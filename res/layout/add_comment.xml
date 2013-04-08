@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="10sp" >
+
+    <EditText
+        android:id="@+id/txtAddComments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/comment_textarea"
+        android:ems="10"
+        android:gravity="top|center_vertical"
+        android:height="100dp"
+        android:hint="Share your thoughts"
+        android:inputType="textMultiLine"
+        android:textColor="#000000"
+        android:textSize="12sp" >
+
+        <requestFocus />
+    </EditText>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/btnglob"
+            android:text="CANCEL"
+            android:textColor="#000000" />
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/btnglob"
+            android:text="SUBMIT"
+            android:textColor="#000000" />
+    </RelativeLayout>
+
+</LinearLayout>
