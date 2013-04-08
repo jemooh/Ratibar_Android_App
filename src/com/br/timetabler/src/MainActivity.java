@@ -27,13 +27,8 @@ import com.br.timetabler.util.LessonClickListener;
 
 public class MainActivity extends SherlockActivity implements LessonClickListener {
 	GridView gridView;
+	private LessonClickListener lessonClickListener;
 	 
-	static final String[] numbers = new String[] { 
-			"A", "B", "C", "D", "E",
-			"F", "G", "H", "I", "J",
-			"K", "L", "M", "N", "O",
-			"P", "Q", "R", "S", "T",
-			"U", "V", "W", "X", "Y", "Z"};
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,14 +36,7 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
 		
 		gridView = (GridView) findViewById(R.id.lessonsGridView);
 		 
-		//ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, numbers);
 		getLessonsFeed(gridView);
-		gridView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-			   Toast.makeText(getApplicationContext(), ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
-			}
-		});
 	}
 	// This is the XML onClick listener to retreive a users video feed
     public void getLessonsFeed(View v){
@@ -73,10 +61,19 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
      */
     private void populateListWithLessons(Message msg) {
         // Retreive the videos are task found from the data bundle sent back
-        LessonLibrary lib = (LessonLibrary) msg.getData().get(GetLessonsTask.LIBRARY);
+        final LessonLibrary lib = (LessonLibrary) msg.getData().get(GetLessonsTask.LIBRARY);
         // Because we have created a custom ListView we don't have to worry about setting the adapter in the activity
         // we can just call our custom method with the list of items we want to display
         GridAdapter adapter = new GridAdapter(this, lib.getLessons());
+        gridView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+			   //Toast.makeText(getApplicationContext(), ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
+			   if(lessonClickListener != null){
+		    		lessonClickListener.onLessonClicked(lib.getLessons().get(position));
+		        }
+			}
+		});
         gridView.setAdapter(adapter);
     }
     
@@ -86,6 +83,10 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
         // because who cares if we get a callback once the activity has stopped? not me!
         responseHandler = null;
         super.onStop();
+    }
+    
+    public void setOnLessonClickListener(LessonClickListener l) {
+    	lessonClickListener = l;
     }
     
     // This is the interface method that is called when a video in the listview is clicked!
