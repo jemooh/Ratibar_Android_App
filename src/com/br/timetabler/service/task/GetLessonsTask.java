@@ -83,9 +83,10 @@ public class GetLessonsTask implements Runnable {
                 String lessonStartTime = jsonObject.getString("unit_time_start");
                 String lessonEndTime = jsonObject.getString("unit_time_end");
                 String lessonLocation = jsonObject.getString("room_names");
+                String lessonDayId = jsonObject.getString("day_id");
                  
                 // Create the video object and add it to our list
-                lessons.add(new Lesson(lessonId, lessonCode, lessonTitle, lessonTeacher, lessonStartTime, lessonEndTime, lessonLocation));
+                lessons.add(new Lesson(lessonId, lessonCode, lessonTitle, lessonTeacher, lessonStartTime, lessonEndTime, lessonLocation, lessonDayId));
             }
             // Create a library to hold our lessons
             LessonLibrary lib = new LessonLibrary("br", lessons);

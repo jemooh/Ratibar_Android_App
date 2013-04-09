@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.br.timetabler.R;
 import com.br.timetabler.model.Lesson;
+import com.br.timetabler.model.OneCell;
+import com.br.timetabler.util.Log;
 
 /**
  * This adapter is used to show our Video objects in a ListView
@@ -21,28 +23,33 @@ import com.br.timetabler.model.Lesson;
  */
 public class GridAdapter extends BaseAdapter {
 	List<Lesson> lessons;
+	List<OneCell> gridCells;
     // An inflator to use when creating rows
     private LayoutInflater mInflater;
     Context mContext;
+    int globStartTime=700, globEndTime=1900, duration=100;
+    int totalCells;
+    int learningDays = 5;
      
     /**
      * @param context this is the context that the list will be shown in - used to create new list rows
      * @param videos this is a list of videos to display
      */
-    public GridAdapter(Context context, List<Lesson> lessons) {
+    public GridAdapter(Context context, List<Lesson> lessons, List<OneCell> gridCells) {
         this.lessons = lessons;
         this.mInflater = LayoutInflater.from(context);
         this.mContext = context;
+        this.gridCells = gridCells;
     }
  
     //@Override
     public int getCount() {
-        return lessons.size();
+        return gridCells.size();
     }
  
     //@Override
     public Object getItem(int position) {
-        return lessons.get(position);
+        return gridCells.get(position);
     }
  
     //@Override
@@ -73,10 +80,35 @@ public class GridAdapter extends BaseAdapter {
 		ViewHolder holder = (ViewHolder) convertView.getTag();
 		
         // Get a single video from our list
-        Lesson lesson = lessons.get(position);
+        OneCell cell = gridCells.get(position);
+        holder.code.setClickable(false);
+    	holder.code.setFocusable(false);
         
-        holder.code.setText(lesson.getCode());
+        //Log.i("position : " + position);
+        //Lesson lesson = lessons.get(position);
+        for(Lesson l : lessons) {
+        	String lessonBegins = l.getStarttime();
+        	int dayId = Integer.parseInt(l.getDayId());
+        	int yRange = Integer.parseInt(lessonBegins) - globStartTime;
+        	int yColumnCount = yRange / duration;
+        	int yCellCount = yColumnCount * learningDays;
+        	int yPosition = yCellCount + dayId; //gives the number of cell to count from 0,0
+        	//Log.i("dayId : " + dayId);
+	        if(yPosition==cell.getGridPos()){ // || position % 5 == dayId){
+	        	//Log.i("Day Id : " + l.getDayId());
+	        	holder.code.setBackgroundResource(R.drawable.item_background_focused);
+	        	holder.code.setText(l.getCode());
+	        	holder.code.setClickable(true);
+	        	holder.code.setFocusable(true);
+	        } 
+        }
+        
+        
          
         return convertView;
+    }
+    
+    public void assignLessons() {
+    	
     }
 }

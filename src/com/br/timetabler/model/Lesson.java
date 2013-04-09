@@ -18,8 +18,9 @@ public class Lesson implements Serializable {
     private String teacher;
     private String starttime, endtime;
     private String location;
+    private String dayId;
      
-    public Lesson(String lessonId, String code, String title, String teacher, String starttime, String endtime, String location) {
+    public Lesson(String lessonId, String code, String title, String teacher, String starttime, String endtime, String location, String dayId) {
         super();
         this.lessonId = lessonId;
         this.code = code;
@@ -28,7 +29,8 @@ public class Lesson implements Serializable {
         this.starttime = starttime;
         this.endtime = endtime;
         this.location = location;
-        }
+        this.dayId = dayId;
+    }
  
     /**
      * @return the title of the video
@@ -44,38 +46,27 @@ public class Lesson implements Serializable {
         return code;
     }
  
-    /**
-     * @return the title of the video
-     */
     public String getTitle(){
         return title;
     }
  
-    /**
-     * @return the url to this video on youtube
-     */
     public String getTeacher() {
         return teacher;
     }
  
-    /**
-     * @return the DescriptionActivity to this video on youtube
-     */
     public String getStarttime() {
         return starttime;
     }
  
-    /**
-     * @return the Duration to this video on youtube
-     */
     public String getEndtime() {
         return endtime;
     }
- 
-    /**
-     * @return the thumbUrl of a still image representation of this video
-     */
+    
     public String getLocation() {
         return location;
+    }
+    
+    public String getDayId() {
+        return dayId;
     }
 }

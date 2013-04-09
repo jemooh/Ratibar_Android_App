@@ -23,7 +23,7 @@ public class GridViewActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
  
-		gridView = (GridView) findViewById(R.id.lessonsGridView);
+		//gridView = (GridView) findViewById(R.id.lessonsGridView);
  
 		gridView.setAdapter(new ImageAdapter(this, MOBILE_OS));
  

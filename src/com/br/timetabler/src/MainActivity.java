@@ -1,17 +1,23 @@
 package com.br.timetabler.src;
 
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.content.ContentUris;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+//import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,20 +28,29 @@ import com.br.timetabler.R;
 import com.br.timetabler.adapter.GridAdapter;
 import com.br.timetabler.model.Lesson;
 import com.br.timetabler.model.LessonLibrary;
+import com.br.timetabler.model.OneCell;
 import com.br.timetabler.service.task.GetLessonsTask;
-import com.br.timetabler.util.LessonClickListener;
+//import com.br.timetabler.util.LessonClickListener;
 
-public class MainActivity extends SherlockActivity implements LessonClickListener {
-	GridView gridView;
-	private LessonClickListener lessonClickListener;
+import com.jess.ui.TwoWayAdapterView;
+import com.jess.ui.TwoWayAdapterView.OnItemClickListener;
+import com.jess.ui.TwoWayGridView;
+
+public class MainActivity extends SherlockActivity {
+	private TwoWayGridView gridView;
+	int startTime=700, endTime=1900, duration=100;
+    int totalCells;
+    int learningDays = 5;
+    List<OneCell> gridCells;
+	//private LessonClickListener lessonClickListener;
 	 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		gridView = (GridView) findViewById(R.id.lessonsGridView);
-		 
+		gridView = (TwoWayGridView) findViewById(R.id.gridview);
+		UpdateGrid(); 
 		getLessonsFeed(gridView);
 	}
 	// This is the XML onClick listener to retreive a users video feed
@@ -64,8 +79,8 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
         final LessonLibrary lib = (LessonLibrary) msg.getData().get(GetLessonsTask.LIBRARY);
         // Because we have created a custom ListView we don't have to worry about setting the adapter in the activity
         // we can just call our custom method with the list of items we want to display
-        GridAdapter adapter = new GridAdapter(this, lib.getLessons());
-        gridView.setOnItemClickListener(new OnItemClickListener() {
+        GridAdapter adapter = new GridAdapter(this, lib.getLessons(), gridCells);
+        /*gridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 			   //Toast.makeText(getApplicationContext(), ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
@@ -73,9 +88,19 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
 		    		lessonClickListener.onLessonClicked(lib.getLessons().get(position));
 		        }
 			}
+		});*/
+        gridView.setOnItemClickListener(new OnItemClickListener() {
+        	@Override
+        	public void onItemClick(TwoWayAdapterView parent, View v, int position, long id) {
+				Log.i("", "showing image: ");
+				Uri uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
+				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+				startActivity(intent);
+			}			
 		});
         gridView.setAdapter(adapter);
     }
+    
     
     @Override
     protected void onStop() {
@@ -84,7 +109,8 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
         responseHandler = null;
         super.onStop();
     }
-    
+   
+    /*
     public void setOnLessonClickListener(LessonClickListener l) {
     	lessonClickListener = l;
     }
@@ -115,7 +141,7 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
         si.putExtras(b);
         startActivity(si);
 		
-	}
+	}*/
     
     public void getff() {
     	int year = 0, month = 0, day = 0;
@@ -128,6 +154,14 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getSupportMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
+	}
+	
+	public void UpdateGrid() {
+		this.totalCells = ((endTime - startTime) / duration) * learningDays;
+		gridCells = new ArrayList<OneCell>();
+		for(int i=1; i<totalCells; i++) {
+			gridCells.add(new OneCell(i, i));
+		}
 	}
 
 
