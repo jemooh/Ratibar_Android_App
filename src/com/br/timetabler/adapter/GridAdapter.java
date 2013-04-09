@@ -81,8 +81,8 @@ public class GridAdapter extends BaseAdapter {
 		
         // Get a single video from our list
         OneCell cell = gridCells.get(position);
-        holder.code.setClickable(false);
-    	holder.code.setFocusable(false);
+        //holder.code.setClickable(false);
+    	//holder.code.setFocusable(false);
         
         //Log.i("position : " + position);
         //Lesson lesson = lessons.get(position);
@@ -96,10 +96,10 @@ public class GridAdapter extends BaseAdapter {
         	//Log.i("dayId : " + dayId);
 	        if(yPosition==cell.getGridPos()){ // || position % 5 == dayId){
 	        	//Log.i("Day Id : " + l.getDayId());
-	        	holder.code.setBackgroundResource(R.drawable.item_background_focused);
+	        	holder.code.setBackgroundResource(R.drawable.grid_lesson_item_bg);
 	        	holder.code.setText(l.getCode());
-	        	holder.code.setClickable(true);
-	        	holder.code.setFocusable(true);
+	        	//holder.code.setClickable(true);
+	        	//holder.code.setFocusable(true);
 	        } 
         }
         
