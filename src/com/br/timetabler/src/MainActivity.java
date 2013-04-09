@@ -30,19 +30,20 @@ import com.br.timetabler.model.Lesson;
 import com.br.timetabler.model.LessonLibrary;
 import com.br.timetabler.model.OneCell;
 import com.br.timetabler.service.task.GetLessonsTask;
-//import com.br.timetabler.util.LessonClickListener;
+import com.br.timetabler.util.LessonClickListener;
 
 import com.jess.ui.TwoWayAdapterView;
 import com.jess.ui.TwoWayAdapterView.OnItemClickListener;
 import com.jess.ui.TwoWayGridView;
 
-public class MainActivity extends SherlockActivity {
+public class MainActivity extends SherlockActivity implements LessonClickListener {
 	private TwoWayGridView gridView;
 	int startTime=700, endTime=1900, duration=100;
     int totalCells;
     int learningDays = 5;
     List<OneCell> gridCells;
-	//private LessonClickListener lessonClickListener;
+    List<Lesson> lessons;
+	private LessonClickListener lessonClickListener;
 	 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +80,8 @@ public class MainActivity extends SherlockActivity {
         final LessonLibrary lib = (LessonLibrary) msg.getData().get(GetLessonsTask.LIBRARY);
         // Because we have created a custom ListView we don't have to worry about setting the adapter in the activity
         // we can just call our custom method with the list of items we want to display
-        GridAdapter adapter = new GridAdapter(this, lib.getLessons(), gridCells);
+        lessons = lib.getLessons();
+        GridAdapter adapter = new GridAdapter(this, lessons, gridCells);
         /*gridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -93,9 +95,12 @@ public class MainActivity extends SherlockActivity {
         	@Override
         	public void onItemClick(TwoWayAdapterView parent, View v, int position, long id) {
 				Log.i("", "showing image: ");
-				Uri uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
-				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-				startActivity(intent);
+				//Uri uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
+				//Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+				//startActivity(intent);
+				if(lessons.contains(position)){
+					onLessonClicked(lessons.get(position));
+				}
 			}			
 		});
         gridView.setAdapter(adapter);
@@ -110,7 +115,7 @@ public class MainActivity extends SherlockActivity {
         super.onStop();
     }
    
-    /*
+    
     public void setOnLessonClickListener(LessonClickListener l) {
     	lessonClickListener = l;
     }
@@ -118,7 +123,7 @@ public class MainActivity extends SherlockActivity {
     // This is the interface method that is called when a video in the listview is clicked!
     // The interface is a contract between this activity and the listview
     @Override
-	public void onLessonClicked(Lesson lesson) {
+    public void onLessonClicked(Lesson lesson) {
     	String unit_id = lesson.getLessonId();
     	String starttime = lesson.getStarttime();
     	String endtime = lesson.getEndtime();
@@ -141,7 +146,7 @@ public class MainActivity extends SherlockActivity {
         si.putExtras(b);
         startActivity(si);
 		
-	}*/
+	}
     
     public void getff() {
     	int year = 0, month = 0, day = 0;
