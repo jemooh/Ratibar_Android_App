@@ -26,11 +26,17 @@ import com.br.timetabler.widget.TodayLessonsListView;
 public class ListDayLessons extends SherlockActivity implements LessonClickListener {
 	private TodayLessonsListView listView;
 	Button btnLogout;
+	String dayId;
     
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_day_lessons);
-
+        
+        Intent in=getIntent();
+		Bundle b=in.getExtras();
+		//Log.i("title", b.getString("ytUrl"));
+		this.dayId = b.getString("dayId");		
+		
         listView = (TodayLessonsListView) findViewById(R.id.todayListView);
 		
 		// Here we are adding this activity as a listener for when any row in the List is 'clicked'
@@ -44,7 +50,7 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
         // We start a new task that does its work on its own thread
         // We pass in a handler that will be called when the task has finished
         // We also pass in the name of the user we are searching YouTube for
-        new Thread(new GetLessonsTask(responseHandler, false, null)).start();
+        new Thread(new GetLessonsTask(responseHandler, dayId, false, null)).start();
     }
     
     // This is the handler that receives the response when the YouTube task has finished

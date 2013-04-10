@@ -21,6 +21,7 @@
 <resources>
 
     <color name="pressed_tabler">#CCFF5E0E</color>
+    <color name="grey_bg">#222222</color>
     <color name="black_bg">#000000</color>
     <color name="ntv_blue">#2c77c7</color>
     <color name="lesson_code">#ff5e0e</color>

@@ -21,7 +21,8 @@
 <resources>
 
     <style name="Theme.Tabler" parent="@style/Theme.Sherlock">
-        <item name="android:windowBackground">@drawable/app_background</item>
+        <!-- <item name="android:windowBackground">@drawable/app_background</item>-->
+        <item name="android:windowBackground">@color/grey_bg</item>
         <item name="actionBarItemBackground">@drawable/selectable_background_tabler</item>
         <item name="popupMenuStyle">@style/PopupMenu.Tabler</item>
         <item name="dropDownListViewStyle">@style/DropDownListView.Tabler</item>

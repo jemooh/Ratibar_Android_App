@@ -37,7 +37,7 @@ public class GetLessonsTask implements Runnable {
      * @param replyTo - the handler you want to receive the response when this task has finished
      * @param username - the username of who on YouTube you are browsing
      */
-    public GetLessonsTask(Handler replyTo, boolean Search, String SearchQuery) {
+    public GetLessonsTask(Handler replyTo, String dayId, boolean Search, String SearchQuery) {
         this.replyTo = replyTo;
         this.SearchQuery = SearchQuery;
         if(Search) {
@@ -45,7 +45,7 @@ public class GetLessonsTask implements Runnable {
         		this.Url = "http://10.0.2.2/timetabler/lessonsList.php?q="+ SearchQuery;
         	}
         } else {
-        	this.Url = "http://10.0.2.2/timetabler/lessonsList.php";
+        	this.Url = "http://10.0.2.2/timetabler/lessonsList.php?dy="+dayId;
         }
         //Log.i(this.Url);
         
@@ -84,9 +84,10 @@ public class GetLessonsTask implements Runnable {
                 String lessonEndTime = jsonObject.getString("unit_time_end");
                 String lessonLocation = jsonObject.getString("room_names");
                 String lessonDayId = jsonObject.getString("day_id");
+                String lessonyPos = jsonObject.getString("yPos");
                  
                 // Create the video object and add it to our list
-                lessons.add(new Lesson(lessonId, lessonCode, lessonTitle, lessonTeacher, lessonStartTime, lessonEndTime, lessonLocation, lessonDayId));
+                lessons.add(new Lesson(lessonId, lessonCode, lessonTitle, lessonTeacher, lessonStartTime, lessonEndTime, lessonLocation, lessonDayId, lessonyPos));
             }
             // Create a library to hold our lessons
             LessonLibrary lib = new LessonLibrary("br", lessons);

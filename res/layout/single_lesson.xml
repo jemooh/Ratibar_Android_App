@@ -76,7 +76,7 @@
             android:text="Add" />
     </RelativeLayout>
 
-    <com.br.tabler.widget.CommentsListView
+    <com.br.timetabler.widget.CommentsListView
         android:id="@+id/commentsListView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

@@ -16,6 +16,7 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 //import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
@@ -44,22 +45,72 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
     List<OneCell> gridCells;
     List<Lesson> lessons;
 	private LessonClickListener lessonClickListener;
+	TextView txtMon, txtTue, txtWed, txtThu, txtFri;
 	 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		txtMon = (TextView) findViewById(R.id.txtMon);
+		txtTue = (TextView) findViewById(R.id.txtTue);
+		txtWed = (TextView) findViewById(R.id.txtWed);
+		txtThu = (TextView) findViewById(R.id.txtThu);
+		txtFri = (TextView) findViewById(R.id.txtFri);
+		
+		txtMon.setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				openDayLessons("1");				
+			}
+		});
+		
+		txtTue.setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				openDayLessons("2");				
+			}
+		});
+		
+		txtWed.setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				openDayLessons("3");				
+			}
+		});
+		
+		txtThu.setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				openDayLessons("4");				
+			}
+		});
+		
+		txtFri.setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				openDayLessons("5");				
+			}
+		});
+		
 		gridView = (TwoWayGridView) findViewById(R.id.gridview);
 		UpdateGrid(); 
 		getLessonsFeed(gridView);
+	}
+	
+	private void openDayLessons(String dayId) {
+		Intent si = new Intent(getApplicationContext(), ListDayLessons.class);
+        Bundle b=new Bundle();        
+        b.putString("dayId", dayId);        
+        si.putExtras(b);
+        startActivity(si);
 	}
 	// This is the XML onClick listener to retreive a users video feed
     public void getLessonsFeed(View v){
         // We start a new task that does its work on its own thread
         // We pass in a handler that will be called when the task has finished
         // We also pass in the name of the user we are searching YouTube for
-        new Thread(new GetLessonsTask(responseHandler, false, null)).start();
+        new Thread(new GetLessonsTask(responseHandler, "0", false, null)).start();
     }
     
     // This is the handler that receives the response when the YouTube task has finished
@@ -81,7 +132,7 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
         // Because we have created a custom ListView we don't have to worry about setting the adapter in the activity
         // we can just call our custom method with the list of items we want to display
         lessons = lib.getLessons();
-        GridAdapter adapter = new GridAdapter(this, lessons, gridCells);
+        GridAdapter adapter = new GridAdapter(this, gridCells);
         /*gridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -94,16 +145,21 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
         gridView.setOnItemClickListener(new OnItemClickListener() {
         	@Override
         	public void onItemClick(TwoWayAdapterView parent, View v, int position, long id) {
-				Log.i("", "showing image: ");
+				
 				//Uri uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
 				//Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 				//startActivity(intent);
-				if(lessons.contains(position)){
-					onLessonClicked(lessons.get(position));
+				for(Lesson l : lessons) {
+					if((Integer.parseInt(l.GetyPos())+1)==position){
+						Log.i("", "position: " + position + " | yPos : " + l.GetyPos());
+						onLessonClicked(lessons.get(Integer.parseInt(l.GetyPos())));
+					}
 				}
-			}			
+			}
 		});
         gridView.setAdapter(adapter);
+        adapter.setLessons(lessons);
+        adapter.notifyDataSetChanged();
     }
     
     
@@ -148,11 +204,6 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
 		
 	}
     
-    public void getff() {
-    	int year = 0, month = 0, day = 0;
-    	GregorianCalendar calendar = new GregorianCalendar(year, month, day);
-    	int i = calendar.get(Calendar.DAY_OF_WEEK);
-    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -164,7 +215,7 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
 	public void UpdateGrid() {
 		this.totalCells = ((endTime - startTime) / duration) * learningDays;
 		gridCells = new ArrayList<OneCell>();
-		for(int i=1; i<totalCells; i++) {
+		for(int i=0; i<totalCells; i++) {
 			gridCells.add(new OneCell(i, i));
 		}
 	}

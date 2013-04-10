@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:paddingTop="5px" >
 
-    <com.br.tabler.widget.TodayLessonsListView
+    <com.br.timetabler.widget.TodayLessonsListView
         android:id="@+id/todayListView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

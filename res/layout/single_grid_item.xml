@@ -3,10 +3,10 @@
     android:id="@+id/lessonCell"
     android:layout_width="65dp"
     android:layout_height="50dp"
-    android:padding="5dp"
     android:textColor="@color/color_white"
     android:textSize="14sp"
     android:textStyle="bold"
-    android:background="@drawable/grid_empty_item_bg" >
+    android:background="@drawable/grid_empty_item_bg"
+    android:gravity="center" >
 
 </TextView>

@@ -17,7 +17,7 @@ public final class R {
 		public static final int fill = 0x7f040009;
 		public static final int spacingWidth = 0x7f040012;
 		public static final int clip_vertical = 0x7f04000a;
-		public static final int gridview = 0x7f040048;
+		public static final int gridview = 0x7f04004a;
 		public static final int fill_vertical = 0x7f040005;
 		public static final int center = 0x7f040008;
 		public static final int alwaysScroll = 0x7f04000e;

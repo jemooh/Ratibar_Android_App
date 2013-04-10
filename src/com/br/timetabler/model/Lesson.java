@@ -19,8 +19,10 @@ public class Lesson implements Serializable {
     private String starttime, endtime;
     private String location;
     private String dayId;
+    private String yPos;
      
-    public Lesson(String lessonId, String code, String title, String teacher, String starttime, String endtime, String location, String dayId) {
+    public Lesson(String lessonId, String code, String title, String teacher, 
+    		String starttime, String endtime, String location, String dayId, String yPos) {
         super();
         this.lessonId = lessonId;
         this.code = code;
@@ -30,6 +32,7 @@ public class Lesson implements Serializable {
         this.endtime = endtime;
         this.location = location;
         this.dayId = dayId;
+        this.yPos = yPos;
     }
  
     /**
@@ -68,5 +71,9 @@ public class Lesson implements Serializable {
     
     public String getDayId() {
         return dayId;
+    }
+    
+    public String GetyPos() {
+    	return yPos;
     }
 }
