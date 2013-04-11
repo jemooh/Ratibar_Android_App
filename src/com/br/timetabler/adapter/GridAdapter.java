@@ -29,12 +29,13 @@ import com.br.timetabler.util.Log;
 public class GridAdapter extends BaseAdapter {
 	List<Lesson> lessons;
 	List<OneCell> gridCells;
+	String[][] strlessons;
     // An inflator to use when creating rows
     private LayoutInflater mInflater;
     Context mContext;
     int globStartTime=715, globEndTime=1915, duration=100;
     int totalCells;
-    int learningDays = 6;
+    long learningDays = 6;
      
     /**
      * @param context this is the context that the list will be shown in - used to create new list rows
@@ -63,6 +64,7 @@ public class GridAdapter extends BaseAdapter {
     
     public void setLessons(List<Lesson> lessons) {
     	this.lessons = lessons;
+    	//assignLessons();
     }
 	
 	static class ViewHolder {
@@ -84,11 +86,12 @@ public class GridAdapter extends BaseAdapter {
 		
 		ViewHolder holder = (ViewHolder) convertView.getTag();
 		
-        // Get a single video from our list
+        // Get a single cell from our grid
         OneCell cell = gridCells.get(position);
-        
+        //Lesson l = lessons.get(getPos(position));
         if(position % learningDays ==0) {
-        	int t = ((position / learningDays)*100) + globStartTime;
+        	//here we are setting the time titles
+        	long t = ((position / learningDays)*100) + globStartTime;
         	String pn;
         	if(t>1200){
         		t = t - 1200;
@@ -101,30 +104,60 @@ public class GridAdapter extends BaseAdapter {
         	holder.code.setText(timeTitleStart + " - " + timeTitleEnd);
         	holder.code.setTextSize(10);
         	holder.code.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+        	holder.code.setClickable(false);
         } else {
-        	holder.code.setText(""+position);
+        	/*for(int i=0; i<strlessons.length; i++) {
+        		if(position == Integer.parseInt(strlessons[i][0])) {
+        			holder.code.setBackgroundResource(R.drawable.grid_lesson_item_bg);
+    	        	holder.code.setText(strlessons[i][1]);
+        		}
+        	} */
+        	holder.code.setText(getLessonCode(position));
+        	//holder.code.setBackgroundResource(R.drawable.grid_lesson_item_bg);
+        	/*for(Lesson l : lessons) {
+            	if(position == Integer.parseInt(l.GetyPos())){ // || position % 5 == dayId){
+    	        	//Log.i("Day Id : " + l.getDayId());
+    	        	holder.code.setBackgroundResource(R.drawable.grid_lesson_item_bg);
+    	        	holder.code.setText(l.getCode());
+    	        } 
+            }*/
         }
-        /*for(Lesson l : lessons) {
-        	if(cell.getGridPos() == Integer.parseInt(l.GetyPos())){ // || position % 5 == dayId){
-	        	//Log.i("Day Id : " + l.getDayId());
-	        	holder.code.setBackgroundResource(R.drawable.grid_lesson_item_bg);
-	        	holder.code.setText(l.getCode());
-	        } else {
-	        	holder.code.setBackgroundResource(R.drawable.grid_empty_item_bg);
-	        	holder.code.setText("");
-	        }
-        }*/
          
         return convertView;
     }
     
-    /*public String[][] assignLessons() {
-    	String [][] lessonsAttr =  new String[4][5];
-    	String pos;
-    	
-    	for (int i=0; i<lessons.size(); i++) {
-    		lessonsAttr[i][pos] = lessons.get(i).GetyPos();
+    private String getLessonCode(int pos){
+    	int i=0;
+    	String jCode=null;
+    	for(Lesson l : lessons) {
+    		int j = Integer.parseInt(l.GetyPos());
+    		if(j==pos){
+    			jCode = l.getCode();
+    		}
     	}
-    	return lessonsAttr;
-    }*/
+    	return jCode;
+    }
+    
+    private void setLessonBg(int pos){
+    	int i=0;
+    	String jCode=null;
+    	for(Lesson l : lessons) {
+    		int j = Integer.parseInt(l.GetyPos());
+    		if(j==pos){
+    			jCode = l.getCode();
+    		}
+    	}
+    }
+    
+    public void assignLessons() {
+    	String [][] lessonsAttr =  new String[2][lessons.size()];
+    	for (int i=0; i<lessons.size(); i++) {
+        	String[] row = new String[2];
+        	row[0] = lessons.get(i).GetyPos();
+        	row[1] = lessons.get(i).getCode();
+        	 
+        	lessonsAttr[i] = row;
+    	}
+    	strlessons = lessonsAttr;
+    }
 }

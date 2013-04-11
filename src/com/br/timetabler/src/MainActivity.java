@@ -109,7 +109,6 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
     public void getLessonsFeed(View v){
         // We start a new task that does its work on its own thread
         // We pass in a handler that will be called when the task has finished
-        // We also pass in the name of the user we are searching YouTube for
         new Thread(new GetLessonsTask(responseHandler, "0", false, null)).start();
     }
     
@@ -149,12 +148,17 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
 				//Uri uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
 				//Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 				//startActivity(intent);
-				for(Lesson l : lessons) {
-					if((Integer.parseInt(l.GetyPos())+1)==position){
+        		Log.i("position", "poslition: " + position);
+        		int lessonPos = getLessonPos(position);
+        		Log.i("getLessonPos", "getLessonPos: " + lessonPos);
+        		onLessonClicked(lessons.get(lessonPos));
+        		
+				/*for(Lesson l : lessons) {
+					if(Integer.parseInt(l.GetyPos())==position){
 						Log.i("", "position: " + position + " | yPos : " + l.GetyPos());
 						onLessonClicked(lessons.get(Integer.parseInt(l.GetyPos())));
 					}
-				}
+				}*/
 			}
 		});
         gridView.setAdapter(adapter);
@@ -204,7 +208,6 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
 		
 	}
     
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -219,7 +222,21 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
 			gridCells.add(new OneCell(i, i));
 		}
 	}
-
-
+	
+	private int getLessonPos(int pos){
+    	int i=0;
+    	int z = 0;
+    	String jCode=null;
+    	for(Lesson l : lessons) {
+    		int j = Integer.parseInt(l.GetyPos());
+    		if(pos==j){
+    			//jCode = l.getCode();
+    			//i = lessons.;
+    			z = i;
+    		}
+    		i++;
+    	}
+    	return z;
+    }
 }
 	

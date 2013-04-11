@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.br.timetabler"
     android:id="@+id/topstories"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:paddingTop="5px" xmlns:app="http://schemas.android.com/apk/res/com.br.timetabler">
+    android:paddingTop="2dp" >
 
     <LinearLayout
         android:id="@+id/linearLayout1"
@@ -69,7 +70,7 @@
         android:background="#FF222222"
         android:cacheColorHint="@android:color/transparent"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:paddingRight="0dp"
         app:columnWidth="80dp"
         app:gravity="center"
         app:horizontalSpacing="0dp"
