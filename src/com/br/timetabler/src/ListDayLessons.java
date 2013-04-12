@@ -2,24 +2,39 @@ package com.br.timetabler.src;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.br.timetabler.R;
 import com.br.timetabler.model.Lesson;
 import com.br.timetabler.model.LessonLibrary;
 import com.br.timetabler.service.task.GetLessonsTask;
+import com.br.timetabler.util.DatabaseHandler;
 import com.br.timetabler.util.LessonClickListener;
+import com.br.timetabler.util.ServerInteractions;
 import com.br.timetabler.widget.TodayLessonsListView;
 
 @SuppressLint("HandlerLeak")
@@ -27,6 +42,19 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
 	private TodayLessonsListView listView;
 	Button btnLogout;
 	String dayId;
+	Button btnFeedBack, btn_submit;
+
+	private static final int FEEDBACK_DIALOG = 1;
+	private static String KEY_SUCCESS = "success";
+	AlertDialog alertDialog;
+	
+	SaveFeedbackTask feedBackTsk;
+	ServerInteractions userFunction;
+	DatabaseHandler db;
+	JSONObject json_user;
+    JSONObject json;
+    String errorMsg, successMsg;
+    String res;
     
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +62,18 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
         
         Intent in=getIntent();
 		Bundle b=in.getExtras();
-		//Log.i("title", b.getString("ytUrl"));
 		this.dayId = b.getString("dayId");		
+		
+		btnFeedBack = (Button) findViewById(R.id.btnFeedBack);
+		btnFeedBack.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				//display feedback dialog
+				showDialog(FEEDBACK_DIALOG);
+				
+			}
+		});
 		
         listView = (TodayLessonsListView) findViewById(R.id.todayListView);
 		
@@ -114,9 +152,115 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
 		
 	}
     
-    public void getff() {
-    	int year = 0, month = 0, day = 0;
-    	GregorianCalendar calendar = new GregorianCalendar(year, month, day);
-    	int i = calendar.get(Calendar.DAY_OF_WEEK);
+    @Override
+	protected Dialog onCreateDialog(int id) {	
+		LayoutInflater inflater;
+		AlertDialog.Builder dialogbuilder;
+		View dialogview;
+		AlertDialog dialogDetails = null;		 
+		switch (id) {
+			case FEEDBACK_DIALOG:
+		 		inflater = LayoutInflater.from(this);
+		 		dialogview = inflater.inflate(R.layout.add_feedback, null);
+	 
+		 		dialogbuilder = new AlertDialog.Builder(this);
+		 		dialogbuilder.setTitle("ADD YOUR COMMENT!");
+		 		//dialogbuilder.setIcon(R.drawable.reviews);
+		 		dialogbuilder.setView(dialogview);
+		 		dialogDetails = dialogbuilder.create();	  
+		 	break;
+		 	
+		 }	 
+	  return dialogDetails;
+	 }
+	
+	@Override
+	protected void onPrepareDialog(int id, Dialog dialog) {
+	 
+	  	switch (id) {
+	  		case FEEDBACK_DIALOG:
+	  			alertDialog = (AlertDialog) dialog;
+	  			btn_submit = (Button) alertDialog.findViewById(R.id.btn_submit);
+	  			Button cancelbutton = (Button) alertDialog.findViewById(R.id.btn_cancel);
+	  			final EditText txtAddFeedback = (EditText) alertDialog.findViewById(R.id.txtAddFeedback);
+			   
+	  			btn_submit.setOnClickListener(new View.OnClickListener() {
+	 
+	  				@Override
+	  				public void onClick(View v) {
+	  					String comments = txtAddFeedback.getText().toString();
+	  					alertDialog.dismiss();
+
+	  					//start task
+	  	                MyCommentParams params = new MyCommentParams(comments);
+	  	                feedBackTsk = new SaveFeedbackTask();
+	  	                feedBackTsk.execute(params);
+	  				}
+	  			});
+	 
+	  			cancelbutton.setOnClickListener(new View.OnClickListener() {
+	 
+	  				@Override
+	  				public void onClick(View v) {
+	  					btn_submit.setText("");
+	  					alertDialog.dismiss();
+	  				}
+	  			});
+	  			break;
+	  	}
+	}
+
+	private class SaveFeedbackTask extends AsyncTask<MyCommentParams, Void, String> {
+        @Override
+        protected String doInBackground(MyCommentParams... params) {
+        	userFunction = new ServerInteractions();
+
+        	String feedbackContent = params[0].feedbackContent;
+        	db = new DatabaseHandler(getApplicationContext());
+        	HashMap<String,String> user = new HashMap<String,String>();
+        	user = db.getUserDetails();
+        	String userId = user.get("uid");
+        	json = userFunction.postFeedback(feedbackContent, userId); //100 refers to example user id
+            try {
+                if (json.getString(KEY_SUCCESS) != null) {
+                	errorMsg = "";
+                    res = json.getString(KEY_SUCCESS);
+                    if(Integer.parseInt(res) == 1){
+                    	successMsg = "Successfully sent a feedback, thank you";
+                    }else{
+                        // Error in login
+                    	successMsg = "Something went wrong, please verify your sentence";
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+			return successMsg; 
+        }
+        
+        @Override
+        protected void onPostExecute(String json_user) {        	
+        	try {
+        		if(isCancelled())        	
+				return;
+        		
+        		if(Integer.parseInt(res) == 1){
+                	Toast.makeText(getApplicationContext(), "Successfully sent a feedback", Toast.LENGTH_SHORT).show();
+                	//getCommentsFeed(listView, strVideoId);
+                  	alertDialog.dismiss();
+                }
+        	} catch(Exception e){
+				Log.e(this.getClass().getSimpleName(), "Error Saving feedback", e);
+			}
+        }        
     }
+	
+	private static class MyCommentParams {
+        String userId, feedbackContent;
+        MyCommentParams(String feedbackContent) {
+            this.feedbackContent = feedbackContent;
+            
+        }
+    }
+    
 }

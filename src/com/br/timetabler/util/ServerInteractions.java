@@ -14,14 +14,16 @@ public class ServerInteractions {
     private JSONParser jsonParser;
  
     // Testing in localhost using wamp or xampp
-    // use http://10.0.2.2/ to connect to your localhost ie http://localhost/
+    // use http://10.0.2.2/ to connect to localhost ie http://localhost/feedback
     private static String loginURL = "http://10.0.2.2/timetabler/";
     private static String registerURL = "http://10.0.2.2/timetabler/";
     private static String commentURL = "http://10.0.2.2/timetabler/saveReviews.php";
+    private static String feedbackURL = "http://10.0.2.2/timetabler/saveFeedback.php";
     
     private static String login_tag = "login";
     private static String register_tag = "register";
     private static String comment_tag = "comments";
+    private static String feedback_tag = "feedback";
     
     // constructor
     public ServerInteractions(){
@@ -80,6 +82,23 @@ public class ServerInteractions {
         
         // getting JSON Object
         JSONObject json = jsonParser.getJSONFromUrl(commentURL, params);
+        // return json
+        return json;
+    }
+ 
+    /**
+     * function make comment save Request
+     * @param comments
+     * */
+    public JSONObject postFeedback(String feedback, String userId){
+        // Building Parameters
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("tag", feedback_tag));
+        params.add(new BasicNameValuePair("feedback", feedback));
+        params.add(new BasicNameValuePair("user_id", userId));
+        
+        // getting JSON Object
+        JSONObject json = jsonParser.getJSONFromUrl(feedbackURL, params);
         // return json
         return json;
     }

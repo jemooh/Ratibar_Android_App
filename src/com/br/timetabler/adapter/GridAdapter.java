@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -126,7 +127,7 @@ public class GridAdapter extends BaseAdapter {
         		}
         	} */
         	holder.code.setText(getLessonCode(position));
-        	//setLessonBg(position, holder.code);
+        	setLessonBg(position, holder.code);
         	//holder.code.setBackgroundResource(R.drawable.grid_lesson_item_bg);
         	/*for(Lesson l : lessons) {
             	if(position == Integer.parseInt(l.GetyPos())){ // || position % 5 == dayId){
@@ -152,17 +153,28 @@ public class GridAdapter extends BaseAdapter {
     	return jCode;
     }
     
-    private String setLessonBg(int pos, TextView v){
+    private void setLessonBg(int pos, TextView v){
     	int i=0;
     	String jCode=null;
     	for(Lesson l : lessons) {
     		int j = Integer.parseInt(l.GetyPos());
+    		String startTime = l.getStarttime();
+    		String endTime = l.getEndtime();
+    		int durTotal = Integer.parseInt(endTime) - Integer.parseInt(startTime);
+    		int durOne = durTotal/100;
+    		Log.i("no. of grids", "startTime:" + startTime + " endTime:" + endTime);
+    		Log.i("no. of grids", "" + durOne);
+    		
     		if(j==pos){
     			jCode = l.getCode();
+    			v.setWidth(durOne * 65);
+    			v.setBackgroundResource(R.drawable.grid_lesson_item_bg);
+    		} else {
+    			v.setBackgroundResource(R.drawable.grid_empty_item_bg);
     		}
     	}
-    	v.setBackgroundResource(R.drawable.grid_lesson_item_bg);
-    	return jCode;
+    	
+    	
     }
     
     /**public void assignLessons() {
