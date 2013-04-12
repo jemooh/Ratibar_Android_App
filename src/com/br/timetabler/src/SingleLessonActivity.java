@@ -1,5 +1,7 @@
 package com.br.timetabler.src;
 
+import java.text.DecimalFormat;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -59,6 +61,7 @@ public class SingleLessonActivity extends Activity implements CommentClickListen
     JSONObject json;
     String errorMsg, successMsg;
     String res;
+    DecimalFormat df = new DecimalFormat("#.##");
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +84,7 @@ public class SingleLessonActivity extends Activity implements CommentClickListen
 		TextView txtTeacher = (TextView) findViewById(R.id.txtSTeacher);
 		TextView txtLocation = (TextView) findViewById(R.id.txtSLocation);
 		
-		txtCode.setText(startTime + " - " + endTime + " : " +code);
+		txtCode.setText(code + " : " + createTime(startTime, endTime));
 		txtTitle.setText(title);
 		txtTeacher.setText(teacher);
 		txtLocation.setText(location);
@@ -95,6 +98,28 @@ public class SingleLessonActivity extends Activity implements CommentClickListen
 		});
 		commentsLstView = (CommentsListView) findViewById(R.id.commentsListView);
 		getCommentsFeed(commentsLstView);
+	}
+	
+	public String createTime(String start, String end) {
+		String pn= "am";
+		double a = Float.parseFloat(start)/100; 
+		double c = Float.parseFloat(end)/100; 
+    	
+		if(a>12){
+    		pn= "pm";
+    		a = a-12;
+    		if(a<1)
+    			a=a+1;
+    	} 
+		if(c>12){
+    		pn= "pm";
+    		c = c-12;
+    		if(c<0.59)
+    			c=c+1;
+    	} 
+    	String m = df.format(a) + " - " + df.format(c) + pn;
+    	m = m.replaceAll("[.]", ":");
+        return m;
 	}
 	
 	// This is the XML onClick listener to retreive a users video feed

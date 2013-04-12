@@ -20,6 +20,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 //import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,9 +40,9 @@ import com.jess.ui.TwoWayGridView;
 
 public class MainActivity extends SherlockActivity implements LessonClickListener {
 	private TwoWayGridView gridView;
-	int startTime=700, endTime=1900, duration=100;
+	int startTime=815, endTime=1715, duration=100;
     int totalCells;
-    int learningDays = 5;
+    int learningDays = 6;
     List<OneCell> gridCells;
     List<Lesson> lessons;
 	private LessonClickListener lessonClickListener;
@@ -161,6 +162,8 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
 				}*/
 			}
 		});
+        ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar1);
+        pb.setVisibility(View.GONE);
         gridView.setAdapter(adapter);
         adapter.setLessons(lessons);
         adapter.notifyDataSetChanged();

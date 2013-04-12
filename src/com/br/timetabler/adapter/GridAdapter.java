@@ -1,9 +1,6 @@
 package com.br.timetabler.adapter;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import android.content.Context;
@@ -12,13 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.br.timetabler.R;
 import com.br.timetabler.model.Lesson;
 import com.br.timetabler.model.OneCell;
-import com.br.timetabler.util.Log;
 
 /**
  * This adapter is used to show our Video objects in a ListView
@@ -33,9 +28,10 @@ public class GridAdapter extends BaseAdapter {
     // An inflator to use when creating rows
     private LayoutInflater mInflater;
     Context mContext;
-    int globStartTime=715, globEndTime=1915, duration=100;
+    double globStartTime=815, globEndTime=1715, duration=100.0;
     int totalCells;
-    long learningDays = 6;
+    float learningDays = 6;
+    DecimalFormat df = new DecimalFormat("#.##");
      
     /**
      * @param context this is the context that the list will be shown in - used to create new list rows
@@ -43,7 +39,7 @@ public class GridAdapter extends BaseAdapter {
      */
     public GridAdapter(Context context, List<OneCell> gridCells) {
         this.mInflater = LayoutInflater.from(context);
-        this.mContext = context;
+        this.mContext = context; 
         this.gridCells = gridCells;
     }
  
@@ -74,7 +70,7 @@ public class GridAdapter extends BaseAdapter {
     //@Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = null; // If convertView wasn't null it means we have already set it to our list_item_user_video so no need to do it again
-        Date dt = null;
+        String timeTitleEnd = null;
         if(convertView == null) {
             // This is the layout we are using for each row in our list anything you declare in this layout can then be referenced below
             convertView = mInflater.inflate(R.layout.single_grid_item, parent, false);
@@ -88,19 +84,36 @@ public class GridAdapter extends BaseAdapter {
 		
         // Get a single cell from our grid
         OneCell cell = gridCells.get(position);
+        
         //Lesson l = lessons.get(getPos(position));
-        if(position % learningDays ==0) {
+        if(Math.floor(position % learningDays) ==0) {
         	//here we are setting the time titles
-        	long t = ((position / learningDays)*100) + globStartTime;
+        	double t = ((position / learningDays)) + (globStartTime/100);
         	String pn;
-        	if(t>1200){
-        		t = t - 1200;
+        	if(t>12){
+        		t = t - 12;
+        		if(t<1) 
+        			t = t+12;
         		pn = "pm";
         	} else 
         		pn = "am";        	
         	
-        	String timeTitleStart = t/100 + pn ; 
-        	String timeTitleEnd = (duration + t)/ 100 + pn;
+        	//first we plot out the starting times
+        	String timeTitleStart = df.format(t) +"" ; 
+        	
+        	//here we have cleanout t for plotting for the ending times
+        	if(t>12){ 
+        		t = t - 12;        		
+        	}
+        	
+        	//next we plot out the end time title
+        	double ent =  (duration/ 100) + t;
+        	timeTitleEnd = df.format(ent) + pn; // ((duration/ 100) + t) + pn;
+        	
+        	//here we replace all the dots with colons
+        	timeTitleStart = timeTitleStart.replaceAll("[.]", ":");
+        	timeTitleEnd = timeTitleEnd.replaceAll("[.]", ":");
+        	
         	holder.code.setText(timeTitleStart + " - " + timeTitleEnd);
         	holder.code.setTextSize(10);
         	holder.code.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
@@ -113,6 +126,7 @@ public class GridAdapter extends BaseAdapter {
         		}
         	} */
         	holder.code.setText(getLessonCode(position));
+        	//setLessonBg(position, holder.code);
         	//holder.code.setBackgroundResource(R.drawable.grid_lesson_item_bg);
         	/*for(Lesson l : lessons) {
             	if(position == Integer.parseInt(l.GetyPos())){ // || position % 5 == dayId){
@@ -138,7 +152,7 @@ public class GridAdapter extends BaseAdapter {
     	return jCode;
     }
     
-    private void setLessonBg(int pos){
+    private String setLessonBg(int pos, TextView v){
     	int i=0;
     	String jCode=null;
     	for(Lesson l : lessons) {
@@ -147,9 +161,11 @@ public class GridAdapter extends BaseAdapter {
     			jCode = l.getCode();
     		}
     	}
+    	v.setBackgroundResource(R.drawable.grid_lesson_item_bg);
+    	return jCode;
     }
     
-    public void assignLessons() {
+    /**public void assignLessons() {
     	String [][] lessonsAttr =  new String[2][lessons.size()];
     	for (int i=0; i<lessons.size(); i++) {
         	String[] row = new String[2];
@@ -159,5 +175,5 @@ public class GridAdapter extends BaseAdapter {
         	lessonsAttr[i] = row;
     	}
     	strlessons = lessonsAttr;
-    }
+    }*/
 }
