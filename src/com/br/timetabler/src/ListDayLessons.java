@@ -1,6 +1,9 @@
 package com.br.timetabler.src;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
@@ -28,6 +31,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.br.timetabler.R;
 import com.br.timetabler.model.Lesson;
 import com.br.timetabler.model.LessonLibrary;
@@ -54,27 +59,38 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
 	JSONObject json_user;
     JSONObject json;
     String errorMsg, successMsg;
-    String res;
+    String res; 
+    int today = new GregorianCalendar().get(Calendar.DAY_OF_WEEK);;
     
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_day_lessons);
         
         Intent in=getIntent();
-		Bundle b=in.getExtras();
-		this.dayId = b.getString("dayId");		
-		
+        
+        //create a today date for display
+  		String currentDate = DateFormat.getDateInstance().format(new Date());
+  		TextView txtDateToday = (TextView) findViewById(R.id.txtDateToday);
+  		txtDateToday.setText("Today is " + currentDate);
+  		
+        if(in.hasExtra("dayId")) {
+        	Bundle b=in.getExtras();
+			this.dayId = b.getString("dayId");
+		} else {
+        	this.dayId = today+"";
+        }
+        Log.i("day", "day id: " + this.dayId);
 		btnFeedBack = (Button) findViewById(R.id.btnFeedBack);
-		btnFeedBack.setOnClickListener(new OnClickListener() {
-			
+		btnFeedBack.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
 				//display feedback dialog
-				showDialog(FEEDBACK_DIALOG);
-				
+				showDialog(FEEDBACK_DIALOG);			
 			}
 		});
 		
+		
+		//create a listview to hold data
         listView = (TodayLessonsListView) findViewById(R.id.todayListView);
 		
 		// Here we are adding this activity as a listener for when any row in the List is 'clicked'
@@ -83,6 +99,47 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
         listView.setOnLessonClickListener(this);
         getLessonsFeed(listView);
     }
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getSupportMenuInflater().inflate(R.menu.activity_main, menu);
+		return true;
+	}
+	public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home://dsipaly video
+                //Toast.makeText(this, "Tapped home", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i);
+                finish();
+                break;
+
+            case R.id.menu_grid: //display description
+            	Intent i1 = new Intent(getApplicationContext(), MainActivity.class);
+            	i1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i1);
+                finish();
+                break;
+
+            case R.id.menu_list: //display description
+            	Intent i2 = new Intent(getApplicationContext(), ListDayLessons.class);
+            	i2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i2);
+                finish();
+                break;
+
+            case R.id.menu_settings: //display reviews
+            	Intent i3 = new Intent(getApplicationContext(), Settings.class);
+                startActivity(i3);
+                finish();
+                break;
+            
+            
+        }
+        return super.onOptionsItemSelected(item);
+    }
+	
 	// This is the XML onClick listener to retreive a users video feed
     public void getLessonsFeed(View v){
         // We start a new task that does its work on its own thread
@@ -114,6 +171,13 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
 		pbpp.setVisibility(View.GONE);
 		txtMsg.setVisibility(View.GONE);
         listView.setLessons(lib.getLessons());
+		if(lib.getLessons().isEmpty()){
+			txtMsg.setText("No lessons for today, take a break");			
+		} else {
+			txtMsg.setVisibility(View.GONE);
+	        listView.setLessons(lib.getLessons());
+		}
+		
     }
     
     @Override
@@ -202,7 +266,6 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
 	 
 	  				@Override
 	  				public void onClick(View v) {
-	  					btn_submit.setText("");
 	  					alertDialog.dismiss();
 	  				}
 	  			});

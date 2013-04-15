@@ -66,35 +66,47 @@ public class GetLessonsTask implements Runnable {
             String jsonString = StreamUtils.convertToString(response.getEntity().getContent());
             // Create a JSON object that we can use from the String
             JSONObject json = new JSONObject(jsonString);
-            
-            // Get are search result items
-            JSONArray jsonArray = json.getJSONObject("data").getJSONArray("lessons");            
-            
-            // Create a list to store are videos in
-            List<Lesson> lessons = new ArrayList<Lesson>();
-            // Loop round our JSON list of lessons creating Lesson objects to use within our app
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                
-                String lessonId = jsonObject.getString("unit_id");
-                String lessonCode = jsonObject.getString("unit_acronyms");
-                String lessonTitle = jsonObject.getString("unit_names");
-                String lessonTeacher = jsonObject.getString("teacher");
-                String lessonStartTime = jsonObject.getString("unit_time_start");
-                String lessonEndTime = jsonObject.getString("unit_time_end");
-                String lessonLocation = jsonObject.getString("room_names");
-                String lessonDayId = jsonObject.getString("day_id");
-                String lessonyPos = jsonObject.getString("yPos");
-                 
-                // Create the video object and add it to our list
-                lessons.add(new Lesson(lessonId, lessonCode, lessonTitle, lessonTeacher, lessonStartTime, lessonEndTime, lessonLocation, lessonDayId, lessonyPos));
-            }
-            // Create a library to hold our lessons
-            LessonLibrary lib = new LessonLibrary("br", lessons);
-            // Pack the Library into the bundle to send back to the Activity
             Bundle data = new Bundle();
-            data.putSerializable(LIBRARY, lib);
-             
+            
+            JSONObject varObj = null;
+            try { 
+        	    json = new JSONObject(jsonString); 
+        	    varObj = json.getJSONObject("data");
+        	} 
+        	catch (JSONException ignored) {}
+            
+            //if (varObj != null) {
+            	// Get are search result items
+            	JSONArray jsonArray = json.getJSONObject("data").getJSONArray("lessons");            
+	            
+	            // Create a list to store are videos in
+	            List<Lesson> lessons = new ArrayList<Lesson>();
+	            // Loop round our JSON list of lessons creating Lesson objects to use within our app
+	                        
+            	for (int i = 0; i < jsonArray.length(); i++) {            
+	                JSONObject jsonObject = jsonArray.getJSONObject(i);	                
+	                String lessonId = jsonObject.getString("unit_id");
+	                String lessonCode = jsonObject.getString("unit_acronyms");
+	                String lessonTitle = jsonObject.getString("unit_names");
+	                String lessonTeacher = jsonObject.getString("teacher");
+	                String lessonStartTime = jsonObject.getString("unit_time_start");
+	                String lessonEndTime = jsonObject.getString("unit_time_end");
+	                String lessonLocation = jsonObject.getString("room_names");
+	                String lessonDayId = jsonObject.getString("day_id");
+	                String lessonyPos = jsonObject.getString("yPos"); 
+	                
+	                // Create the video object and add it to our list
+	                lessons.add(new Lesson(lessonId, lessonCode, lessonTitle, lessonTeacher, lessonStartTime, lessonEndTime, lessonLocation, lessonDayId, lessonyPos));
+	            }
+            
+	            // Create a library to hold our lessons
+	            LessonLibrary lib = new LessonLibrary("br", lessons);
+	            // Pack the Library into the bundle to send back to the Activity	            
+	            data.putSerializable(LIBRARY, lib);
+            /*} else {
+            	LessonLibrary lib = new LessonLibrary("br", null);
+	            data.putSerializable(LIBRARY, lib);
+            }*/
             // Send the Bundle of data (our LessonLibrary) back to the handler (our Activity)
             Message msg = Message.obtain();
             msg.setData(data);

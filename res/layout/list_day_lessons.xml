@@ -10,7 +10,8 @@
         android:id="@+id/todayListView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:cacheColorHint="@android:color/transparent" />
+        android:cacheColorHint="@android:color/transparent"
+        android:layout_below="@+id/txtDateToday" />
 
     <ProgressBar
         android:id="@+id/pbppl"
@@ -27,6 +28,17 @@
         android:layout_centerVertical="true"
         android:text="Loading Todays Lessons"
         android:textColor="@color/color_white" />
+
+	<TextView
+	    android:id="@+id/txtDateToday"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentTop="true"
+	    android:layout_centerHorizontal="true"
+	    android:layout_marginBottom="5dp"
+	    android:layout_marginTop="5dp"
+	    android:text="Medium Text"
+	    android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <LinearLayout
         android:layout_width="fill_parent"

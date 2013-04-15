@@ -22,12 +22,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
  
     // Database Name
-    private static final String DATABASE_NAME = "NTVideosNew.db";
+    private static final String DATABASE_NAME = "timetabler.db";
  
     // Login table name
-    private static final String TABLE_LOGIN = "login";
+    private static final String TABLE_LOGIN = "user";
     //The Android's default system path of your application database.
-    private static String DB_PATH = "/data/data/com.ex.ntv/databases/";
+    private static String DB_PATH = "/data/data/com.br.timetabler/databases/";
      
     private SQLiteDatabase myDataBase;
      
@@ -157,14 +157,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /**
      * Storing user details in database
      * */
-    public void addUser(String name, String email, String uid, String created_at) {
+    public void addUser(String fname, String lname, String email, String uid, String inst_id, String school_id, String date_joined) {
         SQLiteDatabase db = this.getWritableDatabase();
  
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, name); // Name
-        values.put(KEY_EMAIL, email); // Email
-        values.put(KEY_UID, uid); // Email
-        values.put(KEY_CREATED_AT, created_at); // Created At
+        values.put("uid", uid); // user id
+        values.put("fname", fname); // First Name
+        values.put("lname", lname); // Last Name
+        values.put("email", email); // Email
+        values.put("inst_id", inst_id); // University
+        values.put("school_id", school_id); // Faculty
+        values.put("date_joined", date_joined); // Created At
  
         // Inserting Row
         db.insert(TABLE_LOGIN, null, values);
@@ -183,10 +186,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // Move to first row
         cursor.moveToFirst();
         if(cursor.getCount() > 0){
-            user.put("name", cursor.getString(1));
-            user.put("email", cursor.getString(2));
-            user.put("uid", cursor.getString(3));
-            user.put("created_at", cursor.getString(4));
+        	user.put("uid", cursor.getString(2));
+        	user.put("email", cursor.getString(3));
+        	user.put("fname", cursor.getString(5));
+        	user.put("lname", cursor.getString(6));
+            
         }
         cursor.close();
         db.close();

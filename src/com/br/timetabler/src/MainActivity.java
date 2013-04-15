@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.br.timetabler.R;
 import com.br.timetabler.adapter.GridAdapter;
 import com.br.timetabler.model.Lesson;
@@ -217,6 +218,39 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
 		getSupportMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
+	public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home://dsipaly video
+                //Toast.makeText(this, "Tapped home", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i);
+                finish();
+                break;
+
+            case R.id.menu_grid: //display description
+            	Intent i1 = new Intent(getApplicationContext(), MainActivity.class);
+            	i1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i1);
+                finish();
+                break;
+
+            case R.id.menu_list: //display description
+            	Intent i2 = new Intent(getApplicationContext(), ListDayLessons.class);
+            	i2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i2);
+                finish();
+                break;
+
+            case R.id.menu_settings: //display reviews
+            	Intent i3 = new Intent(getApplicationContext(), Settings.class);
+                startActivity(i3);
+                finish();
+                break;
+            
+            
+        }
+        return super.onOptionsItemSelected(item);
+    }
 	
 	public void UpdateGrid() {
 		this.totalCells = ((endTime - startTime) / duration) * learningDays;

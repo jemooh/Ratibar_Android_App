@@ -36,7 +36,7 @@ public class GridAdapter extends BaseAdapter {
      
     /**
      * @param context this is the context that the list will be shown in - used to create new list rows
-     * @param videos this is a list of videos to display
+     * @param gridCells this is a list of gridCells to display
      */
     public GridAdapter(Context context, List<OneCell> gridCells) {
         this.mInflater = LayoutInflater.from(context);
@@ -97,7 +97,7 @@ public class GridAdapter extends BaseAdapter {
         			t = t+12;
         		pn = "pm";
         	} else 
-        		pn = "am";        	
+        		pn = "am";         	
         	
         	//first we plot out the starting times
         	String timeTitleStart = df.format(t) +"" ; 
@@ -162,8 +162,8 @@ public class GridAdapter extends BaseAdapter {
     		String endTime = l.getEndtime();
     		int durTotal = Integer.parseInt(endTime) - Integer.parseInt(startTime);
     		int durOne = durTotal/100;
-    		Log.i("no. of grids", "startTime:" + startTime + " endTime:" + endTime);
-    		Log.i("no. of grids", "" + durOne);
+    		//Log.i("no. of grids", "startTime:" + startTime + " endTime:" + endTime);
+    		//Log.i("no. of grids", "" + durOne);
     		
     		if(j==pos){
     			jCode = l.getCode();
@@ -172,20 +172,6 @@ public class GridAdapter extends BaseAdapter {
     		} else {
     			v.setBackgroundResource(R.drawable.grid_empty_item_bg);
     		}
-    	}
-    	
-    	
+    	}  	
     }
-    
-    /**public void assignLessons() {
-    	String [][] lessonsAttr =  new String[2][lessons.size()];
-    	for (int i=0; i<lessons.size(); i++) {
-        	String[] row = new String[2];
-        	row[0] = lessons.get(i).GetyPos();
-        	row[1] = lessons.get(i).getCode();
-        	 
-        	lessonsAttr[i] = row;
-    	}
-    	strlessons = lessonsAttr;
-    }*/
 }

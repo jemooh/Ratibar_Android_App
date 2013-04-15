@@ -46,9 +46,12 @@ public class LoginActivity extends SherlockActivity {
     private static String KEY_ERROR = "error";
     private static String KEY_ERROR_MSG = "error_msg";
     private static String KEY_UID = "uid";
-    private static String KEY_NAME = "name";
+    private static String KEY_FNAME = "fname";
+    private static String KEY_LNAME = "lname";
     private static String KEY_EMAIL = "email";
-    private static String KEY_CREATED_AT = "created_at";
+    private static String KEY_INST_ID = "inst_id";
+    private static String KEY_SCHOOL_ID = "school_id";
+    private static String KEY_DATE_JOINED = "date_joined";
  
     @SuppressLint("NewApi")
 	@Override
@@ -130,8 +133,8 @@ public class LoginActivity extends SherlockActivity {
                 if(Integer.parseInt(res) == 1){
 	                // user successfully logged in
 	                // Store user details in SQLite Database
-	                db.addUser(json_user.getString(KEY_NAME), json_user.getString(KEY_EMAIL), json.getString(KEY_UID), json_user.getString(KEY_CREATED_AT));                        
-	                               
+	                db.addUser(json_user.getString(KEY_FNAME), json_user.getString(KEY_LNAME), json_user.getString(KEY_EMAIL), json.getString(KEY_UID), json_user.getString(KEY_INST_ID), json_user.getString(KEY_SCHOOL_ID), json_user.getString(KEY_DATE_JOINED));
+		                           
 		        	// Launch Dashboard Screen
 		            Intent dashboard = new Intent(getApplicationContext(), MainActivity.class);
 		            // Close all views before launching Dashboard

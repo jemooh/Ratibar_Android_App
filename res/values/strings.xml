@@ -10,5 +10,7 @@
     <string name="Thu">Thu</string>
     <string name="Fri">Fri</string>
     <string name="feedBackBtn">What should we improve?</string>
-                
+    <string name="menu_grid">Grid</string>            
+    <string name="menu_list">List</string>            
+    <string name="menu_attachments">Attachments</string>            
 </resources>

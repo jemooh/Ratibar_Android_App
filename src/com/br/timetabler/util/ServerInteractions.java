@@ -15,8 +15,8 @@ public class ServerInteractions {
  
     // Testing in localhost using wamp or xampp
     // use http://10.0.2.2/ to connect to localhost ie http://localhost/feedback
-    private static String loginURL = "http://10.0.2.2/timetabler/";
-    private static String registerURL = "http://10.0.2.2/timetabler/";
+    private static String loginURL = "http://10.0.2.2/timetabler/regLogin.php";
+    private static String registerURL = "http://10.0.2.2/timetabler/regLogin.php";
     private static String commentURL = "http://10.0.2.2/timetabler/saveReviews.php";
     private static String feedbackURL = "http://10.0.2.2/timetabler/saveFeedback.php";
     
@@ -54,14 +54,15 @@ public class ServerInteractions {
      * @param email
      * @param password
      * */
-    public JSONObject registerUser(String name, String email, String password){
+    public JSONObject registerUser(String name, String email, String password, String school){
         // Building Parameters
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("tag", register_tag));
-        params.add(new BasicNameValuePair("name", name));
+        params.add(new BasicNameValuePair("fullnames", name));
         params.add(new BasicNameValuePair("email", email));
         params.add(new BasicNameValuePair("password", password));
- 
+        params.add(new BasicNameValuePair("schoolId", school));
+        
         // getting JSON Object
         JSONObject json = jsonParser.getJSONFromUrl(registerURL, params);
         // return json

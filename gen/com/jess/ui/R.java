@@ -60,8 +60,8 @@ public final class R {
 		public static final int TwoWayGridView_columnWidth = 4;
 	}
 	public static final class drawable {
-		public static final int spinner_black_76 = 0x7f020092;
-		public static final int icon = 0x7f020081;
+		public static final int spinner_black_76 = 0x7f020095;
+		public static final int icon = 0x7f020084;
 	}
 	public static final class attr {
 		public static final int smoothScrollbar = 0x7f010008;

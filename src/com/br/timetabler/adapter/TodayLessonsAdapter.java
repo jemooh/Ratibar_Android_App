@@ -1,5 +1,6 @@
 package com.br.timetabler.adapter;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import android.content.Context;
@@ -21,6 +22,7 @@ import com.br.timetabler.model.Lesson;
  */
 public class TodayLessonsAdapter extends BaseAdapter {
 	List<Lesson> lessons;
+	DecimalFormat df = new DecimalFormat("#.##");
     // An inflator to use when creating rows
     private LayoutInflater mInflater;
     Context mContext;
@@ -81,10 +83,32 @@ public class TodayLessonsAdapter extends BaseAdapter {
         
         holder.code.setText(lesson.getCode());
         holder.title.setText(lesson.getTitle());
-        holder.lessontime.setText(lesson.getStarttime() + " - " + lesson.getEndtime());
+        holder.lessontime.setText(createTime(lesson.getStarttime(), lesson.getEndtime()));
         holder.teacher.setText(lesson.getTeacher());
         holder.location.setText(lesson.getLocation());
          
         return convertView;
     }
+    
+    public String createTime(String start, String end) {
+		String pn= "am";
+		double a = Float.parseFloat(start)/100; 
+		double c = Float.parseFloat(end)/100; 
+    	
+		if(a>12){
+    		pn= "pm";
+    		a = a-12;
+    		if(a<1)
+    			a=a+1;
+    	} 
+		if(c>12){
+    		pn= "pm";
+    		c = c-12;
+    		if(c<0.59)
+    			c=c+1;
+    	} 
+    	String m = df.format(a) + " - " + df.format(c) + pn;
+    	m = m.replaceAll("[.]", ":");
+        return m;
+	}
 }

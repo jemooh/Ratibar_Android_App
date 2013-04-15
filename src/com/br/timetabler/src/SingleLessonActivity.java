@@ -1,10 +1,14 @@
 package com.br.timetabler.src;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.br.timetabler.R;
 import com.br.timetabler.model.Comment;
 import com.br.timetabler.model.CommentLibrary;
@@ -38,7 +42,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SingleLessonActivity extends Activity implements CommentClickListener {
+public class SingleLessonActivity extends SherlockActivity implements CommentClickListener {
 	String unit_id;
 	String code;
 	String title;
@@ -99,6 +103,44 @@ public class SingleLessonActivity extends Activity implements CommentClickListen
 		commentsLstView = (CommentsListView) findViewById(R.id.commentsListView);
 		getCommentsFeed(commentsLstView);
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getSupportMenuInflater().inflate(R.menu.activity_main, menu);
+		return true;
+	}
+	public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home://dsipaly video
+                //Toast.makeText(this, "Tapped home", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i);
+                finish();
+                break;
+
+            case R.id.menu_grid: //display description
+            	Intent i1 = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i1);
+                finish();
+                break;
+
+            case R.id.menu_list: //display description
+            	Intent i2 = new Intent(getApplicationContext(), ListDayLessons.class);
+                startActivity(i2);
+                finish();
+                break;
+
+            case R.id.menu_settings: //display reviews
+            	Intent i3 = new Intent(getApplicationContext(), Settings.class);
+                startActivity(i3);
+                finish();
+                break;
+            
+            
+        }
+        return super.onOptionsItemSelected(item);
+    }
 	
 	public String createTime(String start, String end) {
 		String pn= "am";
@@ -250,7 +292,6 @@ public class SingleLessonActivity extends Activity implements CommentClickListen
 	 
 	  				@Override
 	  				public void onClick(View v) {
-	  					btn_submit.setText("");
 	  					alertDialog.dismiss();
 	  				}
 	  			});
@@ -264,8 +305,11 @@ public class SingleLessonActivity extends Activity implements CommentClickListen
 
         	String unit_id = params[0].unit_id;
         	String commentContent = params[0].commentContent;
-        	
-        	json = userFunction.postComment(commentContent, "100", unit_id); //100 refers to example user id
+        	db = new DatabaseHandler(getApplicationContext());
+        	HashMap<String,String> user = new HashMap<String,String>();
+        	user = db.getUserDetails();
+        	String userId = user.get("uid");
+        	json = userFunction.postComment(commentContent, userId, unit_id); //100 refers to example user id
             try {
                 if (json.getString(KEY_SUCCESS) != null) {
                 	errorMsg = "";
