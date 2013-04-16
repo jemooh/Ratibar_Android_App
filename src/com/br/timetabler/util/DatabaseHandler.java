@@ -60,13 +60,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		 	//of your application so we are gonna be able to overwrite that database with our database.
     		this.getReadableDatabase();
     		this.close(); 
-    		try {
-		  
-    			copyDataBase();
-		  
+    		try {		  
+    			copyDataBase();		  
     		} catch (IOException e) {
 		  
-    			throw new Error("Error copying database");
+    			throw new Error(e.toString());
 		  
     		}
     	}    
@@ -186,10 +184,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // Move to first row
         cursor.moveToFirst();
         if(cursor.getCount() > 0){
-        	user.put("uid", cursor.getString(2));
-        	user.put("email", cursor.getString(3));
-        	user.put("fname", cursor.getString(5));
-        	user.put("lname", cursor.getString(6));
+        	user.put("uid", cursor.getString(1));
+        	user.put("email", cursor.getString(2));
+        	user.put("fname", cursor.getString(4));
+        	user.put("lname", cursor.getString(5));
             
         }
         cursor.close();

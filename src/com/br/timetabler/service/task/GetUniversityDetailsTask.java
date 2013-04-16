@@ -81,9 +81,8 @@ public class GetUniversityDetailsTask implements Runnable {
 	                JSONObject jsonObject = jsonArray.getJSONObject(i);	                
 	                String school_id = jsonObject.getString("school_id");
 	                String school_names = jsonObject.getString("school_names");
-	                Log.i("School: "+school_names + " i:" + i);
 	                
-	                // Create the video object and add it to our list
+	                // Create the school object and add it to our list
 	                schools.add(new School(school_id, school_names));
 	            }
             	

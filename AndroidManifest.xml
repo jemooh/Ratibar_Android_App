@@ -19,17 +19,17 @@
         android:theme="@style/Theme.Tabler" >
         <activity
             android:name="com.br.timetabler.src.MainActivity"
-            android:label="@string/app_name" >            
-        </activity>
-        <activity android:name="com.br.timetabler.src.GridViewActivity" android:screenOrientation="portrait" ></activity>
-        <activity android:name="com.br.timetabler.src.ListDayLessons"></activity>
-        <activity android:name="com.br.timetabler.src.SingleLessonActivity" />
-        <activity android:name="com.br.timetabler.src.RegisterActivity" >
+            android:label="@string/app_name" > 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>           
         </activity>
+        <activity android:name="com.br.timetabler.src.GridViewActivity" />
+        <activity android:name="com.br.timetabler.src.ListDayLessons" />
+        <activity android:name="com.br.timetabler.src.SingleLessonActivity" />
+        <activity android:name="com.br.timetabler.src.LoginActivity" />
+        <activity android:name="com.br.timetabler.src.RegisterActivity" />
     </application>
 
 </manifest>

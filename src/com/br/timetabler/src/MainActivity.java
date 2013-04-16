@@ -34,6 +34,7 @@ import com.br.timetabler.model.LessonLibrary;
 import com.br.timetabler.model.OneCell;
 import com.br.timetabler.service.task.GetLessonsTask;
 import com.br.timetabler.util.LessonClickListener;
+import com.br.timetabler.util.ServerInteractions;
 
 import com.jess.ui.TwoWayAdapterView;
 import com.jess.ui.TwoWayAdapterView.OnItemClickListener;
@@ -48,56 +49,66 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
     List<Lesson> lessons;
 	private LessonClickListener lessonClickListener;
 	TextView txtMon, txtTue, txtWed, txtThu, txtFri;
+	ServerInteractions serverInteractions;
 	 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		
-		txtMon = (TextView) findViewById(R.id.txtMon);
-		txtTue = (TextView) findViewById(R.id.txtTue);
-		txtWed = (TextView) findViewById(R.id.txtWed);
-		txtThu = (TextView) findViewById(R.id.txtThu);
-		txtFri = (TextView) findViewById(R.id.txtFri);
-		
-		txtMon.setOnClickListener(new OnClickListener() {			
-			@Override
-			public void onClick(View v) {
-				openDayLessons("1");				
-			}
-		});
-		
-		txtTue.setOnClickListener(new OnClickListener() {			
-			@Override
-			public void onClick(View v) {
-				openDayLessons("2");				
-			}
-		});
-		
-		txtWed.setOnClickListener(new OnClickListener() {			
-			@Override
-			public void onClick(View v) {
-				openDayLessons("3");				
-			}
-		});
-		
-		txtThu.setOnClickListener(new OnClickListener() {			
-			@Override
-			public void onClick(View v) {
-				openDayLessons("4");				
-			}
-		});
-		
-		txtFri.setOnClickListener(new OnClickListener() {			
-			@Override
-			public void onClick(View v) {
-				openDayLessons("5");				
-			}
-		});
-		
-		gridView = (TwoWayGridView) findViewById(R.id.gridview);
-		UpdateGrid(); 
-		getLessonsFeed(gridView);
+		//if(serverInteractions.isUserLoggedIn(getApplicationContext())){
+	        setContentView(R.layout.activity_main);
+			
+			txtMon = (TextView) findViewById(R.id.txtMon);
+			txtTue = (TextView) findViewById(R.id.txtTue);
+			txtWed = (TextView) findViewById(R.id.txtWed);
+			txtThu = (TextView) findViewById(R.id.txtThu);
+			txtFri = (TextView) findViewById(R.id.txtFri);
+			
+			txtMon.setOnClickListener(new OnClickListener() {			
+				@Override
+				public void onClick(View v) {
+					openDayLessons("1");				
+				}
+			});
+			
+			txtTue.setOnClickListener(new OnClickListener() {			
+				@Override
+				public void onClick(View v) {
+					openDayLessons("2");				
+				}
+			});
+			
+			txtWed.setOnClickListener(new OnClickListener() {			
+				@Override
+				public void onClick(View v) {
+					openDayLessons("3");				
+				}
+			});
+			
+			txtThu.setOnClickListener(new OnClickListener() {			
+				@Override
+				public void onClick(View v) {
+					openDayLessons("4");				
+				}
+			});
+			
+			txtFri.setOnClickListener(new OnClickListener() {			
+				@Override
+				public void onClick(View v) {
+					openDayLessons("5");				
+				}
+			});
+			
+			gridView = (TwoWayGridView) findViewById(R.id.gridview);
+			UpdateGrid(); 
+			getLessonsFeed(gridView);
+		/*} else {
+            // user is not logged in show login screen
+            Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+            login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(login);
+            // Closing dashboard screen
+            finish();
+       }*/
 	}
 	
 	private void openDayLessons(String dayId) {
@@ -134,33 +145,12 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
         // we can just call our custom method with the list of items we want to display
         lessons = lib.getLessons();
         GridAdapter adapter = new GridAdapter(this, gridCells);
-        /*gridView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-			   //Toast.makeText(getApplicationContext(), ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
-			   if(lessonClickListener != null){
-		    		lessonClickListener.onLessonClicked(lib.getLessons().get(position));
-		        }
-			}
-		});*/
+        
         gridView.setOnItemClickListener(new OnItemClickListener() {
         	@Override
         	public void onItemClick(TwoWayAdapterView parent, View v, int position, long id) {
-				
-				//Uri uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
-				//Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-				//startActivity(intent);
-        		Log.i("position", "poslition: " + position);
-        		int lessonPos = getLessonPos(position);
-        		Log.i("getLessonPos", "getLessonPos: " + lessonPos);
-        		onLessonClicked(lessons.get(lessonPos));
-        		
-				/*for(Lesson l : lessons) {
-					if(Integer.parseInt(l.GetyPos())==position){
-						Log.i("", "position: " + position + " | yPos : " + l.GetyPos());
-						onLessonClicked(lessons.get(Integer.parseInt(l.GetyPos())));
-					}
-				}*/
+				int lessonPos = getLessonPos(position);
+        		onLessonClicked(lessons.get(lessonPos));        		
 			}
 		});
         ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar1);

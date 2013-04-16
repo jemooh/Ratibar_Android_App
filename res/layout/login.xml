@@ -23,7 +23,6 @@
         <!-- Login Form -->
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -107,13 +106,6 @@
             android:layout_centerHorizontal="true"
             android:paddingBottom="5dip"
             android:paddingTop="5dip" >
-
-            <ImageView
-                android:id="@+id/ntvlogo"
-                android:layout_width="79dp"
-                android:layout_height="80dp"
-                android:layout_marginLeft="10dip"
-                android:src="@drawable/ic_launcher" />
         </LinearLayout>
     </RelativeLayout>
 

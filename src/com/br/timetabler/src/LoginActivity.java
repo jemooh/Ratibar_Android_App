@@ -1,19 +1,19 @@
 package com.br.timetabler.src;
 
+import java.io.IOException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.SQLException;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-//import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -22,10 +22,10 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
-
 import com.br.timetabler.R;
 import com.br.timetabler.util.DatabaseHandler;
 import com.br.timetabler.util.ServerInteractions;
+//import android.view.MenuItem;
  
 public class LoginActivity extends SherlockActivity {
     Button btnLogin;
@@ -58,12 +58,23 @@ public class LoginActivity extends SherlockActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-        // Make sure we're running on Honeycomb or higher to use ActionBar APIs
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            // Show the Up button in the action bar.
-            getActionBar().setDisplayHomeAsUpEnabled(true);
+        
+        db = new DatabaseHandler(this);
+        
+        try {         
+        	db.createDataBase();         
+        } catch (IOException ioe) {         
+        	throw new Error("Unable to create database");         
         }
-		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN); 
+         
+        try {         
+        	db.openDataBase();         
+        }catch(SQLException sqle){         
+        	throw sqle;         
+        }
+        db.close();
+        
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN); 
         // Importing all assets like buttons, text fields
         inputEmail = (EditText) findViewById(R.id.loginEmail);
         inputPassword = (EditText) findViewById(R.id.loginPassword);
