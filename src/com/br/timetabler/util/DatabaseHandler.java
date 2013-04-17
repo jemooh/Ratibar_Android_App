@@ -24,8 +24,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Database Name
     private static final String DATABASE_NAME = "timetabler.db";
  
-    // Login table name
+ // Login table name
     private static final String TABLE_LOGIN = "user";
+ // Login table name
+    private static final String TABLE_UNI_PREFS = "user";
     //The Android's default system path of your application database.
     private static String DB_PATH = "/data/data/com.br.timetabler/databases/";
      
@@ -169,6 +171,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         // Inserting Row
         db.insert(TABLE_LOGIN, null, values);
+        db.close(); // Closing database connection
+    }
+ 
+    /**
+     * Storing user details in database
+     * */
+    public void addUserUniDetails(String schoolId, String courseId, String year, String intake, String semester) {
+        SQLiteDatabase db = this.getWritableDatabase();
+ 
+        ContentValues values = new ContentValues();
+        values.put("schoolId", schoolId); 
+        values.put("courseId", courseId); 
+        values.put("year", year); 
+        values.put("intake", intake); 
+        values.put("semester", semester);
+        
+        // Inserting Row
+        db.insert(TABLE_UNI_PREFS, null, values);
         db.close(); // Closing database connection
     }
  
