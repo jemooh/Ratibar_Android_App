@@ -1,12 +1,8 @@
 package com.br.timetabler.service.task;
 
-import android.os.Handler;
-import android.os.Bundle;
-import android.os.Message;
-
 import java.io.IOException;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -18,8 +14,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.br.timetabler.model.Lesson;
-import com.br.timetabler.model.LessonLibrary;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+
 import com.br.timetabler.model.School;
 import com.br.timetabler.model.SchoolLibrary;
 import com.br.timetabler.util.Log;

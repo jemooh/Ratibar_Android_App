@@ -127,7 +127,9 @@ public class GridAdapter extends BaseAdapter {
         		}
         	} */
         	holder.code.setText(getLessonCode(position));
-        	setLessonBg(position, holder.code);
+        	if(null!=holder.code.getText()) {
+        		//holder.code.setBackgroundResource(R.drawable.grid_lesson_item_bg);
+        	}
         	//holder.code.setBackgroundResource(R.drawable.grid_lesson_item_bg);
         	/*for(Lesson l : lessons) {
             	if(position == Integer.parseInt(l.GetyPos())){ // || position % 5 == dayId){
@@ -145,10 +147,19 @@ public class GridAdapter extends BaseAdapter {
     	int i=0;
     	String jCode=null;
     	for(Lesson l : lessons) {
-    		int j = Integer.parseInt(l.GetyPos());
-    		if(j==pos){
+    		String startTime = l.getStarttime();
+    		String endTime = l.getEndtime(); 
+    		int durTotal = Integer.parseInt(endTime) - Integer.parseInt(startTime);
+    		int reps = durTotal/100;
+    		//Log.i("no. of grids", "startTime:" + startTime + " endTime:" + endTime);
+    		//Log.i("no. of grids", "" + durOne);
+    		int dbPos = Integer.parseInt(l.GetyPos());
+    		int extPos = dbPos + (6*(reps-1));
+    		
+    		if(pos==dbPos || pos==extPos){ 
     			jCode = l.getCode();
     		}
+    		
     	}
     	return jCode;
     }
@@ -158,12 +169,11 @@ public class GridAdapter extends BaseAdapter {
     	String jCode=null;
     	for(Lesson l : lessons) {
     		int j = Integer.parseInt(l.GetyPos());
+    		
     		String startTime = l.getStarttime();
     		String endTime = l.getEndtime();
     		int durTotal = Integer.parseInt(endTime) - Integer.parseInt(startTime);
     		int durOne = durTotal/100;
-    		//Log.i("no. of grids", "startTime:" + startTime + " endTime:" + endTime);
-    		//Log.i("no. of grids", "" + durOne);
     		
     		if(j==pos){
     			jCode = l.getCode();

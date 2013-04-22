@@ -166,20 +166,6 @@ public class RegisterActivity extends SherlockActivity {
     }
     */
     
-    //add items into spinner dynamically
-    /*public void addCoursesOnSpinner() {
-   
-    	spnCourses = (Spinner) findViewById(R.id.spnCourses);
-	  	List<String> list = new ArrayList<String>();
-	  	list.addAll(lib.getLessons());//add("Select University");
-	  	list.add("Strathmore University");
-	  	list.add("USIU University");
-	  	ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
-	  	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-	  	spinInstitutions.setAdapter(dataAdapter);
-	  	spinInstitutions.setOnItemSelectedListener(new UniversitySelectListener());
-    }*/
-    
     private class RegisterTask extends AsyncTask<MyUserParams, Void, JSONObject> {
 
 		@Override
@@ -224,7 +210,7 @@ public class RegisterActivity extends SherlockActivity {
 	            if(Integer.parseInt(res) == 1){
 		            db.addUser(json_user.getString(KEY_FNAME), json_user.getString(KEY_LNAME), json_user.getString(KEY_EMAIL), json.getString(KEY_UID), json_user.getString(KEY_INST_ID), json_user.getString(KEY_SCHOOL_ID), json_user.getString(KEY_DATE_JOINED));
 		            // Launch Dashboard Screen
-		            Intent dashboard = new Intent(getApplicationContext(), MainActivity.class);
+		            Intent dashboard = new Intent(getApplicationContext(), CourseSetupActivity.class);
 		            // Close all views before launching Dashboard
 		            dashboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		            startActivity(dashboard);
@@ -289,14 +275,7 @@ public class RegisterActivity extends SherlockActivity {
 	}
 
     public void getSchoolsFeed(int uni){
-    	/*String uniS = 1+"";
-    	if(instlist.size()>0){
-	    	for(int i =0; i<instlist.size();i++) {
-	    		if(i==uni)
-	    			uniS = uniString[i][1];
-	    	}
-    	}*/
-        new Thread(new GetUniversityDetailsTask(HandleSchools, "12")).start();
+    	new Thread(new GetUniversityDetailsTask(HandleSchools, "12")).start();
     }
     
     @SuppressLint("HandlerLeak")

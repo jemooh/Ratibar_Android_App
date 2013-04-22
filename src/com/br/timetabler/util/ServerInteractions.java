@@ -17,6 +17,7 @@ public class ServerInteractions {
     // use http://10.0.2.2/ to connect to localhost ie http://localhost/feedback
     private static String loginURL = "http://10.0.2.2/timetabler/regLogin.php";
     private static String registerURL = "http://10.0.2.2/timetabler/regLogin.php";
+    private static String regSettingsURL = "http://10.0.2.2/timetabler/regSettings.php";
     private static String commentURL = "http://10.0.2.2/timetabler/saveReviews.php";
     private static String feedbackURL = "http://10.0.2.2/timetabler/saveFeedback.php";
     
@@ -65,6 +66,28 @@ public class ServerInteractions {
         
         // getting JSON Object
         JSONObject json = jsonParser.getJSONFromUrl(registerURL, params);
+        // return json
+        return json;
+    }
+    /**
+     * function make register Request
+     * @param name
+     * @param email
+     * @param password
+     * */
+    public JSONObject registerUserSettings(String schoolId, String course, String year, String intake, String semester, String userId){
+        // Building Parameters
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("tag", register_tag));
+        params.add(new BasicNameValuePair("schoolId", schoolId));
+        params.add(new BasicNameValuePair("course", course));
+        params.add(new BasicNameValuePair("year", year));
+        params.add(new BasicNameValuePair("intake", intake));
+        params.add(new BasicNameValuePair("semester", semester));
+        params.add(new BasicNameValuePair("userId", userId));
+        
+        // getting JSON Object
+        JSONObject json = jsonParser.getJSONFromUrl(regSettingsURL, params);
         // return json
         return json;
     }

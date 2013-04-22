@@ -22,12 +22,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
  
     // Database Name
-    private static final String DATABASE_NAME = "timetabler.db";
+    private static final String DATABASE_NAME = "timetablerN.db";
  
  // Login table name
     private static final String TABLE_LOGIN = "user";
  // Login table name
-    private static final String TABLE_UNI_PREFS = "user";
+    private static final String TABLE_UNI_PREFS = "student_pref";
     //The Android's default system path of your application database.
     private static String DB_PATH = "/data/data/com.br.timetabler/databases/";
      
@@ -177,15 +177,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /**
      * Storing user details in database
      * */
-    public void addUserUniDetails(String schoolId, String courseId, String year, String intake, String semester) {
+    public void addUserUniDetails(String schoolId, String courseId, String year, String intake, String semester, String userId) {
         SQLiteDatabase db = this.getWritableDatabase();
  
+        ContentValues scValues = new ContentValues();
+        scValues.put("course_id", courseId);
+        
         ContentValues values = new ContentValues();
-        values.put("schoolId", schoolId); 
-        values.put("courseId", courseId); 
         values.put("year", year); 
         values.put("intake", intake); 
         values.put("semester", semester);
+        
+        // Inserting Row
+        db.update(TABLE_LOGIN, scValues, "uid ='" + userId + "'", null); //insert(TABLE_LOGIN, null, values);
         
         // Inserting Row
         db.insert(TABLE_UNI_PREFS, null, values);
@@ -208,6 +212,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         	user.put("email", cursor.getString(2));
         	user.put("fname", cursor.getString(4));
         	user.put("lname", cursor.getString(5));
+        	user.put("inst_id", cursor.getString(7));
+        	user.put("school_id", cursor.getString(8));
             
         }
         cursor.close();
@@ -220,7 +226,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * Getting user login status
      * return true if rows are there in table
      * */
-    public int getRowCount() {
+    public int getRowCount() { 
         String countQuery = "SELECT  * FROM " + TABLE_LOGIN;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);

@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 public class LessonLibrary implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	// The username of the owner of the library
     private String user;
@@ -26,7 +23,7 @@ public class LessonLibrary implements Serializable {
     }
  
     /**
-     * @return the videos
+     * @return the lessons
      */
     public List<Lesson> getLessons() {
         return lessons;

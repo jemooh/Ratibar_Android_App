@@ -38,6 +38,13 @@
         android:prompt = "@string/semester_prompt">
     </Spinner>
 
+    <TextView
+        android:id="@+id/register_error2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dip"
+        android:textColor="#e30000"
+        android:textStyle="bold" />
     <Button
         android:id="@+id/btnSaveCourse"
         android:layout_width="match_parent"

@@ -18,4 +18,5 @@
     <string name="intake_prompt">Select your Intake</string>          
     <string name="semester_prompt">Select the Semester</string>    
     <string name="btnSubmitCourse">Continue to Units</string>      
+    <string name="unit_list_title">Please unselect unit you do not take</string>      
 </resources>

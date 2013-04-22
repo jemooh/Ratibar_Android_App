@@ -1,8 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-    
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:paddingTop="10dip" >
 
-</LinearLayout>
+	<LinearLayout
+	    android:id="@+id/footer"
+	    android:layout_width="fill_parent"
+	    android:layout_height="60dp"
+	    android:layout_alignParentBottom="true"
+	    android:background="#ffffff" >
+
+		<Button
+		    android:id="@+id/btnSave"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:layout_margin="4dp"
+		    android:background="@drawable/btnglob"
+		    android:paddingBottom="8dp"
+		    android:paddingTop="8dp"
+		    android:text="Finish"
+		    android:textColor="#333333"
+		    android:textSize="20sp" />
+
+	</LinearLayout>
+
+	<TextView
+	    android:id="@+id/textView1"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentTop="true"
+	    android:layout_centerHorizontal="true"
+	    android:text="@string/unit_list_title"
+	    android:textAppearance="?android:attr/textAppearanceMedium"
+	    android:textColor="#ffffff" />
+
+	<ListView
+	    android:id="@+id/lstUnits"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_above="@+id/footer"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/textView1"
+	    android:cacheColorHint="@android:color/transparent"
+	    android:paddingTop="10dp" >
+
+	</ListView>
+
+</RelativeLayout>
