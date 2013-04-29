@@ -20,9 +20,18 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:text="@+id/label"
-        android:textColor="#ffffff"
-        android:textSize="12sp" >
+        android:textColor="#ffffff" >
 
     </TextView>
+
+    <TextView
+        android:id="@+id/hiddenUnitValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/check"
+        android:layout_centerHorizontal="true"
+        android:text="Small Text"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:visibility="gone" />
 
 </RelativeLayout>

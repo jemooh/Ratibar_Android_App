@@ -19,7 +19,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
  
     // Database Name
     private static final String DATABASE_NAME = "timetablerN.db";
@@ -215,6 +215,28 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         	user.put("inst_id", cursor.getString(7));
         	user.put("school_id", cursor.getString(8));
             
+        }
+        cursor.close();
+        db.close();
+        // return user
+        return user;
+    }
+ 
+    /**
+     * Getting user data from database
+     * */
+    public HashMap<String, String> getUserUniDetails(){
+        HashMap<String,String> user = new HashMap<String,String>();
+        String selectQuery = "SELECT  * FROM " + TABLE_UNI_PREFS;
+ 
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // Move to first row
+        cursor.moveToFirst();
+        if(cursor.getCount() > 0){
+        	user.put("year", cursor.getString(1));
+        	user.put("intake", cursor.getString(2));
+        	user.put("semester", cursor.getString(3));            
         }
         cursor.close();
         db.close();

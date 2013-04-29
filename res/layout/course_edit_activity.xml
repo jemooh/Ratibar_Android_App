@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Select Course and Continue to select Units"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Spinner
+        android:id="@+id/spnCourses"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawSelectorOnTop="true"
+        android:prompt="@string/course_prompt" >
+
+    </Spinner>
+
+    <TextView 
+        android:id="@+id/txtYear"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent">
+    </TextView>
+
+    <TextView 
+        android:id="@+id/txtIntake"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent">
+    </TextView>
+
+    <TextView 
+        android:id="@+id/txtSemester"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent">
+    </TextView>
+
+    <TextView
+        android:id="@+id/register_error2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dip"
+        android:textColor="#e30000"
+        android:textStyle="bold" />
+    <Button
+        android:id="@+id/btnSaveCourse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnSubmitCourse" />
+
+</LinearLayout>

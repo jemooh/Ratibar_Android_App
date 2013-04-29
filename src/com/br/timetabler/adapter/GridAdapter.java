@@ -127,9 +127,7 @@ public class GridAdapter extends BaseAdapter {
         		}
         	} */
         	holder.code.setText(getLessonCode(position));
-        	if(null!=holder.code.getText()) {
-        		//holder.code.setBackgroundResource(R.drawable.grid_lesson_item_bg);
-        	}
+        	//setLessonBg(position, holder.code);
         	//holder.code.setBackgroundResource(R.drawable.grid_lesson_item_bg);
         	/*for(Lesson l : lessons) {
             	if(position == Integer.parseInt(l.GetyPos())){ // || position % 5 == dayId){
@@ -161,27 +159,29 @@ public class GridAdapter extends BaseAdapter {
     		}
     		
     	}
-    	return jCode;
+    	return jCode; 
     }
     
     private void setLessonBg(int pos, TextView v){
     	int i=0;
     	String jCode=null;
+    	
     	for(Lesson l : lessons) {
-    		int j = Integer.parseInt(l.GetyPos());
-    		
     		String startTime = l.getStarttime();
-    		String endTime = l.getEndtime();
+    		String endTime = l.getEndtime(); 
     		int durTotal = Integer.parseInt(endTime) - Integer.parseInt(startTime);
-    		int durOne = durTotal/100;
+    		int reps = durTotal/100;
+    		int dbPos = Integer.parseInt(l.GetyPos());
+    		int extPos = dbPos + (6*(reps-1));
     		
-    		if(j==pos){
+    		if(pos==dbPos || pos==extPos){ 
     			jCode = l.getCode();
-    			v.setWidth(durOne * 65);
+    			v.setText(jCode);
     			v.setBackgroundResource(R.drawable.grid_lesson_item_bg);
     		} else {
     			v.setBackgroundResource(R.drawable.grid_empty_item_bg);
     		}
-    	}  	
+    		
+    	}
     }
 }

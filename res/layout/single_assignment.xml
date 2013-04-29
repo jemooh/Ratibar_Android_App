@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/txtAssSCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/lesson_code" />
+
+        <TextView
+            android:id="@+id/txtAssSDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/txtAssSCode"
+            android:layout_below="@+id/txtAssSCode"
+            android:layout_marginTop="10dp"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/txtSDateCreated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/txtSDateDue"
+            android:layout_alignBottom="@+id/txtSDateDue"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="36dp"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/txtSDateDue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/txtAssSDescription"
+            android:layout_marginLeft="1dp"
+            android:layout_toRightOf="@+id/imgDuration"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/lesson_code" />
+
+        <ImageView
+            android:id="@+id/imgDuration"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_alignLeft="@+id/txtAssSDescription"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/txtSDateDue"
+            android:layout_below="@+id/txtAssSDescription"
+            android:layout_marginLeft="-3dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/device_access_time" />
+
+    </RelativeLayout>
+<!--
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Comments"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/comment_author" />
+
+        <Button
+            android:id="@+id/btnAddComment"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="Add" />
+    </RelativeLayout>
+
+    <com.br.timetabler.widget.CommentsListView
+        android:id="@+id/commentsListView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:cacheColorHint="@android:color/transparent" />
+
+    <ProgressBar
+        android:id="@+id/pbppl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/progressMsg2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pbppl"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:text="Loading Comments" />-->
+
+</ScrollView>

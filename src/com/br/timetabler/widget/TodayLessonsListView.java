@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import com.br.timetabler.adapter.TodayLessonsAdapter;
 import com.br.timetabler.model.Lesson;
-import com.br.timetabler.util.LessonClickListener;
+import com.br.timetabler.listener.LessonClickListener;
 
 public class TodayLessonsListView extends ListView implements android.widget.AdapterView.OnItemClickListener {
 	private List<Lesson> lessons;

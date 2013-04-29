@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <header android:fragment="com.br.timetabler.src.PreferenceWithHeaders$Prefs1Fragment"
+            android:icon="@drawable/settings_courses"
+            android:title="Prefs 1"
+            android:summary="Add more Courses and Units" />
+            
+    <header android:fragment="com.br.timetabler.src.PreferenceWithHeaders$Prefs2Fragment"
+            android:icon="@drawable/settings_phone"
+            android:title="Prefs 2"
+            android:summary="Change notifications, updating etc">
+        <!-- Arbitrary key/value pairs can be included with a header as
+             arguments to its fragment. -->
+        <extra android:name="someKey" android:value="someHeaderValue" />
+    </header>
+<!-- 
+    <header android:icon="@drawable/ic_settings_display"
+            android:title="Intent"
+            android:summary="Launches an Intent.">
+        <intent android:action="android.intent.action.VIEW"
+                android:data="http://www.android.com" />
+    </header>-->
+    
+</preference-headers>

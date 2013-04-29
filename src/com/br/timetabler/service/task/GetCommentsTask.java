@@ -32,6 +32,9 @@ public class GetCommentsTask implements Runnable {
     
     private String SearchQuery;
     private String Url;
+    private static String MainURL = "http://10.0.2.2/timetabler";
+    //private static String MainURL = "http://www.tujenge-ea.com/ti";
+    private static String loginURL = MainURL + "/regLogin.php";
     /**
      * Don't forget to call run(); to start this task
      * @param replyTo - the handler you want to receive the response when this task has finished
@@ -42,10 +45,10 @@ public class GetCommentsTask implements Runnable {
         this.SearchQuery = SearchQuery;
         if(Search) {
         	if(SearchQuery !="") {
-        		this.Url = "http://10.0.2.2/timetabler/commentsList.php?q="+ SearchQuery;
+        		this.Url = MainURL + "/commentsList.php?q="+ SearchQuery;
         	}
         } else {
-        	this.Url = "http://10.0.2.2/timetabler/commentsList.php?unit_id="+unit_id;
+        	this.Url = MainURL + "/commentsList.php?unit_id="+unit_id;
         }
         //Log.i(this.Url);
         

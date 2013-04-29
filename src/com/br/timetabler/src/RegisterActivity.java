@@ -39,7 +39,7 @@ import com.br.timetabler.model.SchoolLibrary;
 import com.br.timetabler.service.task.GetUniversityDetailsTask;
 import com.br.timetabler.util.DatabaseHandler;
 import com.br.timetabler.util.ServerInteractions;
-import com.br.timetabler.util.UniversitySelectListener;
+import com.br.timetabler.listener.UniversitySelectListener;
 //import android.view.MenuItem;
  
 public class RegisterActivity extends SherlockActivity {

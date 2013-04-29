@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import com.br.timetabler.adapter.CommentsAdapter;
 import com.br.timetabler.model.Comment;
-import com.br.timetabler.util.CommentClickListener;
+import com.br.timetabler.listener.CommentClickListener;
 
 public class CommentsListView extends ListView implements android.widget.AdapterView.OnItemClickListener {
 	private List<Comment> comments;

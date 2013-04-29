@@ -1,5 +1,6 @@
 package com.br.timetabler.src;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -38,7 +39,7 @@ import com.br.timetabler.model.Lesson;
 import com.br.timetabler.model.LessonLibrary;
 import com.br.timetabler.service.task.GetLessonsTask;
 import com.br.timetabler.util.DatabaseHandler;
-import com.br.timetabler.util.LessonClickListener;
+import com.br.timetabler.listener.LessonClickListener;
 import com.br.timetabler.util.ServerInteractions;
 import com.br.timetabler.widget.TodayLessonsListView;
 
@@ -46,7 +47,7 @@ import com.br.timetabler.widget.TodayLessonsListView;
 public class ListDayLessons extends SherlockActivity implements LessonClickListener {
 	private TodayLessonsListView listView;
 	Button btnLogout;
-	String dayId;
+	String dayId, dayTitle;
 	Button btnFeedBack, btn_submit;
 
 	private static final int FEEDBACK_DIALOG = 1;
@@ -60,27 +61,43 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
     JSONObject json;
     String errorMsg, successMsg;
     String res; 
-    int today = new GregorianCalendar().get(Calendar.DAY_OF_WEEK);;
+    DatabaseHandler dbHandler;
+    
+    int today = new GregorianCalendar().get(Calendar.DAY_OF_WEEK);
     
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_day_lessons);
+        String[] daysOfWeek = {"Saturday", "Sunday", "Monday", "Tuesday", "Wednesady", "Thursday", "Friday", };
+        dbHandler = new DatabaseHandler(this);
         
-        Intent in=getIntent();
+        try {         
+        	dbHandler.createDataBase();         
+        } catch (IOException ioe) {         
+        	throw new Error("Unable to create database");         
+        }
+         
         
         //create a today date for display
   		String currentDate = DateFormat.getDateInstance().format(new Date());
-  		TextView txtDateToday = (TextView) findViewById(R.id.txtDateToday);
-  		txtDateToday.setText("Today is " + currentDate);
   		
+        Intent in=getIntent();
+        String dyT = null;
         if(in.hasExtra("dayId")) {
         	Bundle b=in.getExtras();
 			this.dayId = b.getString("dayId");
+			this.dayTitle = b.getString("dayTitle");
+			dyT = dayTitle;
 		} else {
         	this.dayId = today+"";
+        	this.dayTitle = daysOfWeek[today];
+        	dyT = "Today is " + dayTitle + ", " + currentDate;
         }
-        Log.i("day", "day id: " + this.dayId);
-		btnFeedBack = (Button) findViewById(R.id.btnFeedBack);
+        
+        TextView txtDateToday = (TextView) findViewById(R.id.txtDateToday);
+  		txtDateToday.setText(dyT);
+  		
+        btnFeedBack = (Button) findViewById(R.id.btnFeedBack);
 		btnFeedBack.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
@@ -99,6 +116,14 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
         listView.setOnLessonClickListener(this);
         getLessonsFeed(listView);
     }
+	public void getDayOfWeek() {
+		Calendar calendar = new GregorianCalendar();
+		Date trialTime = new Date();
+		calendar.setTime(trialTime);
+		int dy = calendar.get(Calendar.DAY_OF_WEEK);
+
+
+	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -129,10 +154,16 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
                 finish();
                 break;
 
-            case R.id.menu_settings: //display reviews
-            	Intent i3 = new Intent(getApplicationContext(), Settings.class);
+            case R.id.menu_assignments: //display reviews
+            	Intent i3 = new Intent(getApplicationContext(), AssignmentsListActivity.class);
                 startActivity(i3);
-                finish();
+                //finish();
+                break;
+            
+            case R.id.menu_settings: //display reviews
+            	Intent i4 = new Intent(getApplicationContext(), Preferences.class);
+                startActivity(i4);
+                //finish();
                 break;
             
             
@@ -228,7 +259,7 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
 		 		dialogview = inflater.inflate(R.layout.add_feedback, null);
 	 
 		 		dialogbuilder = new AlertDialog.Builder(this);
-		 		dialogbuilder.setTitle("ADD YOUR COMMENT!");
+		 		dialogbuilder.setTitle("SHARE YOUR FEEDBACK!");
 		 		//dialogbuilder.setIcon(R.drawable.reviews);
 		 		dialogbuilder.setView(dialogview);
 		 		dialogDetails = dialogbuilder.create();	  

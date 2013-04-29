@@ -15,11 +15,14 @@ public class ServerInteractions {
  
     // Testing in localhost using wamp or xampp
     // use http://10.0.2.2/ to connect to localhost ie http://localhost/feedback
-    private static String loginURL = "http://10.0.2.2/timetabler/regLogin.php";
-    private static String registerURL = "http://10.0.2.2/timetabler/regLogin.php";
-    private static String regSettingsURL = "http://10.0.2.2/timetabler/regSettings.php";
-    private static String commentURL = "http://10.0.2.2/timetabler/saveReviews.php";
-    private static String feedbackURL = "http://10.0.2.2/timetabler/saveFeedback.php";
+    private static String MainURL = "http://10.0.2.2/timetabler";
+    //private static String MainURL = "http://www.tujenge-ea.com/ti";
+    private static String loginURL = MainURL + "/regLogin.php";
+    private static String registerURL = MainURL + "/regLogin.php";
+    private static String regSettingsURL = MainURL + "/regSettings.php";
+    private static String regUnitsURL = MainURL + "/regUnits.php";
+    private static String commentURL = MainURL + "/saveReviews.php";
+    private static String feedbackURL = MainURL + "/saveFeedback.php";
     
     private static String login_tag = "login";
     private static String register_tag = "register";
@@ -85,9 +88,29 @@ public class ServerInteractions {
         params.add(new BasicNameValuePair("intake", intake));
         params.add(new BasicNameValuePair("semester", semester));
         params.add(new BasicNameValuePair("userId", userId));
-        
+        Log.i("registerUserSettings: schoolId="+ schoolId + "&course=" + course + "&year=" + year + "&intake=" + intake + "&semester=" + semester + "&userId=" + userId);
         // getting JSON Object
         JSONObject json = jsonParser.getJSONFromUrl(regSettingsURL, params);
+        // return json
+        return json;
+    }
+    
+    /**
+     * function make register for units that the student takes
+     * @param name
+     * @param email
+     * @param password
+     * */
+    public JSONObject registerUnits(String student_id, String unit_ids){
+        // Building Parameters
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("tag", register_tag));
+        params.add(new BasicNameValuePair("student_id", student_id));
+        params.add(new BasicNameValuePair("unit_ids", unit_ids));
+        
+        // getting JSON Object
+        JSONObject json = jsonParser.getJSONFromUrl(regUnitsURL, params);
+        
         // return json
         return json;
     }

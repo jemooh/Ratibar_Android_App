@@ -16,9 +16,9 @@ import com.br.timetabler.model.Lesson;
 import com.br.timetabler.model.LessonLibrary;
 import com.br.timetabler.service.task.GetCommentsTask;
 import com.br.timetabler.service.task.GetLessonsTask;
-import com.br.timetabler.util.CommentClickListener;
+import com.br.timetabler.listener.CommentClickListener;
 import com.br.timetabler.util.DatabaseHandler;
-import com.br.timetabler.util.LessonClickListener;
+import com.br.timetabler.listener.LessonClickListener;
 import com.br.timetabler.util.ServerInteractions;
 import com.br.timetabler.widget.CommentsListView;
 

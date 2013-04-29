@@ -1,28 +1,20 @@
 package com.br.timetabler.src;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.content.ContentUris;
 import android.content.Intent;
-import android.net.Uri;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-//import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -33,12 +25,13 @@ import com.br.timetabler.model.Lesson;
 import com.br.timetabler.model.LessonLibrary;
 import com.br.timetabler.model.OneCell;
 import com.br.timetabler.service.task.GetLessonsTask;
-import com.br.timetabler.util.LessonClickListener;
+import com.br.timetabler.util.DatabaseHandler;
+import com.br.timetabler.listener.LessonClickListener;
 import com.br.timetabler.util.ServerInteractions;
-
 import com.jess.ui.TwoWayAdapterView;
 import com.jess.ui.TwoWayAdapterView.OnItemClickListener;
 import com.jess.ui.TwoWayGridView;
+//import android.widget.AdapterView.OnItemClickListener;
 
 public class MainActivity extends SherlockActivity implements LessonClickListener {
 	private TwoWayGridView gridView;
@@ -49,12 +42,27 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
     List<Lesson> lessons;
 	private LessonClickListener lessonClickListener;
 	TextView txtMon, txtTue, txtWed, txtThu, txtFri;
-	ServerInteractions serverInteractions;
+	ServerInteractions server;
+	DatabaseHandler dbHandler;
 	 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//if(serverInteractions.isUserLoggedIn(getApplicationContext())){
+		server = new ServerInteractions();
+		dbHandler = new DatabaseHandler(this);
+		
+		//I used this to help in fixing authentication by loging out the user upon loading the app
+		//server.logoutUser(getApplicationContext());
+        
+        try {         
+        	dbHandler.openDataBase();         
+        }catch(SQLException sqle){         
+        	throw sqle;         
+        }
+        dbHandler.close();
+        
+        
+		if(server.isUserLoggedIn(getApplicationContext())){
 	        setContentView(R.layout.activity_main);
 			
 			txtMon = (TextView) findViewById(R.id.txtMon);
@@ -66,55 +74,56 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
 			txtMon.setOnClickListener(new OnClickListener() {			
 				@Override
 				public void onClick(View v) {
-					openDayLessons("1");				
+					openDayLessons("1", "Monday");				
 				}
 			});
 			
 			txtTue.setOnClickListener(new OnClickListener() {			
 				@Override
 				public void onClick(View v) {
-					openDayLessons("2");				
+					openDayLessons("2", "Tuesday");				
 				}
 			});
 			
 			txtWed.setOnClickListener(new OnClickListener() {			
 				@Override
 				public void onClick(View v) {
-					openDayLessons("3");				
+					openDayLessons("3", "Wednesday");				
 				}
 			});
 			
 			txtThu.setOnClickListener(new OnClickListener() {			
 				@Override
 				public void onClick(View v) {
-					openDayLessons("4");				
+					openDayLessons("4", "Thursday");				
 				}
 			});
 			
 			txtFri.setOnClickListener(new OnClickListener() {			
 				@Override
 				public void onClick(View v) {
-					openDayLessons("5");				
+					openDayLessons("5", "Friday");				
 				}
 			});
 			
 			gridView = (TwoWayGridView) findViewById(R.id.gridview);
 			UpdateGrid(); 
 			getLessonsFeed(gridView);
-		/*} else {
+		} else {
             // user is not logged in show login screen
             Intent login = new Intent(getApplicationContext(), LoginActivity.class);
             login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(login);
             // Closing dashboard screen
             finish();
-       }*/
+       }
 	}
 	
-	private void openDayLessons(String dayId) {
+	private void openDayLessons(String dayId, String dayTitle) {
 		Intent si = new Intent(getApplicationContext(), ListDayLessons.class);
         Bundle b=new Bundle();        
         b.putString("dayId", dayId);        
+        b.putString("dayTitle", dayTitle);        
         si.putExtras(b);
         startActivity(si);
 	}
@@ -231,10 +240,16 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
                 finish();
                 break;
 
-            case R.id.menu_settings: //display reviews
-            	Intent i3 = new Intent(getApplicationContext(), Settings.class);
+            case R.id.menu_assignments: //display reviews
+            	Intent i3 = new Intent(getApplicationContext(), AssignmentsListActivity.class);
                 startActivity(i3);
-                finish();
+                //finish();
+                break;
+            
+            case R.id.menu_settings: //display reviews
+            	Intent i4 = new Intent(getApplicationContext(), Preferences.class);
+                startActivity(i4);
+                //finish();
                 break;
             
             
@@ -250,15 +265,19 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
 		}
 	}
 	
-	private int getLessonPos(int pos){
+	private int getLessonPos(int pos){ 
     	int i=0;
     	int z = 0;
-    	String jCode=null;
     	for(Lesson l : lessons) {
+    		String startTime = l.getStarttime();
+    		String endTime = l.getEndtime(); 
+    		int durTotal = Integer.parseInt(endTime) - Integer.parseInt(startTime);
+    		int reps = durTotal/100;
+    		int dbPos = Integer.parseInt(l.GetyPos());
+    		int extPos = dbPos + (6*(reps-1));
     		int j = Integer.parseInt(l.GetyPos());
-    		if(pos==j){
-    			//jCode = l.getCode();
-    			//i = lessons.;
+    		
+    		if(pos==j || pos==extPos){
     			z = i;
     		}
     		i++;

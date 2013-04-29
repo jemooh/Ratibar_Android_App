@@ -1,7 +1,5 @@
 package com.br.timetabler.src;
 
-import java.io.IOException;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,7 +8,6 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.SQLException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,7 +36,7 @@ public class LoginActivity extends SherlockActivity {
     JSONObject json_user;
     JSONObject json;
     String errorMsg;
-    String res;
+    String res; 
  
     // JSON Response node names
     private static String KEY_SUCCESS = "success";
@@ -58,21 +55,6 @@ public class LoginActivity extends SherlockActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-        
-        db = new DatabaseHandler(this);
-        
-        try {         
-        	db.createDataBase();         
-        } catch (IOException ioe) {         
-        	throw new Error("Unable to create database");         
-        }
-         
-        try {         
-        	db.openDataBase();         
-        }catch(SQLException sqle){         
-        	throw sqle;         
-        }
-        db.close();
         
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN); 
         // Importing all assets like buttons, text fields

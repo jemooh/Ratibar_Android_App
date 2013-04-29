@@ -32,6 +32,8 @@ public class GetUniversityDetailsTask implements Runnable {
     
     private String SearchQuery;
     private String Url;
+    private static String MainURL = "http://10.0.2.2/timetabler";
+    //private static String MainURL = "http://www.tujenge-ea.com/ti";
     /**
      * Don't forget to call run(); to start this task
      * @param replyTo - the handler you want to receive the response when this task has finished
@@ -40,7 +42,7 @@ public class GetUniversityDetailsTask implements Runnable {
     public GetUniversityDetailsTask(Handler replyTo, String uniId) {
         this.replyTo = replyTo;
         this.SearchQuery = SearchQuery;
-        this.Url = "http://10.0.2.2/timetabler/fetchSchoolData.php?uni="+ uniId;
+        this.Url = MainURL + "/fetchSchoolData.php?uni="+ uniId;
     }
     
 	@Override

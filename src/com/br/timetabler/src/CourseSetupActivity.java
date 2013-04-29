@@ -75,11 +75,6 @@ public class CourseSetupActivity extends SherlockActivity {
         setContentView(R.layout.course_setup_activity);
         db = new DatabaseHandler(this);
         try {         
-        	db.createDataBase();         
-        } catch (IOException ioe) {         
-        	throw new Error("Unable to create database");         
-        }
-        try {         
         	db.openDataBase();         
         }catch(SQLException sqle){         
         	throw sqle;         
@@ -232,6 +227,7 @@ public class CourseSetupActivity extends SherlockActivity {
 		            Intent i = new Intent(getApplicationContext(), UnitSetupActivity.class);
 		            Bundle b=new Bundle();
 		            String unitsJson = json.toString();
+		            b.putString("userId", userId);
 		            b.putString("units_json", unitsJson);
 		            i.putExtras(b);
 		            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

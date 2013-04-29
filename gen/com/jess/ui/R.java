@@ -8,35 +8,35 @@ package com.jess.ui;
 
 public final class R {
 	public static final class id {
-		public static final int vertical = 0x7f04000f;
-		public static final int spacingWidthUniform = 0x7f040014;
-		public static final int center_vertical = 0x7f040004;
-		public static final int fill_horizontal = 0x7f040007;
-		public static final int center_horizontal = 0x7f040006;
-		public static final int normal = 0x7f04000d;
-		public static final int fill = 0x7f040009;
-		public static final int spacingWidth = 0x7f040012;
-		public static final int clip_vertical = 0x7f04000a;
-		public static final int gridview = 0x7f04004a;
-		public static final int fill_vertical = 0x7f040005;
-		public static final int center = 0x7f040008;
-		public static final int alwaysScroll = 0x7f04000e;
-		public static final int auto_fit = 0x7f040015;
-		public static final int horizontal = 0x7f040010;
-		public static final int clip_horizontal = 0x7f04000b;
-		public static final int bottom = 0x7f040001;
-		public static final int columnWidth = 0x7f040013;
-		public static final int none = 0x7f040011;
-		public static final int left = 0x7f040002;
-		public static final int right = 0x7f040003;
-		public static final int disabled = 0x7f04000c;
-		public static final int top = 0x7f040000;
+		public static final int vertical = 0x7f05000f;
+		public static final int spacingWidthUniform = 0x7f050014;
+		public static final int center_vertical = 0x7f050004;
+		public static final int fill_horizontal = 0x7f050007;
+		public static final int center_horizontal = 0x7f050006;
+		public static final int normal = 0x7f05000d;
+		public static final int fill = 0x7f050009;
+		public static final int spacingWidth = 0x7f050012;
+		public static final int clip_vertical = 0x7f05000a;
+		public static final int gridview = 0x7f05004a;
+		public static final int fill_vertical = 0x7f050005;
+		public static final int center = 0x7f050008;
+		public static final int alwaysScroll = 0x7f05000e;
+		public static final int auto_fit = 0x7f050015;
+		public static final int horizontal = 0x7f050010;
+		public static final int clip_horizontal = 0x7f05000b;
+		public static final int bottom = 0x7f050001;
+		public static final int columnWidth = 0x7f050013;
+		public static final int none = 0x7f050011;
+		public static final int left = 0x7f050002;
+		public static final int right = 0x7f050003;
+		public static final int disabled = 0x7f05000c;
+		public static final int top = 0x7f050000;
 	}
 	public static final class string {
-		public static final int app_name = 0x7f050000;
+		public static final int app_name = 0x7f060000;
 	}
 	public static final class layout {
-		public static final int main = 0x7f03001d;
+		public static final int main = 0x7f03001f;
 	}
 	public static final class styleable {
 		public static final int TwoWayGridView_horizontalSpacing = 1;
@@ -60,8 +60,8 @@ public final class R {
 		public static final int TwoWayGridView_columnWidth = 4;
 	}
 	public static final class drawable {
-		public static final int spinner_black_76 = 0x7f020095;
-		public static final int icon = 0x7f020084;
+		public static final int spinner_black_76 = 0x7f02009a;
+		public static final int icon = 0x7f020087;
 	}
 	public static final class attr {
 		public static final int smoothScrollbar = 0x7f010008;

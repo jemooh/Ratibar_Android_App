@@ -27,7 +27,7 @@
 	</LinearLayout>
 
 	<TextView
-	    android:id="@+id/textView1"
+	    android:id="@+id/hiddenUnitValue"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_alignParentTop="true"
@@ -36,16 +36,16 @@
 	    android:textAppearance="?android:attr/textAppearanceMedium"
 	    android:textColor="#ffffff" />
 
-	<ListView
+	<com.br.timetabler.widget.UnitsListView
 	    android:id="@+id/lstUnits"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_above="@+id/footer"
 	    android:layout_alignParentLeft="true"
-	    android:layout_below="@+id/textView1"
+	    android:layout_below="@+id/hiddenUnitValue"
 	    android:cacheColorHint="@android:color/transparent"
 	    android:paddingTop="10dp" >
 
-	</ListView>
+	</com.br.timetabler.widget.UnitsListView>
 
 </RelativeLayout>

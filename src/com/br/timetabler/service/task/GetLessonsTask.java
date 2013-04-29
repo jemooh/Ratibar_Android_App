@@ -32,6 +32,8 @@ public class GetLessonsTask implements Runnable {
     
     private String SearchQuery;
     private String Url;
+    private static String MainURL = "http://10.0.2.2/timetabler";
+    //private static String MainURL = "http://www.tujenge-ea.com/ti";
     /**
      * Don't forget to call run(); to start this task
      * @param replyTo - the handler you want to receive the response when this task has finished
@@ -42,10 +44,10 @@ public class GetLessonsTask implements Runnable {
         this.SearchQuery = SearchQuery;
         if(Search) {
         	if(SearchQuery !="") {
-        		this.Url = "http://10.0.2.2/timetabler/lessonsList.php?q="+ SearchQuery;
+        		this.Url = MainURL + "/lessonsList.php?q="+ SearchQuery;
         	}
         } else {
-        	this.Url = "http://10.0.2.2/timetabler/lessonsList.php?dy="+dayId;
+        	this.Url = MainURL + "/lessonsList.php?dy="+dayId;
         }
         //Log.i(this.Url);
         

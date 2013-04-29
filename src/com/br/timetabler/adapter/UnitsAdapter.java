@@ -42,6 +42,7 @@ public class UnitsAdapter extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.single_item_unit, parent, false);
             holder = new ViewHolder();
             holder.label = (TextView) convertView.findViewById(R.id.label);
+            holder.unitId = (TextView) convertView.findViewById(R.id.hiddenUnitValue);
             holder.cbox = (CheckBox) convertView.findViewById(R.id.check);
             holder.cbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 				@Override
@@ -58,6 +59,7 @@ public class UnitsAdapter extends BaseAdapter {
         }
         Unit unit = units.get(position);
         holder.label.setText(unit.getUnitAcronyms() + " - " + unit.getUnitName());
+        holder.unitId.setText(unit.getUnitId());
         //holder.cbox.setChecked(true);
         holder.cbox.setChecked(units.get(position).isSelected());
 
@@ -65,7 +67,7 @@ public class UnitsAdapter extends BaseAdapter {
     }
 
     public class ViewHolder {
-        TextView label;
+        TextView label, unitId;
         CheckBox cbox;
     }
 }

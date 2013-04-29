@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Used in app/menu examples -->
+    
+    <string-array name="timeformat_array_list_preference">
+        <item>24 HR</item>
+        <item>12 HR</item>
+    </string-array>
+    <string-array name="timeformat_values_list_preference">
+        <item>24</item>
+        <item>12</item>
+    </string-array>
+    
+    <!-- Used in app/menu examples -->
+    <string-array name="weekstarts_array_list_preference">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>  
+        <item>Thursday</item>  
+        <item>Friday</item>
+    	<item>Saturday</item>  
+    	<item>Sunday</item>   	
+    </string-array>
+    <!-- Used in app/menu examples -->
+    <string-array name="weekstarts_value_list_preference">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>  
+        <item>4</item>  
+        <item>5</item>
+    	<item>6</item>  
+    	<item>0</item>   	
+    </string-array>
+    
+    <string-array name="updatefrequency_array_list_preference">
+        <item>Hourly</item>
+        <item>Daily</item>
+        <item>Weekly</item>
+    </string-array>
+    
+    <string-array name="updatefrequency_value_list_preference">
+        <item>Hourly</item>
+        <item>Daily</item>
+        <item>Weekly</item>
+    </string-array>
+    
+</resources>
