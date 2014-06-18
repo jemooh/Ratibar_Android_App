@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dp" >
+   
+        <Button
+            android:id="@+id/btnAddnotes"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="40dp"
+            android:layout_height="45dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:onClick="onClickAdd"
+            android:text="+"
+            android:textSize="30sp"
+            android:typeface="monospace" />
+
+	    <ListView
+	        android:id="@+id/listViewnotes"
+	        android:layout_width="match_parent"
+	        android:layout_height="50dp" 
+	        android:background="@color/grey_bg">
+
+	    </ListView>
+	    
+	    
+    
+</LinearLayout>

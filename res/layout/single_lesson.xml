@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="#0000"
     android:orientation="vertical"
-    android:padding="10dp" >
+    android:paddingBottom="7dp" >
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -17,7 +18,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:text="Large Text"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/ntv_blue" />
 
         <TextView
             android:id="@+id/txtSTitle"
@@ -51,7 +53,15 @@
             android:text="Small Text"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </RelativeLayout>
+    
+	<android.support.v4.view.ViewPager 
+		    android:id="@+id/pager"
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent">
+		</android.support.v4.view.ViewPager>
 
+    <!--
+    changed to use tabs
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
@@ -62,43 +72,120 @@
             android:layout_gravity="left"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:text="Comments"
+            android:text="Personal Notes"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/comment_author" />
+            android:textColor="@color/ntv_blue" />
 
         <Button
-            android:id="@+id/btnAddComment"
+            android:id="@+id/btnAddnotes"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:onClick="onClickAdd"
             android:text="Add" />
     </RelativeLayout>
 
-    <com.br.timetabler.widget.CommentsListView
-        android:id="@+id/commentsListView"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:cacheColorHint="@android:color/transparent" />
-
-    <ProgressBar
-        android:id="@+id/pbppl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center" />
+    <ListView
+        android:id="@+id/listViewnotes"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" >
+    </ListView>
 
     <TextView
-        android:id="@+id/progressMsg2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/pbppl"
-        android:layout_centerHorizontal="true"
-        android:layout_centerInParent="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center"
-        android:text="Loading Comments" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Assignments"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/ntv_blue" />
+    
+	   <com.br.timetabler.widget.AssignmentsListView
+        android:id="@+id/assignmentsListView"
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:cacheColorHint="@android:color/transparent"
+        android:layout_below="@+id/txtDateToday" />
+	    
+	     <ProgressBar
+	        android:id="@+id/pbpplasignmnt"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerInParent="true"
+	        android:layout_gravity="center" />
+	     
+	    <TextView
+	        android:id="@+id/progressMsg3"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/pbppl"
+	        android:layout_centerHorizontal="true"
+	        android:layout_centerInParent="true"
+	        android:layout_centerVertical="true"
+	        android:layout_gravity="center"
+            android:text="Loading Asignments" />
+	    
+	    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Comments"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/ntv_blue" />
+	    
+	    <com.br.timetabler.widget.CommentsListView
+	        android:id="@+id/commentsListView"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="20dp"
+	        android:layout_weight="0.84"
+	        android:cacheColorHint="@android:color/transparent" />
+	
+	    <ProgressBar
+	        android:id="@+id/pbppl"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerInParent="true"
+	        android:layout_gravity="center" />
+	
+	    <TextView
+	        android:id="@+id/progressMsg2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/pbppl"
+	        android:layout_centerHorizontal="true"
+	        android:layout_centerInParent="true"
+	        android:layout_centerVertical="true"
+	        android:layout_gravity="center"
+            android:text="Loading Comments" />
 
-</LinearLayout>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/edtcomments"
+            android:layout_width="177dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/btnAddComments"
+            android:ems="10"
+            android:hint="Add comment"
+            android:inputType="textMultiLine" />
+
+        <Button
+            android:id="@+id/btnAddComments"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:onClick="onClickAdd"
+            android:text="Send" />
+
+             -->
+             
+   </LinearLayout>

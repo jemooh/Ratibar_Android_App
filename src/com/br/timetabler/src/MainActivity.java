@@ -3,8 +3,8 @@ package com.br.timetabler.src;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.SQLException;
@@ -25,7 +25,8 @@ import com.br.timetabler.model.Lesson;
 import com.br.timetabler.model.LessonLibrary;
 import com.br.timetabler.model.OneCell;
 import com.br.timetabler.service.task.GetLessonsTask;
-import com.br.timetabler.util.DatabaseHandler;
+import com.br.timetabler.util.DatabaseHandler_joe;
+import com.br.timetabler.util.Log;
 import com.br.timetabler.listener.LessonClickListener;
 import com.br.timetabler.util.ServerInteractions;
 import com.jess.ui.TwoWayAdapterView;
@@ -35,24 +36,30 @@ import com.jess.ui.TwoWayGridView;
 
 public class MainActivity extends SherlockActivity implements LessonClickListener {
 	private TwoWayGridView gridView;
-	int startTime=815, endTime=1715, duration=100;
+	int startTime=815, endTime=1715, duration=100,learningDays=6;
     int totalCells;
-    int learningDays = 6;
     List<OneCell> gridCells;
     List<Lesson> lessons;
 	private LessonClickListener lessonClickListener;
 	TextView txtMon, txtTue, txtWed, txtThu, txtFri;
 	ServerInteractions server;
-	DatabaseHandler dbHandler;
+	DatabaseHandler_joe dbHandler;
+	String userId, userReg_no, userPassword;
 	 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		server = new ServerInteractions();
-		dbHandler = new DatabaseHandler(this);
+		dbHandler = new DatabaseHandler_joe(this);
 		
 		//I used this to help in fixing authentication by loging out the user upon loading the app
 		//server.logoutUser(getApplicationContext());
+		
+		try {         
+			dbHandler.createDataBase();         
+        } catch (IOException ioe) {         
+        	throw new Error("Unable to create database");         
+        }         
         
         try {         
         	dbHandler.openDataBase();         
@@ -62,7 +69,7 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
         dbHandler.close();
         
         
-		if(server.isUserLoggedIn(getApplicationContext())){
+		//if(server.isUserLoggedIn(getApplicationContext())){
 	        setContentView(R.layout.activity_main);
 			
 			txtMon = (TextView) findViewById(R.id.txtMon);
@@ -105,19 +112,34 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
 					openDayLessons("5", "Friday");				
 				}
 			});
-			
+		
+			dbHandler = new DatabaseHandler_joe(getApplicationContext());
+        	HashMap<String,String> user = new HashMap<String,String>();
+        	user = dbHandler.getUserDetails();
+        	userId = user.get("uid");
+        	userReg_no = user.get("reg_no");
+        	userPassword = user.get("password");
+        	//inst_id = user.get("inst_id");
+        	//startTime = Integer.parseInt(user.get("globStartTime"));
+        	//endTime = Integer.parseInt(user.get("globEndTime"));
+        	//duration = Integer.parseInt(user.get("globDurationTime"));
+        	//learningDays = Integer.parseInt(user.get("globLearningDays"));
+        	
+        	
 			gridView = (TwoWayGridView) findViewById(R.id.gridview);
 			UpdateGrid(); 
 			getLessonsFeed(gridView);
-		} else {
+		} 
+		/*
+		else {
             // user is not logged in show login screen
-            Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+            Intent login = new Intent(getApplicationContext(), Loginme.class);
             login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(login);
             // Closing dashboard screen
             finish();
-       }
-	}
+       }*/
+	
 	
 	private void openDayLessons(String dayId, String dayTitle) {
 		Intent si = new Intent(getApplicationContext(), ListDayLessons.class);
@@ -131,7 +153,9 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
     public void getLessonsFeed(View v){
         // We start a new task that does its work on its own thread
         // We pass in a handler that will be called when the task has finished
-        new Thread(new GetLessonsTask(responseHandler, "0", false, null)).start();
+        new Thread(new GetLessonsTask(responseHandler, "0", true, userReg_no, userPassword)).start();
+        //new Thread(new GetLessonsTask(responseHandler, dayId, false, null, null)).start();
+       
     }
     
     // This is the handler that receives the response when the YouTube task has finished
@@ -140,32 +164,42 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
 	Handler responseHandler = new Handler() {
         public void handleMessage(Message msg) {
         	populateListWithLessons(msg);
+        	   Log.i("msg"+msg);
         };
     };
-    
+ 
     /**
-     * This method retrieves the Library of videos from the task and passes them to our ListView
+     * This method retrieves the Library of lessons from the task and passes them to our ListView
      * @param msg
      */
     private void populateListWithLessons(Message msg) {
         // Retreive the videos are task found from the data bundle sent back
-        final LessonLibrary lib = (LessonLibrary) msg.getData().get(GetLessonsTask.LIBRARY);
+      //  final LessonLibrary lib = (LessonLibrary) msg.getData().get(GetLessonsTask.LIBRARY);
+        LessonLibrary lib = (LessonLibrary) msg.getData().get(GetLessonsTask.LIBRARY);
+        
         // Because we have created a custom ListView we don't have to worry about setting the adapter in the activity
         // we can just call our custom method with the list of items we want to display
+       
         lessons = lib.getLessons();
-        GridAdapter adapter = new GridAdapter(this, gridCells);
+        GridAdapter adapter = new GridAdapter(this, gridCells ); //the adapter that sets the grid content
+           
         
         gridView.setOnItemClickListener(new OnItemClickListener() {
         	@Override
-        	public void onItemClick(TwoWayAdapterView parent, View v, int position, long id) {
+        	public void onItemClick(TwoWayAdapterView<?> parent, View view, int position, long id) {
 				int lessonPos = getLessonPos(position);
-        		onLessonClicked(lessons.get(lessonPos));        		
+				Log.i("position:"+position);
+				Log.i("lessonPos:"+lessonPos);
+        		onLessonClicked(lessons.get(lessonPos),position);        		
 			}
 		});
+         
         ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar1);
         pb.setVisibility(View.GONE);
         gridView.setAdapter(adapter);
+        Log.i("got past setAdapter!");
         adapter.setLessons(lessons);
+        Log.i("got past setLessons!");
         adapter.notifyDataSetChanged();
     }
     
@@ -183,10 +217,11 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
     	lessonClickListener = l;
     }
     
+    
     // This is the interface method that is called when a video in the listview is clicked!
     // The interface is a contract between this activity and the listview
     @Override
-    public void onLessonClicked(Lesson lesson) {
+    public void onLessonClicked(Lesson lesson,int position) {
     	String unit_id = lesson.getLessonId();
     	String starttime = lesson.getStarttime();
     	String endtime = lesson.getEndtime();
@@ -210,6 +245,7 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
         startActivity(si);
 		
 	}
+    
     
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -258,6 +294,9 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
     }
 	
 	public void UpdateGrid() {
+		
+		
+	
 		this.totalCells = ((endTime - startTime) / duration) * learningDays;
 		gridCells = new ArrayList<OneCell>();
 		for(int i=0; i<totalCells; i++) {

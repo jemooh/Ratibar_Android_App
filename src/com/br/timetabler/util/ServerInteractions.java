@@ -3,10 +3,12 @@ package com.br.timetabler.util;
 import java.util.ArrayList;
 import java.util.List;
  
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
  
+
 import android.content.Context;
  
 public class ServerInteractions {
@@ -15,15 +17,14 @@ public class ServerInteractions {
  
     // Testing in localhost using wamp or xampp
     // use http://10.0.2.2/ to connect to localhost ie http://localhost/feedback
-    private static String MainURL = "http://10.0.2.2/timetabler";
-    //private static String MainURL = "http://www.tujenge-ea.com/ti";
-    private static String loginURL = MainURL + "/regLogin.php";
-    private static String registerURL = MainURL + "/regLogin.php";
-    private static String regSettingsURL = MainURL + "/regSettings.php";
-    private static String regUnitsURL = MainURL + "/regUnits.php";
-    private static String commentURL = MainURL + "/saveReviews.php";
-    private static String feedbackURL = MainURL + "/saveFeedback.php";
-    
+    //private static String MainURL = "http://10.0.2.2/timetabler";
+    //private static String MainURL = "http://time.tujenge-ea.com";
+    private static String loginURL = "http://10.0.2.2/reglogin2.php";
+    private static String registerURL = "http://10.0.2.2/reglogin2.php";
+    private static String regSettingsURL = "http://10.0.2.2/reglogin2.php";
+    private static String regUnitsURL = "http://10.0.2.2/reglogin2.php";
+    private static String commentURL = "http://10.0.2.2/reglogin2.php";
+    private static String feedbackURL = "http://10.0.2.2/reglogin2.php";
     private static String login_tag = "login";
     private static String register_tag = "register";
     private static String comment_tag = "comments";
@@ -154,7 +155,7 @@ public class ServerInteractions {
      * Function get Login status
      * */
     public boolean isUserLoggedIn(Context context){
-        DatabaseHandler db = new DatabaseHandler(context);
+        DatabaseHandler_joe db = new DatabaseHandler_joe(context);
         int count = db.getRowCount();
         if(count > 0){
             // user logged in
@@ -168,7 +169,7 @@ public class ServerInteractions {
      * Reset Database
      * */
     public boolean logoutUser(Context context){
-        DatabaseHandler db = new DatabaseHandler(context);
+        DatabaseHandler_joe db = new DatabaseHandler_joe(context);
         db.resetTables();
         return true;
     }

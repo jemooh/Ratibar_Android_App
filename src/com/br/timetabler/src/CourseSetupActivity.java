@@ -38,7 +38,7 @@ import com.br.timetabler.model.School;
 import com.br.timetabler.model.Unit;
 import com.br.timetabler.model.UnitLibrary;
 import com.br.timetabler.service.task.GetCoursesTask;
-import com.br.timetabler.util.DatabaseHandler;
+import com.br.timetabler.util.DatabaseHandler_joe;
 import com.br.timetabler.util.ServerInteractions;
 
 
@@ -53,7 +53,7 @@ public class CourseSetupActivity extends SherlockActivity {
 	String[] intakes = {"January", "May", "September"};
 	Button btnSaveCourse;
 	ServerInteractions userFunction;
-    DatabaseHandler db;
+    DatabaseHandler_joe db;
     SendServerTask sendServerTask;
     JSONObject json_user;
     JSONObject json;
@@ -73,7 +73,7 @@ public class CourseSetupActivity extends SherlockActivity {
     public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.course_setup_activity);
-        db = new DatabaseHandler(this);
+        db = new DatabaseHandler_joe(this);
         try {         
         	db.openDataBase();         
         }catch(SQLException sqle){         
@@ -177,7 +177,7 @@ public class CourseSetupActivity extends SherlockActivity {
 			String semester = params[0].semester;
 			String intake = params[0].intake;
 			
-			db.addUserUniDetails(DbSchoolId, course, year, intake, semester, userId);
+//james			//db.addUserUniDetails(DbSchoolId, course, year, intake, semester, userId);
 			json = userFunction.registerUserSettings(DbSchoolId, course, year, intake, semester, userId);
             
             // check for server response

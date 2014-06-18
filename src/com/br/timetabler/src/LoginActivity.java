@@ -33,10 +33,11 @@ public class LoginActivity extends SherlockActivity {
     LoginTask loginTask;
     ServerInteractions userFunction;
     DatabaseHandler db;
-    JSONObject json_user;
+    JSONObject json_user, jsonInstSettings;
     JSONObject json;
     String errorMsg;
     String res; 
+    String email, password;
  
     // JSON Response node names
     private static String KEY_SUCCESS = "success";
@@ -54,7 +55,7 @@ public class LoginActivity extends SherlockActivity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        setContentView(R.layout.login_joe);
         
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN); 
         // Importing all assets like buttons, text fields
@@ -93,8 +94,8 @@ public class LoginActivity extends SherlockActivity {
         protected JSONObject doInBackground(MyLoginParams... params) {
         	userFunction = new ServerInteractions();
 
-        	String email = params[0].email;
-        	String password = params[0].password;
+        	email = params[0].email;
+        	password = params[0].password;
         	
         	json = userFunction.loginUser(email, password);
             try {
@@ -103,6 +104,7 @@ public class LoginActivity extends SherlockActivity {
                     res = json.getString(KEY_SUCCESS);
                     if(Integer.parseInt(res) == 1){
                         json_user = json.getJSONObject("user");
+                        jsonInstSettings = json.getJSONObject("settings");
                     }else{
                         // Error in login
                     	errorMsg = "Incorrect username/password";
@@ -126,7 +128,20 @@ public class LoginActivity extends SherlockActivity {
                 if(Integer.parseInt(res) == 1){
 	                // user successfully logged in
 	                // Store user details in SQLite Database
-	                db.addUser(json_user.getString(KEY_FNAME), json_user.getString(KEY_LNAME), json_user.getString(KEY_EMAIL), json.getString(KEY_UID), json_user.getString(KEY_INST_ID), json_user.getString(KEY_SCHOOL_ID), json_user.getString(KEY_DATE_JOINED));
+	                db.addUser(
+	                		json_user.getString(KEY_FNAME), 
+	                		json_user.getString(KEY_LNAME), 
+	                		json_user.getString(KEY_EMAIL),
+	                		password,
+	                		json.getString(KEY_UID), 
+	                		json_user.getString(KEY_INST_ID), 
+	                		json_user.getString(KEY_SCHOOL_ID), 
+	                		json_user.getString(KEY_DATE_JOINED),
+	                		jsonInstSettings.getString("learningDays"),
+	                		jsonInstSettings.getString("startTime"),
+	                		jsonInstSettings.getString("endTime"),
+	                		jsonInstSettings.getString("duration")
+	                		);
 		                           
 		        	// Launch Dashboard Screen
 		            Intent dashboard = new Intent(getApplicationContext(), MainActivity.class);
@@ -179,7 +194,7 @@ public class LoginActivity extends SherlockActivity {
 	    switch (item.getItemId()) {
 	        case android.R.id.home:
 	            // app icon in action bar clicked; go home
-	            Intent intent = new Intent(this, Settings.class);
+	            Intent intent = new Intent(this, Preferences.class);
 	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	            startActivity(intent);
 	            return true;

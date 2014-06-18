@@ -37,7 +37,7 @@
         android:layout_toRightOf="@+id/txtTimes"
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/lesson_code" />
+        android:textColor="@color/ntv_blue" />
 
     <TextView
         android:id="@+id/txtLocation"

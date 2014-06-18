@@ -33,7 +33,7 @@ public class GetUniversityDetailsTask implements Runnable {
     private String SearchQuery;
     private String Url;
     private static String MainURL = "http://10.0.2.2/timetabler";
-    //private static String MainURL = "http://www.tujenge-ea.com/ti";
+    //private static String MainURL = "http://time.tujenge-ea.com/";
     /**
      * Don't forget to call run(); to start this task
      * @param replyTo - the handler you want to receive the response when this task has finished

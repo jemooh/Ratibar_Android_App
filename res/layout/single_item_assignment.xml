@@ -24,20 +24,8 @@
         android:layout_toRightOf="@+id/txtTimes"
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/lesson_code" />
-
-    <TextView
-        android:id="@+id/dateDue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/txtCodel"
-        android:layout_marginRight="14dp"
-        android:layout_marginTop="5dp"
-        android:text="TextView"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/color_white"
-        android:textSize="12sp" />
+        android:textColor="@color/ntv_blue"
+        android:textSize="17sp" />
 
     <TextView
         android:id="@+id/dateCreated"
@@ -49,6 +37,19 @@
         android:text="test text"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#FF666666"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/dateDue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/dateCreated"
+        android:layout_alignBottom="@+id/dateCreated"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="19dp"
+        android:text="TextView"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/color_white"
         android:textSize="12sp" />
 
 </RelativeLayout>

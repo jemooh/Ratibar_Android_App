@@ -33,7 +33,7 @@ import com.br.timetabler.listener.AssignmentClickListener;
 import com.br.timetabler.model.Assignment;
 import com.br.timetabler.model.AssignmentLibrary;
 import com.br.timetabler.service.task.GetAssignmentsTask;
-import com.br.timetabler.util.DatabaseHandler;
+import com.br.timetabler.util.DatabaseHandler_joe;
 import com.br.timetabler.util.ServerInteractions;
 import com.br.timetabler.widget.AssignmentsListView;
 
@@ -50,7 +50,7 @@ public class AssignmentsListActivity extends SherlockActivity implements Assignm
 	String unitId;
 	SaveFeedbackTask feedBackTsk;
 	ServerInteractions userFunction;
-	DatabaseHandler db;
+	DatabaseHandler_joe db;
 	JSONObject json_user;
     JSONObject json;
     String errorMsg, successMsg;
@@ -68,7 +68,7 @@ public class AssignmentsListActivity extends SherlockActivity implements Assignm
 		} else {
         	this.unitId = null;
         }
-        db = new DatabaseHandler(getApplicationContext());
+        db = new DatabaseHandler_joe(getApplicationContext());
     	HashMap<String,String> user = new HashMap<String,String>();
     	user = db.getUserDetails();
     	userId = user.get("uid");
@@ -92,7 +92,7 @@ public class AssignmentsListActivity extends SherlockActivity implements Assignm
         listView.setOnAssignmentClickListener(this);
         getAssignmentsFeed(listView);
     }
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -101,34 +101,35 @@ public class AssignmentsListActivity extends SherlockActivity implements Assignm
 	}
 	public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+        
             case android.R.id.home://dsipaly video
                 //Toast.makeText(this, "Tapped home", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                Intent i = new Intent(getApplicationContext(), DashboardActivity.class);
                 startActivity(i);
                 finish();
                 break;
-
-            case R.id.menu_grid: //display grid
-            	Intent i1 = new Intent(getApplicationContext(), MainActivity.class);
-            	i1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+/**
+            case R.id.menu_grid: //display description
+            	Intent i1 = new Intent(getApplicationContext(), WeekviewActivity.class);
+            	//i1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i1);
-                finish();
+                //finish();
                 break;
 
-            case R.id.menu_list: //display list of lessons
-            	Intent i2 = new Intent(getApplicationContext(), ListDayLessons.class);
-            	i2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            case R.id.menu_list: //display description
+            	Intent i2 = new Intent(getApplicationContext(), DashboardActivity.class);
+            	//i2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i2);
-                finish();
-                break;
-
-            case R.id.menu_assignments: //display assignments
-            	Intent i3 = new Intent(getApplicationContext(), AssignmentsListActivity.class);
-                startActivity(i3);
                 //finish();
                 break;
             
-            case R.id.menu_settings: //display settings
+            case R.id.menu_assignments: //display reviews
+            	Intent i3 = new Intent(getApplicationContext(), AssignmentsListActivity.class);
+                startActivity(i3);
+                //finish();
+                break;*/
+             
+            case R.id.menu_settings: //display reviews
             	Intent i4 = new Intent(getApplicationContext(), Preferences.class);
                 startActivity(i4);
                 //finish();
@@ -138,7 +139,7 @@ public class AssignmentsListActivity extends SherlockActivity implements Assignm
         }
         return super.onOptionsItemSelected(item);
     }
-	
+		/***/
 	// This is the XML onClick listener to retreive a users video feed
     public void getAssignmentsFeed(View v){
         // We start a new task that does its work on its own thread
@@ -274,7 +275,7 @@ public class AssignmentsListActivity extends SherlockActivity implements Assignm
         	userFunction = new ServerInteractions();
 
         	String feedbackContent = params[0].feedbackContent;
-        	db = new DatabaseHandler(getApplicationContext());
+        	db = new DatabaseHandler_joe(getApplicationContext());
         	HashMap<String,String> user = new HashMap<String,String>();
         	user = db.getUserDetails();
         	String userId = user.get("uid");

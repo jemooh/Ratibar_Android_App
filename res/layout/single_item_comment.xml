@@ -5,13 +5,6 @@
     android:padding="5dp" >
 
     <TextView
-        android:id="@+id/txtCreator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textColor="@color/comment_author" />
-
-    <TextView
         android:id="@+id/txtDatetime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,5 +25,24 @@
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/color_white" />
+
+    <TextView
+        android:id="@+id/txtCreator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/txtDatetime"
+        android:layout_alignBottom="@+id/txtDatetime"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="67dp"
+        android:text="TextView"
+        android:textColor="@color/ntv_blue" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/txtCreator"
+        android:src="@drawable/cassie" />
 
 </RelativeLayout>

@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+     <string name="app_namee">DialogFragments</string>
+    <string name="action_settings">Settings</string>
+    <string name="show_dialog">Show Dialog</string>
+    <string name="dialog_message">This is where a sample message could go. We could have just used an AlertDialog perhaps, but we want to show off the ability of setting a custom view while keeping other standard dialog elements. For example, we are using the standard Title and Yes/No buttons typically found in AlertDialog. To make things fun, we\'ll throw in a RatingBar. Try rotating your phone!</string>
+    <string name="dialog_title">Feed </string>
+    <string name="dialog_positive_text">Yes</string>
+    <string name="dialog_positive_toast_message">You clicked Yes!</string>
+    <string name="dialog_negative_text">No</string>
+    <string name="dialog_negative_toast_message">You clicked No...</string>
+    <string name="name">feedback</string>
+    
+    <string name="c1">#FF3c61c1</string>
+    <string name="c2">#222222</string>
+    <string name="c3">#2c77c7</string>
+    <string name="c4">#ff0000</string>
+    <string name="c5">#cccccc</string>
+    
+    
     <string name="app_name">Tabler</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>

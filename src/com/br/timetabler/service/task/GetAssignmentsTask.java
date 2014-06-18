@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import com.br.timetabler.model.Assignment;
 import com.br.timetabler.model.AssignmentLibrary;
+import com.br.timetabler.model.Comment;
 import com.br.timetabler.model.Lesson;
 import com.br.timetabler.model.LessonLibrary;
 import com.br.timetabler.util.Log;
@@ -34,23 +35,23 @@ public class GetAssignmentsTask implements Runnable {
     
     private String SearchQuery;
     private String Url;
-    private static String MainURL = "http://10.0.2.2/timetabler";
-    //private static String MainURL = "http://www.tujenge-ea.com/ti";
-    private static String loginURL = MainURL + "/regLogin.php";
+    private static String MainURL = "http://10.0.2.2/lessons_data.php";
+    //private static String MainURL ="http://dev.ratibar.com/app/mobile_lessonsList.php?email=student@gmail.com&password=okatch/";
+    //private static String loginURL = MainURL + "/last2.php";
     /**
      * Don't forget to call run(); to start this task
      * @param replyTo - the handler you want to receive the response when this task has finished
      * @param username - the username of who on YouTube you are browsing
      */
-    public GetAssignmentsTask(Handler replyTo, String userId, String unitId, boolean Search, String SearchQuery) {
+    public GetAssignmentsTask(Handler replyTo, String userId, String unit_id, boolean Search, String SearchQuery) {
         this.replyTo = replyTo;
         this.SearchQuery = SearchQuery;
         if(Search) {
         	if(SearchQuery !="") {
-        		this.Url = MainURL + "/assignmentsList.php?q="+ SearchQuery;
+        		this.Url = MainURL + "/mobile_assignmentsList.php?q="+ SearchQuery;
         	}
         } else {
-        	this.Url = MainURL + "/assignmentsList.php?userId="+userId+"&unitId=" + unitId;
+        	this.Url = MainURL + "/mobile_assignmentsList.php?userId="+userId+"&unitId=" + unit_id;
         }
         //Log.i(this.Url);
         
@@ -82,21 +83,69 @@ public class GetAssignmentsTask implements Runnable {
             
             //if (varObj != null) {
             	// Get are search result items
-            	JSONArray jsonArray = json.getJSONObject("data").getJSONArray("assignments");            
+            	JSONArray LessonsArray = json.getJSONObject("data").getJSONArray("lessons");            
 	            
 	            // Create a list to store are videos in
 	            List<Assignment> assignments = new ArrayList<Assignment>();
+
+	            
+	            for (int i = 0; i < LessonsArray.length(); i++) {
+	                JSONObject jobj =LessonsArray.getJSONObject(i);
+	                
+	          
+	                //JSONObject comm = jobj.getJSONObject("comments");
+	                JSONArray assignmentsArray= jobj.getJSONArray("assignments");
+	                Log.i("assignmentsArray"+assignmentsArray);
+	            // Create a list to store are videos in
+
+	            
 	            // Loop round our JSON list of lessons creating Lesson objects to use within our app
 	                        
-            	for (int i = 0; i < jsonArray.length(); i++) {            
-	                JSONObject jsonObject = jsonArray.getJSONObject(i);	                
+            	for (int j = 0; j < assignmentsArray.length(); j++) {            
+	                JSONObject jsonObject = assignmentsArray.getJSONObject(j);	                
 	                String unitId = jsonObject.getString("unit_id");
-	                String unitCode = jsonObject.getString("unit_acronyms");
+	                String unitCode = jsonObject.getString("unit_names");
 	                String assDescription = jsonObject.getString("description");
 	                String assDateCreated = jsonObject.getString("date_created");
 	                String assDateDue = jsonObject.getString("date_due");
 	                String assStatus = jsonObject.getString("status");
 	                boolean st = assStatus =="1" ? true  : false;
+	                
+	                
+	                /**
+	                
+package test;
+
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+
+public class Main {
+
+  public static void main(String[] args) {
+    Main m = new Main();
+    m.start();
+  }
+
+  private void start() {
+    long time = System.currentTimeMillis();
+    Date d = new Date(time);
+    Timestamp t = new Timestamp(time);
+    t.setNanos(123456789);
+    System.out.println(d);
+    System.out.println(t);
+    DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss'.'");
+    NumberFormat nf = new DecimalFormat("000000000");
+    System.out.println(df.format(t.getTime()) + nf.format(t.getNanos()));
+  }
+}
+	                
+	                */
+	                
 	                
 	                // Create the video object and add it to our list
 	                assignments.add(new Assignment(unitId, unitCode, assDateCreated, assDateDue, assDescription, st));
@@ -116,7 +165,8 @@ public class GetAssignmentsTask implements Runnable {
             replyTo.sendMessage(msg);
             // We don't do any error catching, just nothing will happen if this task falls over
             // an idea would be to reply to the handler with a different message so your Activity can act accordingly
-            
+	  } 
+	            
 		} catch (ClientProtocolException e) {
             Log.e("Feck", e);
         } catch (IOException e) {

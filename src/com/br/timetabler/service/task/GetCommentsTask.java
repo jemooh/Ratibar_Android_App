@@ -32,9 +32,9 @@ public class GetCommentsTask implements Runnable {
     
     private String SearchQuery;
     private String Url;
-    private static String MainURL = "http://10.0.2.2/timetabler";
-    //private static String MainURL = "http://www.tujenge-ea.com/ti";
-    private static String loginURL = MainURL + "/regLogin.php";
+    private static String MainURL = "http://10.0.2.2/lessons_data.php";
+    //private static String MainURL = "http://dev.ratibar.com/app/mobile_lessonsList.php?email=student@gmail.com&password=okatch/";
+    //private static String loginURL = MainURL + "/last2.php";
     /**
      * Don't forget to call run(); to start this task
      * @param replyTo - the handler you want to receive the response when this task has finished
@@ -45,12 +45,14 @@ public class GetCommentsTask implements Runnable {
         this.SearchQuery = SearchQuery;
         if(Search) {
         	if(SearchQuery !="") {
-        		this.Url = MainURL + "/commentsList.php?q="+ SearchQuery;
+        		this.Url = MainURL + "/lessons_data.php?q="+ SearchQuery;
+        		//this.Url = MainURL + "/mobile_commentsList.php?q="+ SearchQuery;
         	}
         } else {
-        	this.Url = MainURL + "/commentsList.php?unit_id="+unit_id;
-        }
-        //Log.i(this.Url);
+        	this.Url = MainURL + "/mobile_commentsList.php?unit_id="+unit_id;
+        	
+            }
+        Log.i(this.Url);
         
     }
     
@@ -71,14 +73,24 @@ public class GetCommentsTask implements Runnable {
             JSONObject json = new JSONObject(jsonString);
             
             // Get are search result items
-            JSONArray jsonArray = json.getJSONObject("data").getJSONArray("comments");            
+            JSONArray LessonsArray = json.getJSONObject("data").getJSONArray("lessons");            
+          //  Log.i("commentsArray"+commentsArray);
             
+            
+            
+            
+            for (int i = 0; i < LessonsArray.length(); i++) {
+                JSONObject jobj =LessonsArray.getJSONObject(i);
+                
+          
+                //JSONObject comm = jobj.getJSONObject("comments");
+                JSONArray commentsArray= jobj.getJSONArray("comments");
+                Log.i("commentsArray"+commentsArray);
             // Create a list to store are videos in
             List<Comment> comments = new ArrayList<Comment>();
             // Loop round our JSON list of lessons creating Lesson objects to use within our app
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                
+            for (int j = 0; j < commentsArray.length(); j++) {
+            	JSONObject jsonObject = commentsArray.getJSONObject(j);
                 String commentId = jsonObject.getString("id");
                 String lessonId = jsonObject.getString("unit_id");
                 String createdBy = jsonObject.getString("created_by");
@@ -101,7 +113,8 @@ public class GetCommentsTask implements Runnable {
             replyTo.sendMessage(msg);
             // We don't do any error catching, just nothing will happen if this task falls over
             // an idea would be to reply to the handler with a different message so your Activity can act accordingly
-            
+        
+            }
 		} catch (ClientProtocolException e) {
             Log.e("Feck", e);
         } catch (IOException e) {

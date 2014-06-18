@@ -17,6 +17,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.SQLException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,7 +39,7 @@ import com.br.timetabler.R;
 import com.br.timetabler.model.Lesson;
 import com.br.timetabler.model.LessonLibrary;
 import com.br.timetabler.service.task.GetLessonsTask;
-import com.br.timetabler.util.DatabaseHandler;
+import com.br.timetabler.util.DatabaseHandler_joe;
 import com.br.timetabler.listener.LessonClickListener;
 import com.br.timetabler.util.ServerInteractions;
 import com.br.timetabler.widget.TodayLessonsListView;
@@ -56,28 +57,53 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
 	
 	SaveFeedbackTask feedBackTsk;
 	ServerInteractions userFunction;
-	DatabaseHandler db;
+	DatabaseHandler_joe db;
 	JSONObject json_user;
     JSONObject json;
     String errorMsg, successMsg;
     String res; 
-    DatabaseHandler dbHandler;
-    
+    DatabaseHandler_joe dbHandler;
+    ServerInteractions server;
+	String userId, userReg_no, userPassword;
     int today = new GregorianCalendar().get(Calendar.DAY_OF_WEEK);
     
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_day_lessons);
         String[] daysOfWeek = {"Saturday", "Sunday", "Monday", "Tuesday", "Wednesady", "Thursday", "Friday", };
-        dbHandler = new DatabaseHandler(this);
+       // dbHandler = new DatabaseHandler_joe(this);
+        
+        server = new ServerInteractions();
+		dbHandler = new DatabaseHandler_joe(this);
+		
+		//I used this to help in fixing authentication by loging out the user upon loading the app
+		//server.logoutUser(getApplicationContext());
+		
+		try {         
+			dbHandler.createDataBase();         
+        } catch (IOException ioe) {         
+        	throw new Error("Unable to create database");         
+        }         
         
         try {         
+        	dbHandler.openDataBase();         
+        }catch(SQLException sqle){         
+        	throw sqle;         
+        }
+        dbHandler.close();
+
+        
+        /*try {         
         	dbHandler.createDataBase();         
         } catch (IOException ioe) {         
         	throw new Error("Unable to create database");         
-        }
+        }*/
          
+        //check if the user is locked in.
         
+       // if(server.isUserLoggedIn(getApplicationContext())){
+        	//setContentView(R.layout.list_day_lessons);
+       
         //create a today date for display
   		String currentDate = DateFormat.getDateInstance().format(new Date());
   		
@@ -93,6 +119,8 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
         	this.dayTitle = daysOfWeek[today];
         	dyT = "Today is " + dayTitle + ", " + currentDate;
         }
+   
+		
         
         TextView txtDateToday = (TextView) findViewById(R.id.txtDateToday);
   		txtDateToday.setText(dyT);
@@ -107,6 +135,9 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
 		});
 		
 		
+ //check if user is logged in.
+        
+     
 		//create a listview to hold data
         listView = (TodayLessonsListView) findViewById(R.id.todayListView);
 		
@@ -115,7 +146,27 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
         // in this case we will retrieve the URL of the video and fire off an intent to view it
         listView.setOnLessonClickListener(this);
         getLessonsFeed(listView);
-    }
+        
+    	dbHandler = new DatabaseHandler_joe(getApplicationContext());
+    	HashMap<String,String> user = new HashMap<String,String>();
+    	user = dbHandler.getUserDetails();
+    	userId = user.get("uid");
+    	userReg_no = user.get("reg_no");
+    	userPassword = user.get("password");
+    	/**
+	   }else {
+			//user in not logged in show login screen
+			Intent login = new Intent (getApplicationContext(),Loginme.class);
+			login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(login);
+			
+		}
+        */
+        
+        }
+        
+        
+    
 	public void getDayOfWeek() {
 		Calendar calendar = new GregorianCalendar();
 		Date trialTime = new Date();
@@ -124,6 +175,7 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
 
 
 	}
+	/**/
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -133,30 +185,25 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
 	}
 	public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+        
             case android.R.id.home://dsipaly video
                 //Toast.makeText(this, "Tapped home", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                Intent i = new Intent(getApplicationContext(), DashboardActivity.class);
                 startActivity(i);
                 finish();
                 break;
-
+        
             case R.id.menu_grid: //display description
-            	Intent i1 = new Intent(getApplicationContext(), MainActivity.class);
-            	i1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            	Intent i1 = new Intent(getApplicationContext(), WeekviewActivity.class);
+            	//i1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i1);
-                finish();
+                //finish();
                 break;
 
             case R.id.menu_list: //display description
-            	Intent i2 = new Intent(getApplicationContext(), ListDayLessons.class);
-            	i2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            	Intent i2 = new Intent(getApplicationContext(), DashboardActivity.class);
+            	//i2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i2);
-                finish();
-                break;
-
-            case R.id.menu_assignments: //display reviews
-            	Intent i3 = new Intent(getApplicationContext(), AssignmentsListActivity.class);
-                startActivity(i3);
                 //finish();
                 break;
             
@@ -170,13 +217,12 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
         }
         return super.onOptionsItemSelected(item);
     }
-	
 	// This is the XML onClick listener to retreive a users video feed
     public void getLessonsFeed(View v){
         // We start a new task that does its work on its own thread
         // We pass in a handler that will be called when the task has finished
         // We also pass in the name of the user we are searching YouTube for
-        new Thread(new GetLessonsTask(responseHandler, dayId, false, null)).start();
+        new Thread(new GetLessonsTask(responseHandler, dayId, false, null, null)).start();
     }
     
     // This is the handler that receives the response when the YouTube task has finished
@@ -222,7 +268,7 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
     // This is the interface method that is called when a video in the listview is clicked!
     // The interface is a contract between this activity and the listview
     @Override
-	public void onLessonClicked(Lesson lesson) {
+	public void onLessonClicked(Lesson lesson, int position) {
     	String unit_id = lesson.getLessonId();
     	String starttime = lesson.getStarttime();
     	String endtime = lesson.getEndtime();
@@ -310,7 +356,7 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
         	userFunction = new ServerInteractions();
 
         	String feedbackContent = params[0].feedbackContent;
-        	db = new DatabaseHandler(getApplicationContext());
+        	db = new DatabaseHandler_joe(getApplicationContext());
         	HashMap<String,String> user = new HashMap<String,String>();
         	user = db.getUserDetails();
         	String userId = user.get("uid");

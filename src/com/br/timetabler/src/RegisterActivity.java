@@ -53,13 +53,14 @@ public class RegisterActivity extends SherlockActivity {
     RegisterTask registerTask;
     ServerInteractions userFunction;
     DatabaseHandler db;
-    JSONObject json_user;
+    JSONObject json_user, jsonInstSettings;
     JSONObject json;
     String errorMsg;
     String res;
     Spinner spinInstitutions, spnSchools, spnCourses, spnUnits;
     List<School> schools;
     List<String> instlist;
+    String password;
     /**
      * ArrayAdapter connects the spinner widget to array-based data.
      */
@@ -174,7 +175,7 @@ public class RegisterActivity extends SherlockActivity {
 			
 			String fullname = params[0].fullname;
 			String email = params[0].email;
-			String password = params[0].password;
+			password = params[0].password;
 			String school = params[0].school;
             json = userFunction.registerUser(fullname, email, password, school);
 
@@ -188,6 +189,7 @@ public class RegisterActivity extends SherlockActivity {
                         // user successfully registred, Store user details in SQLite Database
                         db = new DatabaseHandler(getApplicationContext());
                         json_user = json.getJSONObject("user");
+                        jsonInstSettings = json.getJSONObject("settings");
                     }else{
                         // Error in registration
                         
@@ -208,7 +210,20 @@ public class RegisterActivity extends SherlockActivity {
 				// Clear all previous data in database
 	            userFunction.logoutUser(getApplicationContext());
 	            if(Integer.parseInt(res) == 1){
-		            db.addUser(json_user.getString(KEY_FNAME), json_user.getString(KEY_LNAME), json_user.getString(KEY_EMAIL), json.getString(KEY_UID), json_user.getString(KEY_INST_ID), json_user.getString(KEY_SCHOOL_ID), json_user.getString(KEY_DATE_JOINED));
+		            db.addUser(
+		            		json_user.getString(KEY_FNAME), 
+		            		json_user.getString(KEY_LNAME), 
+		            		json_user.getString(KEY_EMAIL),
+		            		password,
+		            		json.getString(KEY_UID), 
+		            		json_user.getString(KEY_INST_ID), 
+		            		json_user.getString(KEY_SCHOOL_ID), 
+		            		json_user.getString(KEY_DATE_JOINED),
+		            		jsonInstSettings.getString("learningDays"),
+	                		jsonInstSettings.getString("startTime"),
+	                		jsonInstSettings.getString("endTime"),
+	                		jsonInstSettings.getString("duration")
+	                		);
 		            // Launch Dashboard Screen
 		            Intent dashboard = new Intent(getApplicationContext(), CourseSetupActivity.class);
 		            // Close all views before launching Dashboard
@@ -265,7 +280,7 @@ public class RegisterActivity extends SherlockActivity {
 	    switch (item.getItemId()) {
 	        case android.R.id.home:
 	            // app icon in action bar clicked; go home
-	            Intent intent = new Intent(this, Settings.class);
+	            Intent intent = new Intent(this, Preferences.class);
 	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	            startActivity(intent);
 	            return true;

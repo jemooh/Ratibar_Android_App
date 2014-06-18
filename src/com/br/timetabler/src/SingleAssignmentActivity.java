@@ -33,7 +33,7 @@ import com.br.timetabler.listener.CommentClickListener;
 import com.br.timetabler.model.Comment;
 import com.br.timetabler.model.CommentLibrary;
 import com.br.timetabler.service.task.GetCommentsTask;
-import com.br.timetabler.util.DatabaseHandler;
+import com.br.timetabler.util.DatabaseHandler_joe;
 import com.br.timetabler.util.ServerInteractions;
 import com.br.timetabler.widget.CommentsListView;
 
@@ -49,7 +49,7 @@ public class SingleAssignmentActivity extends SherlockActivity implements Commen
 	
 	//SaveCommentTask commentTsk;
 	ServerInteractions userFunction;
-	DatabaseHandler db;
+	DatabaseHandler_joe db;
 	JSONObject json_user;
     JSONObject json;
     String errorMsg, successMsg;
@@ -107,7 +107,7 @@ public class SingleAssignmentActivity extends SherlockActivity implements Commen
                 finish();
                 break;
 
-            /**case R.id.menu_grid: //display description
+          case R.id.menu_grid: //display description
             	Intent i1 = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(i1);
                 finish();
@@ -129,7 +129,7 @@ public class SingleAssignmentActivity extends SherlockActivity implements Commen
             	Intent i4 = new Intent(getApplicationContext(), Preferences.class);
                 startActivity(i4);
                 //finish();
-                break;*/
+                break;
             
             
         }

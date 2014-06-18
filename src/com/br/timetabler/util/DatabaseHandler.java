@@ -22,7 +22,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 2;
  
     // Database Name
-    private static final String DATABASE_NAME = "timetablerN.db";
+    private static final String DATABASE_NAME = "timetablerN2.db";
  
  // Login table name
     private static final String TABLE_LOGIN = "user";
@@ -157,7 +157,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /**
      * Storing user details in database
      * */
-    public void addUser(String fname, String lname, String email, String uid, String inst_id, String school_id, String date_joined) {
+    public void addUser(String fname, String lname, String email, String password, String uid, String inst_id, String school_id, String date_joined, String learningDays, String startTime, String endTime, String duration) {
         SQLiteDatabase db = this.getWritableDatabase();
  
         ContentValues values = new ContentValues();
@@ -165,11 +165,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put("fname", fname); // First Name
         values.put("lname", lname); // Last Name
         values.put("email", email); // Email
+        values.put("password", password); // Email
         values.put("inst_id", inst_id); // University
         values.put("school_id", school_id); // Faculty
-        values.put("date_joined", date_joined); // Created At
+        values.put("date_joined", date_joined); 
+        values.put("globLearningDays", learningDays); 
+        values.put("globStartTime", startTime); 
+        values.put("globEndTime", endTime); 
+        values.put("globDurationTime", duration); 
  
-        // Inserting Row
+        // Inserting Row , 
         db.insert(TABLE_LOGIN, null, values);
         db.close(); // Closing database connection
     }
@@ -208,12 +213,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // Move to first row
         cursor.moveToFirst();
         if(cursor.getCount() > 0){
-        	user.put("uid", cursor.getString(1));
-        	user.put("email", cursor.getString(2));
-        	user.put("fname", cursor.getString(4));
-        	user.put("lname", cursor.getString(5));
-        	user.put("inst_id", cursor.getString(7));
-        	user.put("school_id", cursor.getString(8));
+        	user.put("uid", cursor.getString(5));
+        	user.put("email", cursor.getString(6));
+        	user.put("fname", cursor.getString(8));
+        	user.put("lname", cursor.getString(9));
+        	user.put("inst_id", cursor.getString(11));
+        	user.put("school_id", cursor.getString(12));
+        	
+        	user.put("globLearningDays", cursor.getString(0)); 
+        	user.put("globDurationTime", cursor.getString(1));
+        	user.put("globStartTime", cursor.getString(2)); 
+        	user.put("globEndTime", cursor.getString(3)); 
+        	
             
         }
         cursor.close();

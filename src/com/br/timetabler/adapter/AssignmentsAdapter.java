@@ -9,7 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import com.br.timetabler.R;
 import com.br.timetabler.model.Assignment;
 
@@ -100,4 +105,13 @@ public class AssignmentsAdapter extends BaseAdapter {
     	m = m.replaceAll("[.]", ":");
         return m;
 	}
+    
+
+
+  
 }
+    
+    
+    
+    
+

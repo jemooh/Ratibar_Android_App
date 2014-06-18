@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -33,7 +34,6 @@ public class GridAdapter extends BaseAdapter {
     int totalCells;
     float learningDays = 6;
     DecimalFormat df = new DecimalFormat("#.##");
-     
     /**
      * @param context this is the context that the list will be shown in - used to create new list rows
      * @param gridCells this is a list of gridCells to display
@@ -72,14 +72,15 @@ public class GridAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = null; // If convertView wasn't null it means we have already set it to our list_item_user_video so no need to do it again
         String timeTitleEnd = null;
-        if(convertView == null) {
+   //......james commet out coz tz reusing views    // if(convertView == null) {
             // This is the layout we are using for each row in our list anything you declare in this layout can then be referenced below
-            convertView = mInflater.inflate(R.layout.single_grid_item, parent, false);
-			
+        	LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        	convertView = inflater.inflate(R.layout.single_grid_item, parent, false);
+           // Uses ViewHolder class for storing view handles to reduce number of times findViewById() is called
 			final ViewHolder viewHolder = new ViewHolder();
 			viewHolder.code = (TextView) convertView.findViewById(R.id.lessonCell); 
 			convertView.setTag(viewHolder);
-        }
+        //}
 		
 		ViewHolder holder = (ViewHolder) convertView.getTag();
 		
@@ -127,15 +128,22 @@ public class GridAdapter extends BaseAdapter {
         		}
         	} */
         	holder.code.setText(getLessonCode(position));
-        	//setLessonBg(position, holder.code);
-        	//holder.code.setBackgroundResource(R.drawable.grid_lesson_item_bg);
-        	/*for(Lesson l : lessons) {
-            	if(position == Integer.parseInt(l.GetyPos())){ // || position % 5 == dayId){
-    	        	//Log.i("Day Id : " + l.getDayId());
-    	        	holder.code.setBackgroundResource(R.drawable.grid_lesson_item_bg);
-    	        	holder.code.setText(l.getCode());
+        	//String color = "#FF3c61c1";
+        	//holder.code.setBackgroundColor(Color.parseColor(color));
+        	
+        	for(Lesson l : lessons) {
+        		String startTime = l.getStarttime();
+        		String endTime = l.getEndtime(); 
+        		int durTotal = Integer.parseInt(endTime) - Integer.parseInt(startTime);
+        		int reps = durTotal/100;
+        		int dbPos = Integer.parseInt(l.GetyPos());
+        		int extPos = dbPos + (6*(reps-1));
+            	if(position == dbPos || position == extPos){ // || position % 5 == dayId){
+    	        	//holder.code.setBackgroundResource(R.drawable.grid_lesson_item_bg);
+            		holder.code.setBackgroundColor(Color.parseColor(l.getColorband()));
+    	        	//holder.code.setText(l.getCode());
     	        } 
-            }*/
+            }
         }
          
         return convertView;
@@ -161,6 +169,29 @@ public class GridAdapter extends BaseAdapter {
     	}
     	return jCode; 
     }
+    
+		    /*
+		    private String getLessonColorband(int pos){
+		    	int i=0;
+		    	String jcolorband=null;
+		    	for(Lesson l : lessons) {
+		    		String startTime = l.getStarttime();
+		    		String endTime = l.getEndtime(); 
+		    		int durTotal = Integer.parseInt(endTime) - Integer.parseInt(startTime);
+		    		int reps = durTotal/100;
+		    		int dbPos = Integer.parseInt(l.GetyPos());
+		    		int extPos = dbPos + (6*(reps-1));
+		    		if(pos==dbPos || pos==extPos){ 
+		    			
+		    			jcolorband = l.getColorband();
+		    				
+		    		}
+		    		
+		    	}
+		    	return jcolorband; 
+			
+		    }*/
+    
     
     private void setLessonBg(int pos, TextView v){
     	int i=0;

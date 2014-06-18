@@ -18,7 +18,7 @@
             android:layout_alignParentTop="true"
             android:text="Large Text"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/lesson_code" />
+            android:textColor="@color/ntv_blue" />
 
         <TextView
             android:id="@+id/txtAssSDescription"
@@ -51,7 +51,7 @@
             android:layout_toRightOf="@+id/imgDuration"
             android:text="Small Text"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/lesson_code" />
+            android:textColor="@color/ntv_blue" />
 
         <ImageView
             android:id="@+id/imgDuration"

@@ -60,7 +60,7 @@ public class TodayLessonsListView extends ListView implements android.widget.Ada
     @Override
 	public void onItemClick(AdapterView<?> adapter, View v, int position, long id) {
     	if(lessonClickListener != null){
-    		lessonClickListener.onLessonClicked(lessons.get(position));
+    		lessonClickListener.onLessonClicked(lessons.get(position), position);
         }
 		
 	}

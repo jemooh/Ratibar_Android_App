@@ -28,6 +28,19 @@ public class Assignment implements Serializable {
      * @return the UnitId of the assignment
      */
     public String getUnitId(){
+    	
+    /**
+    	 private void start() {
+    		    long time = System.currentTimeMillis();
+    		    Date d = new Date(time);
+    		    Timestamp t = new Timestamp(time);
+    		    t.setNanos(123456789);
+    		    System.out.println(d);
+    		    System.out.println(t);
+    		    DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss'.'");
+    		    NumberFormat nf = new DecimalFormat("000000000");
+    		    System.out.println(df.format(t.getTime()) + nf.format(t.getNanos()));
+    	*/
         return unitId;
     }
     

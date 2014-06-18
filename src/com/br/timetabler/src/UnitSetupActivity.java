@@ -29,7 +29,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.br.timetabler.R;
 import com.br.timetabler.adapter.UnitsAdapter;
 import com.br.timetabler.model.Unit;
-import com.br.timetabler.util.DatabaseHandler;
+import com.br.timetabler.util.DatabaseHandler_joe;
 import com.br.timetabler.util.ServerInteractions;
 import com.br.timetabler.widget.UnitsListView;
 
@@ -46,7 +46,7 @@ public class UnitSetupActivity extends SherlockActivity {
     JSONObject json;
     String errorMsg;
     String res;
-    DatabaseHandler db; 
+    DatabaseHandler_joe db; 
     RegisterUnitsTask regUnitsTask;
     private static String KEY_SUCCESS = "success";
     
@@ -152,7 +152,7 @@ public class UnitSetupActivity extends SherlockActivity {
                 	res = json.getString(KEY_SUCCESS);
                     if(Integer.parseInt(res) == 1){
                         // user successfully registred, Store user details in SQLite Database
-                        db = new DatabaseHandler(getApplicationContext());
+                        db = new DatabaseHandler_joe(getApplicationContext());
                         json_user = json.getJSONObject("data");
                     }else{
                         // Error in registration

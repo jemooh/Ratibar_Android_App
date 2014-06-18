@@ -28,5 +28,6 @@
     <color name="comment_author">#ff5e0e</color>
     <color name="comment_grey">#cccccc</color>
     <color name="color_white">#ffffff</color>
+    <color name="c1">#FF3c61c1</color>
 
 </resources>

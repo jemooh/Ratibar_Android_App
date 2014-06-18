@@ -30,26 +30,28 @@ public class GetLessonsTask implements Runnable {
     private final Handler replyTo;
     // The user we are querying on server for lessons
     
-    private String SearchQuery;
+    private String userReg_no;
     private String Url;
-    private static String MainURL = "http://10.0.2.2/timetabler";
-    //private static String MainURL = "http://www.tujenge-ea.com/ti";
+    private static String MainURL = "http://10.0.2.2/lessons_data2.php";
+     //private static String MainURL = "http://dev.ratibar.com/app/mobile_lessonsList.php?email=student@gmail.com&password=okatch/";
     /**
      * Don't forget to call run(); to start this task
      * @param replyTo - the handler you want to receive the response when this task has finished
      * @param username - the username of who on YouTube you are browsing
      */
-    public GetLessonsTask(Handler replyTo, String dayId, boolean Search, String SearchQuery) {
+    public GetLessonsTask(Handler replyTo, String dayId, boolean fullGrid, String userReg_no, String userPassword) {
         this.replyTo = replyTo;
-        this.SearchQuery = SearchQuery;
-        if(Search) {
-        	if(SearchQuery !="") {
-        		this.Url = MainURL + "/lessonsList.php?q="+ SearchQuery;
+        this.userReg_no = userReg_no;
+        if(fullGrid) {
+        	if(userReg_no !="") {
+        		this.Url = MainURL + "/lessons_data2.php?reg_no="+ userReg_no + "&password="+userPassword;
+        		//this.Url = "http://dev.ratibar.com/app/mobile_lessonsList.php?email=student@gmail.com&password=okatch/";
         	}
         } else {
-        	this.Url = MainURL + "/lessonsList.php?dy="+dayId;
+        	this.Url = MainURL + "/lessons_data2?day_id="+dayId;
+        	
         }
-        //Log.i(this.Url);
+        Log.i(this.Url);
         
     }
     
@@ -67,6 +69,7 @@ public class GetLessonsTask implements Runnable {
             // Convert this response into a readable string
             String jsonString = StreamUtils.convertToString(response.getEntity().getContent());
             // Create a JSON object that we can use from the String
+            Log.i(jsonString);
             JSONObject json = new JSONObject(jsonString);
             Bundle data = new Bundle();
             
@@ -89,6 +92,7 @@ public class GetLessonsTask implements Runnable {
 	                JSONObject jsonObject = jsonArray.getJSONObject(i);	                
 	                String lessonId = jsonObject.getString("unit_id");
 	                String lessonCode = jsonObject.getString("unit_acronyms");
+	                String lessonColorband = jsonObject.getString("color_band");
 	                String lessonTitle = jsonObject.getString("unit_names");
 	                String lessonTeacher = jsonObject.getString("teacher");
 	                String lessonStartTime = jsonObject.getString("unit_time_start");
@@ -98,7 +102,7 @@ public class GetLessonsTask implements Runnable {
 	                String lessonyPos = jsonObject.getString("yPos"); 
 	                
 	                // Create the video object and add it to our list
-	                lessons.add(new Lesson(lessonId, lessonCode, lessonTitle, lessonTeacher, lessonStartTime, lessonEndTime, lessonLocation, lessonDayId, lessonyPos));
+	                lessons.add(new Lesson(lessonId, lessonCode,lessonColorband, lessonTitle, lessonTeacher, lessonStartTime, lessonEndTime, lessonLocation, lessonDayId, lessonyPos));
 	            }
             
 	            // Create a library to hold our lessons

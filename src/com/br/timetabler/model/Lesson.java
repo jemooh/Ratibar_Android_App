@@ -14,6 +14,7 @@ public class Lesson implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String lessonId;
     private String code;
+    private String colorband;
     private String title;
     private String teacher;
     private String starttime, endtime;
@@ -21,11 +22,12 @@ public class Lesson implements Serializable {
     private String dayId;
     private String yPos;
      
-    public Lesson(String lessonId, String code, String title, String teacher, 
+    public Lesson(String lessonId, String code,String colorband, String title, String teacher, 
     		String starttime, String endtime, String location, String dayId, String yPos) {
         super();
         this.lessonId = lessonId;
         this.code = code;
+        this.colorband = colorband;
         this.title = title;
         this.teacher = teacher;
         this.starttime = starttime;
@@ -47,6 +49,10 @@ public class Lesson implements Serializable {
      */
     public String getCode(){
         return code;
+    }
+    
+    public String getColorband(){
+        return colorband;
     }
  
     public String getTitle(){
