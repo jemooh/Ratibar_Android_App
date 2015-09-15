@@ -18,59 +18,71 @@
 <PreferenceScreen
         xmlns:android="http://schemas.android.com/apk/res/android">
      
-	<PreferenceCategory android:title="Courses and Units">
+	<PreferenceCategory android:title=" Units"
+	                    android:textSize="10px">
         <PreferenceScreen
-                android:title="Add Courses and Units"
-                android:summary="Add more course and units to your account">
-            <intent 
+                android:title="Add and drop Units"
+                android:textSize="10px"
+                 android:icon="@drawable/units"
+                android:summary="Add or drop units from your account">
+           <!--  <intent 
                 android:action="android.intent.action.VIEW"
                 android:targetPackage="com.br.timetabler"
-                android:targetClass="com.br.timetabler.src.CourseEditActivity"/>
+                android:targetClass="com.br.timetabler.src.CourseEditActivity"/>-->
         </PreferenceScreen>
-        <EditTextPreference
+        <!-- <EditTextPreference
                 android:key="edittext_preference" 
+                android:textSize="20px"
                 android:title="Share your Course settings with a friend"
                 android:summary="You can share your Course settings with a friend who takes same courses and units as you"
-                android:dialogTitle="Enter friend's email address" />
+                android:dialogTitle="Enter friend's email address" />-->
     </PreferenceCategory>
     <PreferenceCategory
-            android:title="launch Preferences">
+            android:title="launch Preferences"
+            android:textSize="10px">
 
         <PreferenceScreen
-                android:title="About"
-                android:summary="About this App">
+                android:title="About us"
+                android:icon="@drawable/about_a"
+                android:textSize="10px" >
+               
             <intent 
                 android:action="android.intent.action.VIEW"
                 android:targetPackage="com.br.timetabler"
                 android:targetClass="com.br.timetabler.src.AboutUsActivity"                
                 />
         </PreferenceScreen>
-
+  <!-- 
         <PreferenceScreen
                 android:title="Login"
-                android:summary="You need to login to post comments">
+                 android:icon="@drawable/login"
+                android:textSize="10px">
             <intent 
                 android:action="android.intent.action.VIEW"
                 android:targetPackage="com.br.timetabler"
                 android:targetClass="com.br.timetabler.src.LoginActivity"/>
-        </PreferenceScreen>
-
+        </PreferenceScreen>-->
+        
         <PreferenceScreen
-                android:title="Register"
-                android:summary="Add your name and email to post comments">
+                android:title="Logout"
+                 android:icon="@drawable/logout"
+                android:textSize="10px">
             <intent 
                 android:action="android.intent.action.VIEW"
                 android:targetPackage="com.br.timetabler"
-                android:targetClass="com.br.timetabler.src.RegisterActivity"/>
+                android:targetClass="com.br.timetabler.src.LogOutActivity"/>
         </PreferenceScreen>
+        
     </PreferenceCategory>
     
-    <PreferenceCategory
-            android:title="Time Settings">
+   <!--  <PreferenceCategory
+            android:title="Time Settings"
+            android:textSize="10px">
 
         <ListPreference
                 android:key="timeformat_preference"
                 android:title="Set Time Format"
+                android:textSize="10px"
                 android:summary="Set the Time Format to use"
                 android:entries="@array/timeformat_array_list_preference"
                 android:entryValues="@array/timeformat_values_list_preference"
@@ -79,6 +91,7 @@
         <ListPreference
                 android:key="weekstarts_preference" 
                 android:title="Week Starts"
+                android:textSize="10px"
                 android:summary="Set the day when your week starts"
                 android:entries="@array/weekstarts_array_list_preference"
                 android:entryValues="@array/weekstarts_value_list_preference"
@@ -87,31 +100,37 @@
         <ListPreference
                 android:key="update_frequency_preference" 
                 android:title="Update Frequency"
+                android:textSize="20px"
                 android:summary="How often to update your app from the cloud "
                 android:entries="@array/updatefrequency_array_list_preference"
                 android:entryValues="@array/updatefrequency_value_list_preference"
                 android:dialogTitle="Update Frequency" />
 
-    </PreferenceCategory>
+    </PreferenceCategory>-->
 
     <PreferenceCategory
-            android:title="Notification Settings">
+            android:title="Notification Settings"
+            android:textSize="20px">
 
         <CheckBoxPreference
                 android:key="parent_notification_checkbox_preference"
                 android:title="Enable Notifications"
+                android:icon="@drawable/notification"
                 android:summary="Enable your phone to receive notification alerts" />
 
          <!-- The visual style of a child is defined by this styled theme attribute. --> 
         <CheckBoxPreference
                 android:key="child_upcoming_lessonscheckbox_preference"
+                android:icon="@drawable/bullet"
                 android:dependency="parent_notification_checkbox_preference"
                 android:layout="?android:attr/preferenceLayoutChild"
                 android:title="Upcoming Lessons"
+                android:textSize="20px"
                 android:summary="Alert me for Upcoming Lessons" />
 
         <CheckBoxPreference
                 android:key="child_new_comment_checkbox_preference"
+                android:icon="@drawable/bullet"
                 android:dependency="parent_notification_checkbox_preference"
                 android:layout="?android:attr/preferenceLayoutChild"
                 android:title="New Comment"
@@ -119,6 +138,7 @@
 
         <CheckBoxPreference
                 android:key="child_new_assignment_checkbox_preference"
+                android:icon="@drawable/bullet"
                 android:dependency="parent_notification_checkbox_preference"
                 android:layout="?android:attr/preferenceLayoutChild"
                 android:title="New Assignment"
@@ -128,12 +148,23 @@
 
     <PreferenceCategory
             android:title="Updating">
-
-        <CheckBoxPreference
-                android:key="auto_update_yes"
-                android:title="Automatic Updates"
-                android:defaultValue="true"
-                android:summary="Turn On/Off Automatic Updates" />
+         <CheckBoxPreference
+	            android:key="perform_updates"
+	            android:icon="@drawable/update"
+	            android:summary="Enable or disable data updates"
+	            android:title="Enable updates"
+	            android:defaultValue="true"/>
+	         
+	        <ListPreference
+	            android:key="updates_interval"
+	            android:icon="@drawable/update_i"
+	            android:title="Updates interval"
+	            android:summary="Define how often updates will be performed"
+	            android:defaultValue="1000"
+	            android:entries="@array/updateInterval"
+	            android:entryValues="@array/updateIntervalValues"
+	            android:dependency="perform_updates" />  
+       
 
     </PreferenceCategory>
     

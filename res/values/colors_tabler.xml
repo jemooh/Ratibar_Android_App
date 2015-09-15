@@ -29,5 +29,12 @@
     <color name="comment_grey">#cccccc</color>
     <color name="color_white">#ffffff</color>
     <color name="c1">#FF3c61c1</color>
+    
+    <color name="dark_grey">#858585</color>
+    <color name="black">#010101</color>
+    <color name="less_grey">#606060</color>
+    <color name="light_gry">#d5d5d5</color>
+    <color name="rati_gry">#EFEFEF</color>
+    <color name="green">#5BB75B</color>
 
 </resources>

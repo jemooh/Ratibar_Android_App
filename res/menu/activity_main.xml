@@ -1,32 +1,66 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-
-    <item android:id="@+id/menu_list"
-        android:title="@string/menu_list"
-        android:orderInCategory="1"
-        android:showAsAction="always"
-        android:icon="@drawable/collections_view_as_list" />
-    
-    <item android:id="@+id/menu_grid"
-        android:title="@string/menu_grid"
-        android:orderInCategory="2"
-        android:showAsAction="always"
-        android:icon="@drawable/collections_view_as_grid" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android" 
+  xmlns:timetabler="http://schemas.android.com/apk/res-auto">
+  
     
     <!--<item android:id="@+id/menu_attachments"
         android:title="@string/menu_attachments"
         android:orderInCategory="3"
         android:showAsAction="always"	
-        android:icon="@drawable/content_attachment" />-->
-     <item android:id="@+id/menu_assignments"
-        android:title="@string/menu_assignments"
-        android:orderInCategory="3"
-        android:showAsAction="always"	
-        android:icon="@drawable/action_assignments" />
-     <item
-        android:id="@+id/menu_settings"
-        android:orderInCategory="100"
-        android:showAsAction="always"
-        android:title="@string/menu_settings"
-        android:icon="@drawable/action_settings"/>
-
+        android:icon="@drawable/content_attachment" />
+        
+			        
+			  <item
+			        android:id="@+id/a_More"
+			        android:icon="@drawable/ic_action_overflow"
+			        timetabler:showAsAction="always"
+			        android:orderInCategory="100"
+			        android:title="@string/action_more" />-->
+			       
+			
+			      <item android:id="@+id/menu_assignments"
+			        android:title="@string/menu_assignments"
+			        android:orderInCategory="1"	
+			        timetabler:showAsAction="never|withText"
+			        android:showAsAction="never|withText"
+			        android:icon="@drawable/ccollections_collection" />
+			     
+			     <item android:id="@+id/menu_list"
+			        android:title="@string/menu_list"
+			        android:orderInCategory="2"
+			        timetabler:showAsAction="never|withText"
+			        android:showAsAction="never|withText"
+			        android:icon="@drawable/ccollections_view_as_list" />
+			     
+			     
+			     
+			     <item android:id="@+id/menu_grid"
+				        android:title="@string/menu_grid"
+				        android:orderInCategory="2"
+				        timetabler:showAsAction="always"
+				        android:showAsAction="never|withText"	
+				        android:icon="@drawable/ccollections_view_as_grid" />
+			     
+			     <item
+			        android:id="@+id/profile"
+			        android:orderInCategory="4"
+			        timetabler:showAsAction="never|withText"
+			        android:showAsAction="never|withText"	
+			        android:title="@string/user"
+			        android:icon="@drawable/social_person_white"/>
+			     
+			     <!--<item
+			        android:id="@+id/menu_refresh"
+			        android:orderInCategory="1"
+			        timetabler:showAsAction="always"
+			        android:title="@string/menu_refresh"
+			        android:icon="@drawable/nnavigation_refresh"/>-->
+			     
+			    <item
+			        android:id="@+id/menu_settings"
+			        android:orderInCategory="100"
+			        timetabler:showAsAction="never|withText"
+			        android:showAsAction="never|withText"		
+			        android:title="@string/menu_settings"
+			        android:icon="@drawable/aaaction_settings"/>
+			 
 </menu>

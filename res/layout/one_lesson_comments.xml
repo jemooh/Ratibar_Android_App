@@ -2,64 +2,70 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#0000"
+    android:background="@color/color_white"
     android:orientation="vertical"
     android:paddingBottom="7dp" >
 
-			    
-			     <com.br.timetabler.widget.CommentsListView
-			         android:id="@+id/commentsListView"
-			         android:layout_width="wrap_content"
-			         android:layout_height="wrap_content"
-			         android:layout_marginTop="20dp"
-			         android:background="@color/grey_bg"
-			         android:cacheColorHint="@android:color/transparent" />
-			     
-			     	
-				    <ProgressBar
-				        android:id="@+id/pbppl"
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				        android:layout_centerInParent="true"
-				        android:layout_gravity="center" />
-				
-				    <TextView
-				        android:id="@+id/progressMsg2"
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				        android:layout_below="@+id/pbppl"
-				        android:layout_centerHorizontal="true"
-				        android:layout_centerInParent="true"
-				        android:layout_centerVertical="true"
-				        android:layout_gravity="center"
-				        android:padding="10dp"
-				        android:text="Loading Comments..." />
-				  
-			     <RelativeLayout
-					       android:layout_width="fill_parent"
-					       android:layout_height="wrap_content"
-					       android:orientation="vertical" >
-					
-						       <EditText
-						           android:id="@+id/edtcomments"
-						           android:layout_width="177dp"
-						           android:layout_height="wrap_content"
-						           android:layout_alignParentLeft="true"
-						           android:layout_toLeftOf="@+id/btnAddComments"
-						           android:hint="Add comment"
-						           android:inputType="textMultiLine" >
-						       </EditText>
-						
-						       <Button
-						           android:id="@+id/btnAddComments"
-						           style="?android:attr/buttonStyleSmall"
-						           android:layout_width="wrap_content"
-						           android:layout_height="40dp"
-						           android:layout_alignParentRight="true"
-						           android:layout_alignParentTop="true"
-						           android:onClick="onClickAdd"
-						           android:text="Send" />
-					   </RelativeLayout>
-			
+    <ListView
+        android:id="@+id/commentsListView"
+        android:layout_width="wrap_content"
+        android:layout_height="91dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="0.35"
+        android:background="@color/color_white"
+        android:cacheColorHint="@android:color/transparent" />
+
+    <ProgressBar
+        android:id="@+id/pbppl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@xml/progress" />
+
+    <TextView
+        android:id="@+id/progressMsg2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pbppl"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:text="Loading Comments..." />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <Button
+            android:id="@+id/btnAddComment"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/btn_blue_round_bg"
+            android:text="Add"
+            android:textColor="@color/color_white"
+            android:textStyle="normal" />
+
+        <EditText
+            android:id="@+id/edtcomment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/btnAddComment"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/btnAddComment"
+            android:ems="10"
+            android:inputType="textMultiLine" >
+
+            <requestFocus />
+        </EditText>
+    </RelativeLayout>
 
 </LinearLayout>

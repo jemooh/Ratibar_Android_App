@@ -10,8 +10,6 @@ import java.util.HashMap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.actionbarsherlock.app.SherlockActivity;
 import com.br.timetabler.R;
 import com.br.timetabler.model.AssignmentLibrary;
 import com.br.timetabler.model.Comment;
@@ -35,6 +33,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -51,7 +50,7 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class One_Lesson_Notes extends SherlockActivity  {
+public class One_Lesson_Notes extends ActionBarActivity  {
 
 	String unit_id,userId;
 	AlertDialog alertDialog;

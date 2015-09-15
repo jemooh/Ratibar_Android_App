@@ -31,9 +31,7 @@ public class Log {
             android.util.Log.i(TAG, Thread.currentThread().getName() +"| "+ msg, e);
     }
      
-    public static void e(String msg){
-        e(msg, null);
-    }
+   
      
     public static void e(String msg, Throwable e){
         if(!live)

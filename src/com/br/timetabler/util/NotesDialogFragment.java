@@ -35,20 +35,18 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.br.timetabler.R;
 import com.br.timetabler.model.Lesson;
 import com.br.timetabler.model.LessonLibrary;
 import com.br.timetabler.service.task.GetLessonsTask;
 import com.br.timetabler.util.DatabaseHandler_joe;
-import com.br.timetabler.util.MyDialogFragment;
+import com.br.timetabler.util.FeedbackDialogFragment;
+import com.br.timetabler.adapter.LessonNotesCursorAdapter;
 import com.br.timetabler.listener.LessonClickListener;
 import com.br.timetabler.util.ServerInteractions;
 import com.br.timetabler.widget.TodayLessonsListView;
@@ -70,13 +68,15 @@ import com.br.timetabler.widget.TodayLessonsListView;
 	    JSONObject json;
 	    String errorMsg, successMsg;
 	    String res; 
+		private LessonNotesCursorAdapter customAdapter;
+	    private NotesDataHelper databaseHelper;
 	    DatabaseHandler_joe dbHandler;
 	    boolean mDualPane;
 		
 	
-		public static MyDialogFragment newInstance(int id){
+		public static NotesDialogFragment newInstance(int id){
 			
-			MyDialogFragment dialogFragment = new MyDialogFragment();
+			NotesDialogFragment dialogFragment = new NotesDialogFragment();
 			Bundle bundle = new Bundle();
 			bundle.putInt("id", id);
 			dialogFragment.setArguments(bundle);
@@ -93,10 +93,10 @@ import com.br.timetabler.widget.TodayLessonsListView;
 			switch (id) {
 				case NOTES_DIALOG:
 			 		inflater = LayoutInflater.from(getActivity());
-			 		dialogview = inflater.inflate(R.layout.add_notes, null);
+			 		dialogview = inflater.inflate(R.layout.note_lay, null);
 		 
 			 		dialogbuilder = new AlertDialog.Builder(getActivity());
-			 		dialogbuilder.setTitle("ADD YOUR NOTES!");
+			 		//5dialogbuilder.setTitle("NEW NOTES");
 			 		//dialogbuilder.setIcon(R.drawable.reviews);
 			 		dialogbuilder.setView(dialogview);
 			 		dialogDetails = dialogbuilder.create();	  
@@ -118,9 +118,9 @@ import com.br.timetabler.widget.TodayLessonsListView;
 				  	
 				  	case NOTES_DIALOG:
 			  			alertDialog = (AlertDialog) dialog;
-			  			Button btnShareNotes = (Button) alertDialog.findViewById(R.id.btn_share);
-			  			Button btnSaveNotes = (Button) alertDialog.findViewById(R.id.btn_save);
-			  			Button cancelbutton = (Button) alertDialog.findViewById(R.id.btn_cancel);
+			  			ImageButton btnShareNotes = (ImageButton) alertDialog.findViewById(R.id.btn_share);
+			  			ImageButton btnSaveNotes = (ImageButton) alertDialog.findViewById(R.id.btn_save);
+			  			ImageButton cancelbutton = (ImageButton) alertDialog.findViewById(R.id.btn_cancel);
 			  			final EditText txtAddNotes = (EditText) alertDialog.findViewById(R.id.txtAddNotes);
 					   
 			  			btnShareNotes.setOnClickListener(new View.OnClickListener() {
@@ -128,13 +128,14 @@ import com.br.timetabler.widget.TodayLessonsListView;
 			  				@Override
 			  				public void onClick(View v) {
 			  					String notes = txtAddNotes.getText().toString();
+			  					String currentTime = giveDateTime();
 			  					alertDialog.dismiss();
 		
-			  					
+			  					//
 			  					//start task
-			  	                MyNotesParams params = new MyNotesParams(unit_id, notes);
+			  	              /*  MyNotesParams params = new MyNotesParams(unit_id,currentTime, notes);
 			  	              notesTsk = new SaveNotesTask();
-			  	              notesTsk.execute(params);
+			  	              notesTsk.execute(params);*/
 			  				}
 			  			});
 			 
@@ -143,21 +144,17 @@ import com.br.timetabler.widget.TodayLessonsListView;
 			  				@Override
 			  				public void onClick(View v) {
 			  					String notes = txtAddNotes.getText().toString();
+			  					String currentTime = giveDateTime();
 			  					alertDialog.dismiss();
 		
 			  					
 			  					//start task
-			  	                MyNotesParams params = new MyNotesParams(unit_id, notes);
+			  	                MyNotesParams params = new MyNotesParams(unit_id,currentTime, notes);
 			  	              notesTsk = new SaveNotesTask();
 			  	              notesTsk.execute(params);
 			  				}
 			  			});
 			 
-			  			
-			  			
-			  			
-			  			
-			  			
 			  			cancelbutton.setOnClickListener(new View.OnClickListener() {
 			 
 			  				@Override
@@ -168,39 +165,13 @@ import com.br.timetabler.widget.TodayLessonsListView;
 			  			break;
 			  	}
 			}
-				  	
-				  	/*
-				  		case NOTES_DIALOG:
-				  			alertDialog = (AlertDialog) dialog;
-				  			btn_submit = (Button) alertDialog.findViewById(R.id.btn_submit);
-				  			Button cancelbutton = (Button) alertDialog.findViewById(R.id.btn_cancel);
-				  			final EditText txtAddFeedback = (EditText) alertDialog.findViewById(R.id.txtAddFeedback);
-						   
-				  			btn_submit.setOnClickListener(new View.OnClickListener() {
-				 
-				  				@Override
-				  				public void onClick(View v) {
-				  					String comments = txtAddFeedback.getText().toString();
-				  					alertDialog.dismiss();
+				 //Getting current time/date
+			 public String giveDateTime() {
+			       Calendar cal = Calendar.getInstance();
+			       SimpleDateFormat currentDate = new SimpleDateFormat("MMM/dd/yyyy HH:mm ");
+			       return currentDate.format(cal.getTime());
+			    }
 			
-				  					//start task
-				  	                MyCommentParams params = new MyCommentParams(comments);
-				  	                feedBackTsk = new SaveFeedbackTask();
-				  	                feedBackTsk.execute(params);
-				  				}
-				  			});
-				 
-				  			cancelbutton.setOnClickListener(new View.OnClickListener() {
-				 
-				  				@Override
-				  				public void onClick(View v) {
-				  					alertDialog.dismiss();
-				  				}
-				  			});
-				  			break;
-				  	}
-				}
-			*/
 	
 			private class SaveNotesTask extends AsyncTask<MyNotesParams, Void, String> {
 		        @Override
@@ -208,13 +179,15 @@ import com.br.timetabler.widget.TodayLessonsListView;
 		        	userFunction = new ServerInteractions();
 		//
 		        	String unit_id = params[0].unit_id;
+		        	String time = params[0].currentTime;
 		        	String notesContent = params[0].notesContent;
-		        	db = new DatabaseHandler_joe(getActivity());
-		        	HashMap<String,String> user = new HashMap<String,String>();
-		        	user = db.getUserDetails();
-		        	String userId = user.get("uid");
+		        	
+		        	 databaseHelper.insertData(time,unit_id,notesContent);
+			            
+			            customAdapter.changeCursor(databaseHelper.getAllData());
+			            successMsg = "Something went wrong, please verify your sentence";
 		    //james    	//json = userFunction.postNotes(notesContent, userId, unit_id); //100 refers to example user id
-		            try {
+		           /* try {
 		                if (json.getString(KEY_SUCCESS) != null) {
 		                	errorMsg = "";
 		                    res = json.getString(KEY_SUCCESS);
@@ -227,7 +200,7 @@ import com.br.timetabler.widget.TodayLessonsListView;
 		                }
 		            } catch (JSONException e) {
 		                e.printStackTrace();
-		            }
+		            }*/
 					return successMsg; 
 		        }
 		        
@@ -249,11 +222,12 @@ import com.br.timetabler.widget.TodayLessonsListView;
 		    }
 			
 			private static class MyNotesParams {
-		        String userId, unit_id, notesContent;
+		        String currentTime, unit_id, notesContent;
 		        
 		
-		        MyNotesParams(String unit_id, String notesContent) {
+		        MyNotesParams(String unit_id,String currentTime, String notesContent) {
 		            this.unit_id = unit_id;
+		            this.currentTime = currentTime;
 		            this.notesContent = notesContent;
 		            
 		        }

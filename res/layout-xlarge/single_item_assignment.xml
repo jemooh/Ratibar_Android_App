@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@color/color_white"
+    android:padding="10dp" >
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtCodel"
+        android:layout_below="@+id/txtCodel"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/black_bg"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/txtCodel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/txtTimes"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/ntv_blue"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/dateCreated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtTitle"
+        android:layout_below="@+id/txtTitle"
+        android:layout_marginTop="10dp"
+        android:text="test text"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/black_bg"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/dateDue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/dateCreated"
+        android:layout_alignBottom="@+id/dateCreated"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="38dp"
+        android:text="TextView"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/black_bg"
+        android:textSize="10sp" />
+
+</RelativeLayout>

@@ -8,102 +8,62 @@ package com.jess.ui;
 
 public final class R {
 	public static final class attr {
-		public static final int alignmentMode = 0x7f010077;
-		public static final int cacheColorHint = 0x7f010068;
-		public static final int columnCount = 0x7f010075;
-		public static final int columnOrderPreserved = 0x7f010079;
-		public static final int columnWidth = 0x7f01006f;
-		public static final int drawSelectorOnTop = 0x7f010064;
-		public static final int gravity = 0x7f010061;
-		public static final int gridViewStyle = 0x7f010062;
-		public static final int horizontalSpacing = 0x7f01006c;
-		public static final int layout_column = 0x7f01007c;
-		public static final int layout_columnSpan = 0x7f01007d;
-		public static final int layout_gravity = 0x7f01007e;
-		public static final int layout_row = 0x7f01007a;
-		public static final int layout_rowSpan = 0x7f01007b;
-		public static final int listSelector = 0x7f010063;
-		public static final int numColumns = 0x7f010071;
-		public static final int numRows = 0x7f010072;
-		public static final int orientation = 0x7f010073;
-		public static final int rowCount = 0x7f010074;
-		public static final int rowHeight = 0x7f010070;
-		public static final int rowOrderPreserved = 0x7f010078;
-		public static final int scrollDirectionLandscape = 0x7f01006b;
-		public static final int scrollDirectionPortrait = 0x7f01006a;
-		public static final int scrollingCache = 0x7f010066;
-		public static final int smoothScrollbar = 0x7f010069;
-		public static final int stackFromBottom = 0x7f010065;
-		public static final int stretchMode = 0x7f01006e;
-		public static final int transcriptMode = 0x7f010067;
-		public static final int useDefaultMargins = 0x7f010076;
-		public static final int verticalSpacing = 0x7f01006d;
-	}
-	public static final class dimen {
-		public static final int default_gap = 0x7f080011;
+		public static final int cacheColorHint = 0x7f010013;
+		public static final int columnWidth = 0x7f01001a;
+		public static final int drawSelectorOnTop = 0x7f01000f;
+		public static final int gravity = 0x7f01000c;
+		public static final int gridViewStyle = 0x7f01000d;
+		public static final int horizontalSpacing = 0x7f010017;
+		public static final int listSelector = 0x7f01000e;
+		public static final int numColumns = 0x7f01001c;
+		public static final int numRows = 0x7f01001d;
+		public static final int rowHeight = 0x7f01001b;
+		public static final int scrollDirectionLandscape = 0x7f010016;
+		public static final int scrollDirectionPortrait = 0x7f010015;
+		public static final int scrollingCache = 0x7f010011;
+		public static final int smoothScrollbar = 0x7f010014;
+		public static final int stackFromBottom = 0x7f010010;
+		public static final int stretchMode = 0x7f010019;
+		public static final int transcriptMode = 0x7f010012;
+		public static final int verticalSpacing = 0x7f010018;
 	}
 	public static final class drawable {
-		public static final int icon = 0x7f020099;
-		public static final int spinner_black_76 = 0x7f0200ba;
+		public static final int icon = 0x7f0200e5;
+		public static final int spinner_black_76 = 0x7f020167;
 	}
 	public static final class id {
-		public static final int alignBounds = 0x7f050025;
-		public static final int alignMargins = 0x7f050026;
-		public static final int alwaysScroll = 0x7f05001d;
-		public static final int auto_fit = 0x7f050024;
-		public static final int bottom = 0x7f050011;
-		public static final int center = 0x7f050018;
-		public static final int center_horizontal = 0x7f050016;
-		public static final int center_vertical = 0x7f050014;
-		public static final int clip_horizontal = 0x7f05001b;
-		public static final int clip_vertical = 0x7f05001a;
-		public static final int columnWidth = 0x7f050022;
-		public static final int disabled = 0x7f05001c;
-		public static final int end = 0x7f050028;
-		public static final int fill = 0x7f050019;
-		public static final int fill_horizontal = 0x7f050017;
-		public static final int fill_vertical = 0x7f050015;
-		public static final int gridview = 0x7f05004e;
-		public static final int horizontal = 0x7f05001f;
-		public static final int left = 0x7f050012;
-		public static final int none = 0x7f050020;
-		public static final int normal = 0x7f050001;
-		public static final int right = 0x7f050013;
-		public static final int spacingWidth = 0x7f050021;
-		public static final int spacingWidthUniform = 0x7f050023;
-		public static final int start = 0x7f050027;
-		public static final int top = 0x7f050010;
-		public static final int vertical = 0x7f05001e;
+		public static final int alwaysScroll = 0x7f0c0033;
+		public static final int auto_fit = 0x7f0c003b;
+		public static final int bottom = 0x7f0c0027;
+		public static final int center = 0x7f0c0028;
+		public static final int center_horizontal = 0x7f0c0029;
+		public static final int center_vertical = 0x7f0c002a;
+		public static final int clip_horizontal = 0x7f0c002b;
+		public static final int clip_vertical = 0x7f0c002c;
+		public static final int columnWidth = 0x7f0c0037;
+		public static final int disabled = 0x7f0c0034;
+		public static final int fill = 0x7f0c002d;
+		public static final int fill_horizontal = 0x7f0c002e;
+		public static final int fill_vertical = 0x7f0c002f;
+		public static final int gridview = 0x7f0c0094;
+		public static final int horizontal = 0x7f0c0035;
+		public static final int left = 0x7f0c0030;
+		public static final int none = 0x7f0c0038;
+		public static final int normal = 0x7f0c0023;
+		public static final int right = 0x7f0c0031;
+		public static final int spacingWidth = 0x7f0c0039;
+		public static final int spacingWidthUniform = 0x7f0c003a;
+		public static final int top = 0x7f0c0032;
+		public static final int vertical = 0x7f0c0036;
 	}
 	public static final class layout {
-		public static final int main = 0x7f030024;
+		public static final int main = 0x7f03002b;
 	}
 	public static final class string {
-		public static final int app_name = 0x7f0a000f;
+		public static final int app_name = 0x7f070000;
 	}
 	public static final class styleable {
-		public static final int[] GridLayout = { 0x7f010073, 0x7f010074, 0x7f010075, 0x7f010076, 0x7f010077, 0x7f010078, 0x7f010079 };
-		public static final int[] GridLayout_Layout = { 0x010100f4, 0x010100f5, 0x010100f6, 0x010100f7, 0x010100f8, 0x010100f9, 0x010100fa, 0x7f01007a, 0x7f01007b, 0x7f01007c, 0x7f01007d, 0x7f01007e };
-		public static final int GridLayout_Layout_android_layout_height = 1;
-		public static final int GridLayout_Layout_android_layout_margin = 2;
-		public static final int GridLayout_Layout_android_layout_marginBottom = 6;
-		public static final int GridLayout_Layout_android_layout_marginLeft = 3;
-		public static final int GridLayout_Layout_android_layout_marginRight = 5;
-		public static final int GridLayout_Layout_android_layout_marginTop = 4;
-		public static final int GridLayout_Layout_android_layout_width = 0;
-		public static final int GridLayout_Layout_layout_column = 9;
-		public static final int GridLayout_Layout_layout_columnSpan = 10;
-		public static final int GridLayout_Layout_layout_gravity = 11;
-		public static final int GridLayout_Layout_layout_row = 7;
-		public static final int GridLayout_Layout_layout_rowSpan = 8;
-		public static final int GridLayout_alignmentMode = 4;
-		public static final int GridLayout_columnCount = 2;
-		public static final int GridLayout_columnOrderPreserved = 6;
-		public static final int GridLayout_orientation = 0;
-		public static final int GridLayout_rowCount = 1;
-		public static final int GridLayout_rowOrderPreserved = 5;
-		public static final int GridLayout_useDefaultMargins = 3;
-		public static final int[] TwoWayAbsListView = { 0x7f010063, 0x7f010064, 0x7f010065, 0x7f010066, 0x7f010067, 0x7f010068, 0x7f010069, 0x7f01006a, 0x7f01006b };
+		public static final int[] TwoWayAbsListView = { 0x7f01000e, 0x7f01000f, 0x7f010010, 0x7f010011, 0x7f010012, 0x7f010013, 0x7f010014, 0x7f010015, 0x7f010016 };
 		public static final int TwoWayAbsListView_cacheColorHint = 5;
 		public static final int TwoWayAbsListView_drawSelectorOnTop = 1;
 		public static final int TwoWayAbsListView_listSelector = 0;
@@ -113,7 +73,7 @@ public final class R {
 		public static final int TwoWayAbsListView_smoothScrollbar = 6;
 		public static final int TwoWayAbsListView_stackFromBottom = 2;
 		public static final int TwoWayAbsListView_transcriptMode = 4;
-		public static final int[] TwoWayGridView = { 0x7f010061, 0x7f01006c, 0x7f01006d, 0x7f01006e, 0x7f01006f, 0x7f010070, 0x7f010071, 0x7f010072 };
+		public static final int[] TwoWayGridView = { 0x7f01000c, 0x7f010017, 0x7f010018, 0x7f010019, 0x7f01001a, 0x7f01001b, 0x7f01001c, 0x7f01001d };
 		public static final int TwoWayGridView_columnWidth = 4;
 		public static final int TwoWayGridView_gravity = 0;
 		public static final int TwoWayGridView_horizontalSpacing = 1;

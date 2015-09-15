@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Spinner
+        android:id="@+id/spnCourses"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawSelectorOnTop="true"
+        android:prompt="@string/course_prompt" >
+
+    </Spinner>
+
+    <Spinner 
+        android:id="@+id/spnYear"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:drawSelectorOnTop = "true"
+        android:prompt = "@string/year_prompt">
+    </Spinner>
+
+    <Spinner 
+        android:id="@+id/spnIntake"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:drawSelectorOnTop = "true"
+        android:prompt = "@string/intake_prompt">
+    </Spinner>
+
+    <Spinner 
+        android:id="@+id/spnSemester"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:drawSelectorOnTop = "true"
+        android:prompt = "@string/semester_prompt">
+    </Spinner>
+
+    <TextView
+        android:id="@+id/register_error2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dip"
+        android:textColor="#e30000"
+        android:textStyle="bold" />
+    <Button
+        android:id="@+id/btnSaveCourse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnSubmitCourse" />
+
+</LinearLayout>

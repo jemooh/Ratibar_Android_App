@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.Message;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -35,25 +37,28 @@ public class GetAssignmentsTask implements Runnable {
     
     private String SearchQuery;
     private String Url;
-    private static String MainURL = "http://10.0.2.2/lessons_data.php";
-    //private static String MainURL ="http://dev.ratibar.com/app/mobile_lessonsList.php?email=student@gmail.com&password=okatch/";
+    private static String MainURL = "http://syncsoft.co.ke/timetable/lessons_data2.php";
+    //private static String MainURL ="http://dev.ratibar.com/app/appAssignmentsList.php";
+    //private static String MainURL ="https://www.ratibar.com/app/appAssignmentsList.php";
     //private static String loginURL = MainURL + "/last2.php";
     /**
      * Don't forget to call run(); to start this task
      * @param replyTo - the handler you want to receive the response when this task has finished
      * @param username - the username of who on YouTube you are browsing
      */
-    public GetAssignmentsTask(Handler replyTo, String userId, String unit_id, boolean Search, String SearchQuery) {
+    public GetAssignmentsTask(Handler replyTo, String email, String userPassword, boolean Search, String SearchQuery) {
         this.replyTo = replyTo;
         this.SearchQuery = SearchQuery;
         if(Search) {
         	if(SearchQuery !="") {
-        		this.Url = MainURL + "/mobile_assignmentsList.php?q="+ SearchQuery;
+        		//this.Url = MainURL + "/appAssignmentsList.php?q="+ SearchQuery;
+        		this.Url = MainURL; 
         	}
         } else {
-        	this.Url = MainURL + "/mobile_assignmentsList.php?userId="+userId+"&unitId=" + unit_id;
+        	this.Url = MainURL; // + "/appAssignmentsList.php?userId="+email+"&unitId=" + unit_id;
+        	//this.Url = "https://www.ratibar.com/app/appLessonsList.php?email="+ email + "&password="+userPassword;
         }
-        //Log.i(this.Url);
+        Log.i(this.Url);
         
     }
     
@@ -110,43 +115,9 @@ public class GetAssignmentsTask implements Runnable {
 	                String assDateDue = jsonObject.getString("date_due");
 	                String assStatus = jsonObject.getString("status");
 	                boolean st = assStatus =="1" ? true  : false;
-	                
-	                
-	                /**
-	                
-package test;
-
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-
-public class Main {
-
-  public static void main(String[] args) {
-    Main m = new Main();
-    m.start();
-  }
-
-  private void start() {
-    long time = System.currentTimeMillis();
-    Date d = new Date(time);
-    Timestamp t = new Timestamp(time);
-    t.setNanos(123456789);
-    System.out.println(d);
-    System.out.println(t);
-    DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss'.'");
-    NumberFormat nf = new DecimalFormat("000000000");
-    System.out.println(df.format(t.getTime()) + nf.format(t.getNanos()));
-  }
-}
-	                
-	                */
-	                
-	                
+	               
+	               
+	                   
 	                // Create the video object and add it to our list
 	                assignments.add(new Assignment(unitId, unitCode, assDateCreated, assDateDue, assDescription, st));
 	            }
@@ -177,3 +148,16 @@ public class Main {
 	}
 
 }
+/** Calendar c = Calendar.getInstance();
+	                int t = Integer.parseInt(assDateCreatedU);
+	    		    c.setTimeInMillis(t*1000L);
+	    		    SimpleDateFormat currentDate = new SimpleDateFormat("MM/dd/yy HH:mm ");
+	    		    Log.i( "Hours: " +currentDate.format(c.getTime()));
+	                 String assDateCreated = currentDate.format(c.getTime());
+	                 
+	                 Calendar cal = Calendar.getInstance();
+		                int t2 = Integer.parseInt(assDateDueU);
+		    		    cal.setTimeInMillis(t2*1000L);
+		    		    SimpleDateFormat currentDat = new SimpleDateFormat("MM/dd/yy HH:mm ");
+		    		    Log.i( "Hours: " +currentDat.format(cal.getTime()));
+		                 String assDateDue = currentDate.format(cal.getTime());*/

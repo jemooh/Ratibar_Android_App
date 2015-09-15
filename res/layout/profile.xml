@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true" >
+    
+   <LinearLayout
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:id="@+id/prof"
+			    android:orientation="vertical"
+			    android:padding="5dp" >
+
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:orientation="vertical"
+           android:padding="10dp">
+
+           <ImageView
+               android:id="@+id/imageView1"
+               android:layout_width="150dp"
+               android:layout_height="150dp"
+               android:layout_alignParentLeft="true"
+               android:layout_alignParentTop="true"
+               android:background="@drawable/round_bg"
+               android:padding="2dp"
+               android:src="@drawable/cassie" />
+
+           <TextView
+               android:id="@+id/txtYear"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignLeft="@+id/imageView1"
+               android:layout_below="@+id/imageView1"
+               android:layout_marginTop="141dp"
+               android:text="TextView"
+               android:textSize="13sp" />
+
+           <TextView
+               android:id="@+id/txtIsnt_name"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_above="@+id/txtCourse_name"
+               android:layout_alignLeft="@+id/txtCourse_name"
+               android:layout_marginBottom="22dp"
+               android:text="Medium Text"
+               android:textAppearance="?android:attr/textAppearanceMedium"
+               android:textSize="14sp" />
+
+           <TextView
+               android:id="@+id/txtname"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_above="@+id/txtIsnt_name"
+               android:layout_alignLeft="@+id/txtIsnt_name"
+               android:layout_marginBottom="23dp"
+               android:text="Medium Text"
+               android:textAppearance="?android:attr/textAppearanceMedium"
+               android:textSize="18sp" />
+
+           <TextView
+               android:id="@+id/txtCourse_name"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignBottom="@+id/txtYear"
+               android:layout_alignLeft="@+id/txtYear"
+               android:layout_marginBottom="50dp"
+               android:text="TextView"
+               android:textSize="13sp" />
+
+       </RelativeLayout>
+
+		         <!--  <LinearLayout
+		            android:layout_width="fill_parent"
+		            android:layout_height="wrap_content"
+		            android:layout_alignParentLeft="true"
+		            android:layout_alignParentTop="true"
+		            android:background="@color/rati_gry"
+		            android:gravity="center" >
+		
+		            <TextView
+		                android:id="@+id/txtDateToday"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:gravity="center_vertical"
+		                android:padding="5dp"
+		                android:text="Registered Units"
+		                android:textAppearance="?android:attr/textAppearanceSmall"
+		                android:textColor="@color/black_bg"
+		                android:textColorHint="@color/c1"
+		                android:textSize="12dp" />
+		            </LinearLayout>
+		
+					<ListView
+					    android:id="@+id/unitslistView"
+					    android:layout_width="match_parent"
+					    android:layout_height="wrap_content"
+					    android:fadingEdge="none"
+					    android:listSelector="@drawable/list_selector_t" >
+		
+					          </ListView>
+		
+					<ProgressBar
+					    android:id="@+id/pbppl"
+					    android:layout_width="wrap_content"
+					    android:layout_height="wrap_content"
+					    android:layout_gravity="center_horizontal"
+					    android:indeterminate="true"
+					    android:indeterminateDrawable="@xml/progress" />
+					
+					    <TextView
+					        android:id="@+id/progressMsg2"
+					        android:layout_width="wrap_content"
+					        android:layout_height="wrap_content"
+					        android:layout_below="@+id/pbppl"
+					        android:layout_centerHorizontal="true"
+					        android:layout_centerVertical="true"
+					        android:layout_gravity="center_horizontal"
+					        android:text="Loading Todays Lessons"
+					        android:textColor="@color/less_grey"
+					        android:textSize="10sp" />
+								-->
+          </LinearLayout>
+          
+	</ScrollView>		

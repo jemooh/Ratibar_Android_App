@@ -5,26 +5,28 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.br.timetabler.R;
 import com.br.timetabler.adapter.GridAdapter;
 import com.br.timetabler.model.Lesson;
 import com.br.timetabler.model.LessonLibrary;
 import com.br.timetabler.model.OneCell;
 import com.br.timetabler.service.task.GetLessonsTask;
+import com.br.timetabler.util.DatabaseHandler;
 import com.br.timetabler.util.DatabaseHandler_joe;
 import com.br.timetabler.util.Log;
 import com.br.timetabler.listener.LessonClickListener;
@@ -34,23 +36,23 @@ import com.jess.ui.TwoWayAdapterView.OnItemClickListener;
 import com.jess.ui.TwoWayGridView;
 //import android.widget.AdapterView.OnItemClickListener;
 
-public class MainActivity extends SherlockActivity implements LessonClickListener {
+public class MainActivity extends ActionBarActivity implements LessonClickListener {
 	private TwoWayGridView gridView;
-	int startTime=815, endTime=1715, duration=100,learningDays=6;
+	int startTime, endTime, duration,learningDays;
     int totalCells;
     List<OneCell> gridCells;
     List<Lesson> lessons;
 	private LessonClickListener lessonClickListener;
 	TextView txtMon, txtTue, txtWed, txtThu, txtFri;
 	ServerInteractions server;
-	DatabaseHandler_joe dbHandler;
-	String userId, userReg_no, userPassword;
+	DatabaseHandler dbHandler;
+	String userId, email, userPassword,inst_id;
 	 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		server = new ServerInteractions();
-		dbHandler = new DatabaseHandler_joe(this);
+		dbHandler = new DatabaseHandler(this);
 		
 		//I used this to help in fixing authentication by loging out the user upon loading the app
 		//server.logoutUser(getApplicationContext());
@@ -69,8 +71,8 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
         dbHandler.close();
         
         
-		//if(server.isUserLoggedIn(getApplicationContext())){
-	        setContentView(R.layout.activity_main);
+		if(server.isUserLoggedIn(getApplicationContext())){
+	        setContentView(R.layout.grid_main);
 			
 			txtMon = (TextView) findViewById(R.id.txtMon);
 			txtTue = (TextView) findViewById(R.id.txtTue);
@@ -113,33 +115,33 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
 				}
 			});
 		
-			dbHandler = new DatabaseHandler_joe(getApplicationContext());
+			dbHandler = new DatabaseHandler(getApplicationContext());
         	HashMap<String,String> user = new HashMap<String,String>();
         	user = dbHandler.getUserDetails();
         	userId = user.get("uid");
-        	userReg_no = user.get("reg_no");
+        	email = user.get("email");
         	userPassword = user.get("password");
-        	//inst_id = user.get("inst_id");
-        	//startTime = Integer.parseInt(user.get("globStartTime"));
-        	//endTime = Integer.parseInt(user.get("globEndTime"));
-        	//duration = Integer.parseInt(user.get("globDurationTime"));
-        	//learningDays = Integer.parseInt(user.get("globLearningDays"));
+        	inst_id = user.get("inst_id");
+        	startTime = Integer.parseInt(user.get("startTime"));
+        	endTime = Integer.parseInt(user.get("endTime"));
+        	duration = Integer.parseInt(user.get("duration"));
+        	learningDays = Integer.parseInt(user.get("learningDays"));
         	
         	
 			gridView = (TwoWayGridView) findViewById(R.id.gridview);
 			UpdateGrid(); 
 			getLessonsFeed(gridView);
 		} 
-		/*
+		
 		else {
             // user is not logged in show login screen
-            Intent login = new Intent(getApplicationContext(), Loginme.class);
+            Intent login = new Intent(getApplicationContext(), LoginActivity.class);
             login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(login);
             // Closing dashboard screen
             finish();
-       }*/
-	
+       }
+	}
 	
 	private void openDayLessons(String dayId, String dayTitle) {
 		Intent si = new Intent(getApplicationContext(), ListDayLessons.class);
@@ -153,7 +155,7 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
     public void getLessonsFeed(View v){
         // We start a new task that does its work on its own thread
         // We pass in a handler that will be called when the task has finished
-        new Thread(new GetLessonsTask(responseHandler, "0", true, userReg_no, userPassword)).start();
+        new Thread(new GetLessonsTask(responseHandler, "0", true, email, userPassword)).start();
         //new Thread(new GetLessonsTask(responseHandler, dayId, false, null, null)).start();
        
     }
@@ -230,7 +232,7 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
     	String teacher = lesson.getTeacher();
     	String location = lesson.getLocation();
                 
-        Intent si = new Intent(getApplicationContext(), SingleLessonActivity.class);
+        Intent si = new Intent(getApplicationContext(), SingleLessonActivity1.class);
         Bundle b=new Bundle();
         
         b.putString("unit_id", unit_id);
@@ -250,7 +252,7 @@ public class MainActivity extends SherlockActivity implements LessonClickListene
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getSupportMenuInflater().inflate(R.menu.activity_main, menu);
+		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
 	public boolean onOptionsItemSelected(MenuItem item) {

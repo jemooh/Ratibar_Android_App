@@ -5,17 +5,6 @@
     android:padding="5dp" >
 
     <TextView
-        android:id="@+id/txtDatetime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/txtLocation"
-        android:layout_alignBottom="@+id/txtLocation"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="18dp"
-        android:text="TextView"
-        android:textColor="@color/comment_grey" />
-
-    <TextView
         android:id="@+id/txtComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,25 +13,47 @@
         android:layout_marginTop="10dp"
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/color_white" />
-
-    <TextView
-        android:id="@+id/txtCreator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/txtDatetime"
-        android:layout_alignBottom="@+id/txtDatetime"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="67dp"
-        android:text="TextView"
-        android:textColor="@color/ntv_blue" />
+        android:textColor="@color/grey_bg" />
 
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/txtCreator"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/round_bg"
+        android:padding="2dp"
         android:src="@drawable/cassie" />
+
+    <TextView
+        android:id="@+id/txtCreator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView1"
+        android:layout_marginLeft="14dp"
+        android:layout_toRightOf="@+id/imageView1"
+        android:text="TextView"
+        android:textColor="@color/ntv_blue"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/txtDatetime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/txtCreator"
+        android:layout_marginRight="40dp"
+        android:text="TextView"
+        android:textColor="@color/comment_grey"
+        android:textSize="9sp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignBottom="@+id/txtComment"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/txtCreator"
+        android:src="@drawable/ic_action_remove" />
 
 </RelativeLayout>

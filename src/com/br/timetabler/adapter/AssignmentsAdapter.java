@@ -1,20 +1,18 @@
 package com.br.timetabler.adapter;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 import com.br.timetabler.R;
 import com.br.timetabler.model.Assignment;
 
@@ -82,11 +80,32 @@ public class AssignmentsAdapter extends BaseAdapter {
 		
         // Get a single video from our list
         Assignment assignment = assignments.get(position);
+        //change date formate
+         Calendar c = Calendar.getInstance();
+        int t = Integer.parseInt(assignment.getDateCreated());
+	    c.setTimeInMillis(t*1000L);
+	    SimpleDateFormat currentDate = new SimpleDateFormat("MM/dd/yy HH:mm ");
+         String assDateCreated = currentDate.format(c.getTime());
+         
+         Calendar cal = Calendar.getInstance();
+            int t2 = Integer.parseInt(assignment.getDateDue());
+		    cal.setTimeInMillis(t2*1000L);
+		    SimpleDateFormat currentDat = new SimpleDateFormat("MM/dd/yy HH:mm ");
+		   //set Roboto font
+             String assDateDue = currentDat.format(cal.getTime());
+             Typeface font = Typeface.createFromAsset(mContext.getAssets(), "fonts/Roboto-Light.ttf");
+ 	        Typeface font_a = Typeface.createFromAsset(mContext.getAssets(), "fonts/Roboto-Medium.ttf");
+ 	        Typeface font_b = Typeface.createFromAsset(mContext.getAssets(), "fonts/Roboto-Regular.ttf");
+ 	        holder.code.setTypeface(font_b);
+ 	        holder.title.setTypeface(font_a);
+ 	        holder.dateCreated.setTypeface(font_b);
+ 	        holder.dateDue.setTypeface(font_b);
         
+             
         holder.code.setText(assignment.getUnitCode());
         holder.title.setText(assignment.getDescription());
-        holder.dateCreated.setText("Created On " + assignment.getDateCreated());
-        holder.dateDue.setText("Due On " + assignment.getDateDue());
+        holder.dateCreated.setText("Created On " + assDateCreated);
+        holder.dateDue.setText("Due On " + assDateDue);
          
         return convertView;
     }
@@ -105,13 +124,4 @@ public class AssignmentsAdapter extends BaseAdapter {
     	m = m.replaceAll("[.]", ":");
         return m;
 	}
-    
-
-
-  
 }
-    
-    
-    
-    
-

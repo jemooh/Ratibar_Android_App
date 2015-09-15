@@ -35,6 +35,7 @@ public class AssignmentsListView extends ListView implements android.widget.Adap
     	this.assignments = assignments;
     	AssignmentsAdapter adapter = new AssignmentsAdapter(getContext(), assignments);
         setAdapter(adapter);
+        adapter.notifyDataSetChanged();
         // When the videos are set we also set an item click listener to the list
         // this will callback to our custom list whenever an item it pressed
         // it will tell us what position in the list is pressed

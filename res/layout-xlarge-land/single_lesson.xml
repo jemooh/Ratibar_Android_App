@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#0000"
+    android:orientation="vertical"
+    android:paddingBottom="7dp" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/txtSCode"
+            android:layout_below="@+id/txtSLocation"
+            android:text="Also on: Friday."
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/txtSTeacher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textView1"
+            android:layout_toRightOf="@+id/imageView3"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#696969"
+            android:textSize="9sp"
+            android:typeface="normal" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="14dp"
+            android:layout_height="15dp"
+            android:layout_alignRight="@+id/imageView2"
+            android:layout_below="@+id/imageView2"
+            android:src="@drawable/social_person" />
+
+        <TextView
+            android:id="@+id/txtTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/txtSLocation"
+            android:layout_alignParentTop="true"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="32sp"
+            android:typeface="normal" />
+
+        <TextView
+            android:id="@+id/txtColor"
+            android:layout_width="2dp"
+            android:layout_height="30dp"
+            android:layout_above="@+id/txtSTitle"
+            android:layout_alignLeft="@+id/imageView2" />
+
+        <TextView
+            android:id="@+id/txtSLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/txtSTeacher"
+            android:layout_below="@+id/txtSTitle"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#696969"
+            android:textSize="9sp"
+            android:typeface="normal" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="10dp"
+            android:layout_height="15dp"
+            android:layout_alignBottom="@+id/txtSLocation"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/locate" />
+
+        <TextView
+            android:id="@+id/txtSCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/txtTime"
+            android:layout_alignBottom="@+id/txtTime"
+            android:layout_alignLeft="@+id/txtSTitle"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#808080"
+            android:textSize="18sp"
+            android:typeface="normal" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignTop="@+id/txtColor"
+            android:layout_toRightOf="@+id/txtTime"
+            android:text="pm"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="10sp"
+            android:typeface="normal" />
+
+        <TextView
+            android:id="@+id/txtSTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/txtTime"
+            android:layout_marginRight="33dp"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="10sp"
+            android:typeface="normal" />
+
+    </RelativeLayout>
+    
+	<android.support.v4.view.ViewPager 
+		    android:id="@+id/pager"
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent">
+		</android.support.v4.view.ViewPager>
+
+    <!--
+    changed to use tabs
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Personal Notes"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/ntv_blue" />
+
+        <Button
+            android:id="@+id/btnAddnotes"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:onClick="onClickAdd"
+            android:text="Add" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/listViewnotes"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" >
+    </ListView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Assignments"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/ntv_blue" />
+    
+	   <com.br.timetabler.widget.AssignmentsListView
+        android:id="@+id/assignmentsListView"
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:cacheColorHint="@android:color/transparent"
+        android:layout_below="@+id/txtDateToday" />
+	    
+	     <ProgressBar
+	        android:id="@+id/pbpplasignmnt"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerInParent="true"
+	        android:layout_gravity="center" />
+	     
+	    <TextView
+	        android:id="@+id/progressMsg3"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/pbppl"
+	        android:layout_centerHorizontal="true"
+	        android:layout_centerInParent="true"
+	        android:layout_centerVertical="true"
+	        android:layout_gravity="center"
+            android:text="Loading Asignments" />
+	    
+	    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Comments"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/ntv_blue" />
+	    
+	    <com.br.timetabler.widget.CommentsListView
+	        android:id="@+id/commentsListView"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="20dp"
+	        android:layout_weight="0.84"
+	        android:cacheColorHint="@android:color/transparent" />
+	
+	    <ProgressBar
+	        android:id="@+id/pbppl"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerInParent="true"
+	        android:layout_gravity="center" />
+	
+	    <TextView
+	        android:id="@+id/progressMsg2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/pbppl"
+	        android:layout_centerHorizontal="true"
+	        android:layout_centerInParent="true"
+	        android:layout_centerVertical="true"
+	        android:layout_gravity="center"
+            android:text="Loading Comments" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/edtcomments"
+            android:layout_width="177dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/btnAddComments"
+            android:ems="10"
+            android:hint="Add comment"
+            android:inputType="textMultiLine" />
+
+        <Button
+            android:id="@+id/btnAddComments"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:onClick="onClickAdd"
+            android:text="Send" />
+
+             -->
+             
+   </LinearLayout>

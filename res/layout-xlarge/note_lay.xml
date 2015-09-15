@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/rati_gry"
+        android:padding="5dp" >
+
+   
+        <ImageButton
+            android:id="@+id/btn_save"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/btn_press_blue_bg"
+            android:minHeight="40dp"
+            android:onClick="onClickSave"
+            android:textColor="#000000"
+            android:src="@drawable/navigation_accept" />
+
+        <ImageButton
+            android:id="@+id/btn_share"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/btn_press_blue_bg"
+            android:minHeight="40dp"
+            android:textSize="12sp"
+            android:onClick="onClickShare"
+            android:textColor="#000000"
+            android:src="@drawable/social_share" />
+
+        <ImageButton
+            android:id="@+id/btn_cancel"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/btn_press_blue_bg"
+            android:minHeight="40dp"
+            android:textSize="12sp"
+            android:onClick="onClickCancel"
+            android:textColor="#000000"
+            android:src="@drawable/navigation_cancel" />
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/txtAddNotes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/comment_textarea"
+        android:ems="10"
+        android:gravity="top|center_vertical"
+        android:height="100dp"
+        android:hint="Write your note"
+        android:inputType="textMultiLine"
+        android:padding="10dp"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:typeface="normal" />
+
+</LinearLayout>

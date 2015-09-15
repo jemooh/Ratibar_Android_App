@@ -4,43 +4,39 @@ import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.br.timetabler.R;
-import com.actionbarsherlock.app.SherlockActivity;
 import com.br.timetabler.model.CommentLibrary;
 import com.br.timetabler.service.task.GetCommentsTask;
 import com.br.timetabler.widget.CommentsListView;
 
-public class One_Lesson_Comments  extends SherlockActivity {
+public class One_Lesson_Comments  extends ActionBarActivity {
 	
 	CommentsListView commentsLstView;
-	String unit_id,userId;
+	String userId;
+	String password = DashboardActivity.password;
+	String email   = DashboardActivity.email;
+	String unit_id = SingleLessonActivity1.unit_id;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
 		setContentView(R.layout.one_lesson_comments);
 		
-		
 		commentsLstView = (CommentsListView) findViewById(R.id.commentsListView);
 		getCommentsFeed(commentsLstView);
 		
-		
-		
 	}
-	
-
 	// This is the XML onClick listener to retreive a users video feed
     public void getCommentsFeed(View v){
         // We start a new task that does its work on its own thread
         // We pass in a handler that will be called when the task has finished
         // We also pass in the name of the user we are searching YouTube for
-        new Thread(new GetCommentsTask(responseHandler, unit_id, false, null)).start();
+        new Thread(new GetCommentsTask(responseHandler,email,password, unit_id, false, null)).start();
     }
-    
-    
-    
     
     // This is the handler that receives the response when the YouTube task has finished
 

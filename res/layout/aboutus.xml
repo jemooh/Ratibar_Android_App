@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true" >
+		<RelativeLayout 
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:orientation="vertical"
+		    android:padding="5dp" >
+		
+		    <TextView
+		        android:id="@+id/title"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentTop="true"
+		        android:layout_centerHorizontal="true"
+		        android:text="BriteSkills Team"
+		        android:textAppearance="?android:attr/textAppearanceMedium"
+		        android:textSize="18sp" />
+		
+		    <TextView
+		        android:id="@+id/about"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_alignLeft="@+id/whatwedo"
+		        android:layout_below="@+id/title"
+		        android:layout_marginTop="30dp"
+		        android:text="about"
+		        android:textAppearance="?android:attr/textAppearanceMedium"
+		        android:textSize="15sp" />
+		
+		    <TextView
+		        android:id="@+id/whatwedo"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignLeft="@+id/contactT"
+		        android:layout_below="@+id/about"
+		        android:layout_marginTop="23dp"
+		        android:text="What we do"
+		        android:textAppearance="?android:attr/textAppearanceMedium"
+		        android:textColor="@color/green"
+		        android:textSize="16sp" />
+		
+		    <TextView
+		        android:id="@+id/contactT"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_above="@+id/contactB"
+		        android:layout_alignLeft="@+id/contactB"
+		        android:layout_marginBottom="22dp"
+		        android:text="Contact Us"
+		        android:textAppearance="?android:attr/textAppearanceMedium"
+		        android:textColor="@color/green"
+		        android:textSize="16sp"
+		        android:typeface="normal" />
+		
+		    <TextView
+		        android:id="@+id/whatweB"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignLeft="@+id/whatwedo"
+		        android:layout_below="@+id/whatwedo"
+		        android:layout_marginTop="18dp"
+		        android:text="what we do body"
+		        android:textAppearance="?android:attr/textAppearanceSmall"
+		        android:textSize="13sp" />
+
+		    <TextView
+		        android:id="@+id/contactB"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentBottom="true"
+		        android:layout_centerHorizontal="true"
+		        android:layout_marginBottom="110dp"
+		        android:text="contact us body"
+		        android:textAppearance="?android:attr/textAppearanceMedium"
+		        android:textColor="@color/less_grey"
+		        android:textSize="13sp" />
+		
+		</RelativeLayout>
+
+</ScrollView>

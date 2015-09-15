@@ -14,14 +14,16 @@ public class Comment implements Serializable {
     private String creator;
     private String datetime;
     private String comment;
+    private String thumbUrl;
      
-    public Comment(String lessonId, String commentId, String creator, String datetime, String comment) {
+    public Comment(String lessonId, String commentId, String creator, String datetime, String comment,String thumbUrl) {
         super();
         this.lessonId = lessonId;
         this.commentId = commentId;
         this.creator = creator;
         this.datetime = datetime;
         this.comment = comment;
+        this.thumbUrl = thumbUrl;
         }
  
     /**
@@ -31,6 +33,9 @@ public class Comment implements Serializable {
         return lessonId;
     }
     
+    public String getUrl(){
+        return thumbUrl;
+    }
     /**
      * @return the title of the video
      */

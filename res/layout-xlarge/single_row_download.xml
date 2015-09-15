@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical" >
+
+<TextView
+    android:id="@+id/title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Title" />
+
+<Button
+    android:id="@+id/btndownload"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentTop="true"
+    android:text=">" />
+
+<TextView
+    android:id="@+id/length"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_above="@+id/progressBar"
+    android:layout_alignParentLeft="true"
+    android:text="Small Text"
+    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+<TextView
+    android:id="@+id/elapsedTotal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_above="@+id/progressBar"
+    android:layout_toLeftOf="@+id/bntdownload"
+    android:text="Small Text"
+    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+<ProgressBar
+    android:id="@+id/elapsedProgressBar"
+    style="?android:attr/progressBarStyleHorizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_below="@+id/bntdownload"
+    android:max="100" />
+
+</RelativeLayout>

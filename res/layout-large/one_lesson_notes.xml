@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/rati_gry"
+        android:padding="5dp" >
+
+        <ImageButton
+            android:id="@+id/btnAddnotes"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/btn_press_blue_w_bg"
+            android:onClick="onClickAdd"
+            android:src="@drawable/content_new" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/btnAddnotes"
+            android:layout_marginLeft="14dp"
+            android:layout_toRightOf="@+id/btnAddnotes"
+            android:text="New Note"
+            android:textSize="12sp"
+            android:typeface="normal" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:listSelector="@drawable/list_selector_t"
+        android:fadingEdge="none"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" >
+
+    </ListView>`
+    
+</LinearLayout>

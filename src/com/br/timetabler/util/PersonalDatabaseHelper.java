@@ -13,15 +13,14 @@ public class PersonalDatabaseHelper {
 
    // database configuration
    // if you want the onUpgrade to run then change the database_version
-   private static final int DATABASE_VERSION = 1;
-   private static final String DATABASE_NAME = "comments_users.db";
+   private static final int DATABASE_VERSION = 2;
+   private static final String DATABASE_NAME = "timetablerN11.db";
 
    // table configuration
-   private static final String TABLE_NAME = "person_table";         // Table name
-   private static final String PERSON_TABLE_COLUMN_ID = "_id";     // a column named "_id" is required for cursor
-   private static final String PERSON_TABLE_COLUMN_NAME = "userId";
-   private static final String PERSON_TABLE_COLUMN_TIME = "time";
-   private static final String PERSON_TABLE_COLUMN_COMMENT = "comment";
+	   private static final String TABLE_NAME = "lesson_table";         // Table name
+	   private static final String PERSON_TABLE_COLUMN_ID = "_id";
+		private static final String PERSON_TABLE_COLUMN_JSON= "json";
+	    
 
    private DatabaseOpenHelper openHelper;
    private SQLiteDatabase database;
@@ -34,16 +33,17 @@ public class PersonalDatabaseHelper {
        database = openHelper.getWritableDatabase();
    }
 
-   public void insertData (String userId, String time,String comment ) {
+   public void insertData (String json ) {
 
        // we are using ContentValues to avoid sql format errors
 
        ContentValues contentValues = new ContentValues();
 
-       contentValues.put(PERSON_TABLE_COLUMN_NAME, userId);
-       contentValues.put(PERSON_TABLE_COLUMN_TIME, time);
-       contentValues.put(PERSON_TABLE_COLUMN_COMMENT, comment);
+      
+       contentValues.put(PERSON_TABLE_COLUMN_JSON, json );
+       
 
+       
        database.insert(TABLE_NAME, null, contentValues);
         // Closing database connection
    }
@@ -69,9 +69,9 @@ public class PersonalDatabaseHelper {
        @Override
        public void onCreate(SQLiteDatabase sqLiteDatabase) {
            // Create your tables here
-
-           String buildSQL = "CREATE TABLE " + TABLE_NAME + "( " + PERSON_TABLE_COLUMN_ID + " INTEGER PRIMARY KEY, " +
-                   PERSON_TABLE_COLUMN_NAME + " TEXT, " + PERSON_TABLE_COLUMN_TIME + " TEXT,"+ PERSON_TABLE_COLUMN_COMMENT + " TEXT )";
+           String buildSQL = "CREATE TABLE " + TABLE_NAME + "( " 
+           + PERSON_TABLE_COLUMN_ID + " INTEGER PRIMARY KEY, "
+           + PERSON_TABLE_COLUMN_JSON + " TEXT)";
 
            Log.d(TAG, "onCreate SQL: " + buildSQL);
 

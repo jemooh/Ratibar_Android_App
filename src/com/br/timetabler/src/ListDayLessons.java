@@ -22,9 +22,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,20 +36,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.br.timetabler.R;
 import com.br.timetabler.model.Lesson;
 import com.br.timetabler.model.LessonLibrary;
 import com.br.timetabler.service.task.GetLessonsTask;
+import com.br.timetabler.util.DatabaseHandler;
 import com.br.timetabler.util.DatabaseHandler_joe;
 import com.br.timetabler.listener.LessonClickListener;
 import com.br.timetabler.util.ServerInteractions;
 import com.br.timetabler.widget.TodayLessonsListView;
 
 @SuppressLint("HandlerLeak")
-public class ListDayLessons extends SherlockActivity implements LessonClickListener {
+public class ListDayLessons extends ActionBarActivity implements LessonClickListener {
 	private TodayLessonsListView listView;
 	Button btnLogout;
 	String dayId, dayTitle;
@@ -57,40 +59,41 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
 	
 	SaveFeedbackTask feedBackTsk;
 	ServerInteractions userFunction;
-	DatabaseHandler_joe db;
 	JSONObject json_user;
     JSONObject json;
     String errorMsg, successMsg;
     String res; 
-    DatabaseHandler_joe dbHandler;
+    DatabaseHandler db;
     ServerInteractions server;
-	String userId, userReg_no, userPassword;
+	String userId, email, userPassword;
     int today = new GregorianCalendar().get(Calendar.DAY_OF_WEEK);
     
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_day_lessons);
-        String[] daysOfWeek = {"Saturday", "Sunday", "Monday", "Tuesday", "Wednesady", "Thursday", "Friday", };
+        String[] daysOfWeek = {"Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", };
        // dbHandler = new DatabaseHandler_joe(this);
-        
+        getOverflowMenu();
         server = new ServerInteractions();
-		dbHandler = new DatabaseHandler_joe(this);
+		db = new DatabaseHandler(this);
 		
 		//I used this to help in fixing authentication by loging out the user upon loading the app
-		//server.logoutUser(getApplicationContext());
+		server.logoutUser(getApplicationContext());
 		
-		try {         
-			dbHandler.createDataBase();         
+		try {   
+			
+			db.createDataBase();         
         } catch (IOException ioe) {         
         	throw new Error("Unable to create database");         
         }         
         
-        try {         
-        	dbHandler.openDataBase();         
+        try {  
+        	
+        	db.openDataBase();         
         }catch(SQLException sqle){         
         	throw sqle;         
         }
-        dbHandler.close();
+        db.close();
 
         
         /*try {         
@@ -138,6 +141,14 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
  //check if user is logged in.
         
      
+		db = new DatabaseHandler(getApplicationContext());
+    	HashMap<String,String> user = new HashMap<String,String>();
+    	user = db.getUserDetails();
+    	userId = user.get("uid");
+    	email = user.get("email");
+    	userPassword = user.get("password");
+		
+		
 		//create a listview to hold data
         listView = (TodayLessonsListView) findViewById(R.id.todayListView);
 		
@@ -147,12 +158,7 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
         listView.setOnLessonClickListener(this);
         getLessonsFeed(listView);
         
-    	dbHandler = new DatabaseHandler_joe(getApplicationContext());
-    	HashMap<String,String> user = new HashMap<String,String>();
-    	user = dbHandler.getUserDetails();
-    	userId = user.get("uid");
-    	userReg_no = user.get("reg_no");
-    	userPassword = user.get("password");
+    	
     	/**
 	   }else {
 			//user in not logged in show login screen
@@ -175,12 +181,30 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
 
 
 	}
-	/**/
+	
+	
+	
+	private void getOverflowMenu() {
+		 
+	    try {
+	 
+	       ViewConfiguration config = ViewConfiguration.get(this);
+	       java.lang.reflect.Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+	       if(menuKeyField != null) {
+	           menuKeyField.setAccessible(true);
+	           menuKeyField.setBoolean(config, false);
+	       }
+	   } catch (Exception e) {
+	       e.printStackTrace();
+	   }
+	}
+	 
+	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getSupportMenuInflater().inflate(R.menu.activity_main, menu);
+		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -206,13 +230,13 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
                 startActivity(i2);
                 //finish();
                 break;
-            
+            /*
             case R.id.menu_settings: //display reviews
             	Intent i4 = new Intent(getApplicationContext(), Preferences.class);
                 startActivity(i4);
                 //finish();
                 break;
-            
+            */
             
         }
         return super.onOptionsItemSelected(item);
@@ -222,7 +246,7 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
         // We start a new task that does its work on its own thread
         // We pass in a handler that will be called when the task has finished
         // We also pass in the name of the user we are searching YouTube for
-        new Thread(new GetLessonsTask(responseHandler, dayId, false, null, null)).start();
+        new Thread(new GetLessonsTask(responseHandler, dayId, false, email, userPassword)).start();
     }
     
     // This is the handler that receives the response when the YouTube task has finished
@@ -277,9 +301,9 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
     	String teacher = lesson.getTeacher();
     	String location = lesson.getLocation();
                 
-        Intent si = new Intent(getApplicationContext(), SingleLessonActivity.class);
+        Intent si = new Intent(getApplicationContext(), SingleLessonActivity1.class);
         Bundle b=new Bundle();
-        
+              
         b.putString("unit_id", unit_id);
         b.putString("starttime", starttime);
         b.putString("endtime", endtime);
@@ -356,11 +380,11 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
         	userFunction = new ServerInteractions();
 
         	String feedbackContent = params[0].feedbackContent;
-        	db = new DatabaseHandler_joe(getApplicationContext());
+        	db = new DatabaseHandler(getApplicationContext());
         	HashMap<String,String> user = new HashMap<String,String>();
         	user = db.getUserDetails();
-        	String userId = user.get("uid");
-        	json = userFunction.postFeedback(feedbackContent, userId); //100 refers to example user id
+        	String email = user.get("email");
+        	json = userFunction.postFeedback(feedbackContent, email); //100 refers to example user id
             try {
                 if (json.getString(KEY_SUCCESS) != null) {
                 	errorMsg = "";
@@ -396,7 +420,7 @@ public class ListDayLessons extends SherlockActivity implements LessonClickListe
     }
 	
 	private static class MyCommentParams {
-        String userId, feedbackContent;
+        String email, feedbackContent;
         MyCommentParams(String feedbackContent) {
             this.feedbackContent = feedbackContent;
             

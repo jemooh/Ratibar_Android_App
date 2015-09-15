@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.os.Message;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -22,7 +25,6 @@ import com.br.timetabler.model.Comment;
 import com.br.timetabler.model.CommentLibrary;
 import com.br.timetabler.util.Log;
 import com.br.timetabler.util.StreamUtils;
-
 public class GetCommentsTask implements Runnable {
 	// A reference to retrieve the data when this task finishes
     public static final String LIBRARY = "CommentsLibrary";
@@ -32,29 +34,46 @@ public class GetCommentsTask implements Runnable {
     
     private String SearchQuery;
     private String Url;
-    private static String MainURL = "http://10.0.2.2/lessons_data.php";
-    //private static String MainURL = "http://dev.ratibar.com/app/mobile_lessonsList.php?email=student@gmail.com&password=okatch/";
+    private static String MainURL = "http://syncsoft.co.ke/timetable/lessons_data2.php";
+    //private static String MainURL = "http://dev.ratibar.com/app/appCommentsList.php?email=iopondo@gmail.com&password=iopondo&unit_id=28
     //private static String loginURL = MainURL + "/last2.php";
+   // http://dev.ratibar.com/app/appCommentsList.php?email=iopondo@gmail.com&password=iopondo&unit_id=28
+    
     /**
      * Don't forget to call run(); to start this task
      * @param replyTo - the handler you want to receive the response when this task has finished
      * @param username - the username of who on YouTube you are browsing
      */
-    public GetCommentsTask(Handler replyTo, String unit_id, boolean Search, String SearchQuery) {
+    public GetCommentsTask(Handler replyTo, String email, String userPassword, String unit_id, boolean Search, String SearchQuery) {
         this.replyTo = replyTo;
         this.SearchQuery = SearchQuery;
         if(Search) {
         	if(SearchQuery !="") {
-        		this.Url = MainURL + "/lessons_data.php?q="+ SearchQuery;
+        		this.Url = MainURL; //+ "/lessons_data.php?q="+ SearchQuery;
         		//this.Url = MainURL + "/mobile_commentsList.php?q="+ SearchQuery;
         	}
         } else {
-        	this.Url = MainURL + "/mobile_commentsList.php?unit_id="+unit_id;
+        	this.Url = MainURL; // + "/mobile_commentsList.php?unit_id="+unit_id;
+        	//this.Url = "https://www.ratibar.com/app/appLessonsList.php?email="+ email + "&password="+userPassword+"&unit_id="+unit_id;
+        	//this.Url = "http://dev.ratibar.com/app/appCommentsList.php?email=iopondo@gmail.com&password=iopondo&unit_id="+unit_id;
         	
             }
         Log.i(this.Url);
         
     }
+    /*
+    public String GetDate(){
+    	
+		    Calendar c = Calendar.getInstance();
+		    c.setTimeInMillis(1336425840*1000);
+		    SimpleDateFormat currentDate = new SimpleDateFormat("MMM/dd/yyyy HH:mm ");
+		    Log.i( "Hours: " +currentDate.format(c.getTime()));
+		    
+    return currentDate.format(c.getTime());
+    
+    }*/
+    
+    
     
 	@Override
 	public void run() {
@@ -71,20 +90,21 @@ public class GetCommentsTask implements Runnable {
             String jsonString = StreamUtils.convertToString(response.getEntity().getContent());
             // Create a JSON object that we can use from the String
             JSONObject json = new JSONObject(jsonString);
-            
+            Log.i(jsonString);
             // Get are search result items
-            JSONArray LessonsArray = json.getJSONObject("data").getJSONArray("lessons");            
+            JSONArray commentsArray = json.getJSONArray("data"); 
+           // JSONArray LessonsArray = json.getJSONObject("data").getJSONArray("lessons"); 
           //  Log.i("commentsArray"+commentsArray);
             
             
             
-            
+          /*  
             for (int i = 0; i < LessonsArray.length(); i++) {
                 JSONObject jobj =LessonsArray.getJSONObject(i);
-                
+                */
           
                 //JSONObject comm = jobj.getJSONObject("comments");
-                JSONArray commentsArray= jobj.getJSONArray("comments");
+                //JSONArray commentsArray= jobj.getJSONArray("comments");
                 Log.i("commentsArray"+commentsArray);
             // Create a list to store are videos in
             List<Comment> comments = new ArrayList<Comment>();
@@ -95,11 +115,18 @@ public class GetCommentsTask implements Runnable {
                 String lessonId = jsonObject.getString("unit_id");
                 String createdBy = jsonObject.getString("created_by");
                 String strComments = jsonObject.getString("comments");
-                String createdOn = jsonObject.getString("created_on");
+                String createdt = jsonObject.getString("created_on");
+                String thumbUrl = jsonObject.getString("thumbUrl");
                 
-                 
+                //converting time to Simple format for Unix Time.
+                Calendar c = Calendar.getInstance();
+                int t = Integer.parseInt(createdt);
+    		    c.setTimeInMillis(t*1000L);
+    		    SimpleDateFormat currentDate = new SimpleDateFormat("MMM/dd/yyyy HH:mm ");
+    		    Log.i( "Hours: " +currentDate.format(c.getTime()));
+                 String createdOn = currentDate.format(c.getTime());
                 // Create the video object and add it to our list
-                comments.add(new Comment(lessonId, commentId, createdBy, createdOn, strComments));
+                comments.add(new Comment(lessonId, commentId, createdBy, createdOn, strComments,thumbUrl));
             }
             // Create a library to hold our lessons
             CommentLibrary lib = new CommentLibrary("br", comments);
@@ -114,13 +141,13 @@ public class GetCommentsTask implements Runnable {
             // We don't do any error catching, just nothing will happen if this task falls over
             // an idea would be to reply to the handler with a different message so your Activity can act accordingly
         
-            }
+            
 		} catch (ClientProtocolException e) {
-            Log.e("Feck", e);
+            Log.e("Feck1", e);
         } catch (IOException e) {
-            Log.e("Feck", e);
+            Log.e("Feck2", e);
         } catch (JSONException e) {
-            Log.e("Feck", e);
+            Log.e("Feck3", e);
         }
 	}
 

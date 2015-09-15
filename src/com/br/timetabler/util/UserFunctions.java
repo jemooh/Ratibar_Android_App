@@ -14,7 +14,8 @@ public class UserFunctions {
      
     // Testing in localhost using wamp or xampp
     // use http://10.0.2.2/ to connect to your localhost ie http://localhost/
-    private static String loginURL = "http://10.0.2.2/last2.php";
+   // private static String loginURL = "http://10.0.2.2/last2.php";
+    private static String loginURL = "http://dev.ratibar.com/app/appRegLogin.php";
     private static String registerURL = "http://10.0.2.2/last2.php";
     private static String notesURL = "http://10.0.2.2/last2.php";
     private static String uploadURL = "http://10.0.2.2/last2.php";
@@ -35,11 +36,11 @@ public class UserFunctions {
      * @param email
      * @param password
      * */
-    public JSONObject loginUser(String reg_no, String password){
+    public JSONObject loginUser(String email, String password){
         // Building Parameters
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("tag", login_tag));
-        params.add(new BasicNameValuePair("reg_no", reg_no));
+        params.add(new BasicNameValuePair("email", email));
         params.add(new BasicNameValuePair("password", password));
         JSONObject json = jsonParser.getJSONFromUrl(loginURL, params);
         // return json
@@ -91,12 +92,10 @@ public class UserFunctions {
     
     
     
-    public JSONObject shareNotes(String lact, String unit_t, String notes){
+    public JSONObject shareNotes( String notes){
         // Building Parameters
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("tag", notes_tag));
-        params.add(new BasicNameValuePair("lact", lact));
-        params.add(new BasicNameValuePair("unit_t", unit_t));
         params.add(new BasicNameValuePair("notes", notes));
          
         // getting JSON Object
@@ -109,7 +108,7 @@ public class UserFunctions {
      * Function get Login status
      * */
     public boolean isUserLoggedIn(Context context){
-        DatabaseHandler_jemo db = new DatabaseHandler_jemo(context);
+        DatabaseHandler_TodayLessons db = new DatabaseHandler_TodayLessons(context);
         int count = db.getRowCount();
         if(count > 0){
             // user logged in
@@ -123,7 +122,7 @@ public class UserFunctions {
      * Reset Database
      * */
     public boolean logoutUser(Context context){
-        DatabaseHandler_jemo db = new DatabaseHandler_jemo(context);
+        DatabaseHandler_TodayLessons db = new DatabaseHandler_TodayLessons(context);
         db.resetTables();
         return true;
     }

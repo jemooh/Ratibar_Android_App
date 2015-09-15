@@ -20,6 +20,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,8 +30,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.actionbarsherlock.app.SherlockActivity;
 import com.br.timetabler.R;
 import com.br.timetabler.model.Course;
 import com.br.timetabler.model.CourseLibrary;
@@ -42,7 +41,7 @@ import com.br.timetabler.util.DatabaseHandler_joe;
 import com.br.timetabler.util.ServerInteractions;
 
 
-public class CourseEditActivity extends SherlockActivity {
+public class CourseEditActivity extends ActionBarActivity {
 	Spinner spnCourses, spnYear, spnIntake, spnSemester;
 	protected ArrayAdapter<String> courseAdapter;
 	String[] years = {"1st Year", "2nd Year", "3rd Year", "4th Year"};
